@@ -7,7 +7,7 @@
   "dependencies": {
     "underscore": "1.5.x",
     "substance-document": "git+https://github.com/substance/document.git#lens",
-    "substance-nodes":"git+https://github.com/substance/nodes.git#lens",
+    "substance-nodes": "git+https://github.com/substance/nodes.git#lens",
     "substance-util": "git+https://github.com/substance/util.git#lens",
     "substance-application": "git+https://github.com/substance/application.git#lens",
     "substance-operator": "git+https://github.com/substance/operator.git#lens"
