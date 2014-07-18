@@ -6,10 +6,10 @@
   },
   "dependencies": {
     "underscore": "1.5.x",
-    "substance-document": "git+https://github.com/substance/document.git#0.6.x",
-    "substance-util": "git+https://github.com/substance/util.git#0.3.x",
-    "substance-application": "git+https://github.com/substance/application.git#0.2.x",
-    "substance-operator": "git+https://github.com/substance/operator.git#0.3.x"
+    "substance-document": "git+https://github.com/substance/document.git#lens",
+    "substance-util": "git+https://github.com/substance/util.git#lens",
+    "substance-application": "git+https://github.com/substance/application.git#lens",
+    "substance-operator": "git+https://github.com/substance/operator.git#lens"
   },
   "version": "0.2.0",
   "engines": {
