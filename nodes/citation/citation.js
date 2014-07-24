@@ -106,7 +106,7 @@ Citation.prototype.constructor = Citation;
 var getters = {
   header: {
     get: function() {
-      if (this.properties.label !== '') {
+      if (this.properties.label) {
         return [this.properties.label,this.properties.title].join(". ")
       }
       else {
