@@ -68,7 +68,8 @@ var Article = function(options) {
       created_at: options.created_at,
       views: ["content"], // is views really needed on the instance level
       title: "",
-      abstract: ""
+      abstract: "",
+      authors: []
     });
 
     // Create views on the doc
