@@ -4,6 +4,7 @@ var _ = require("underscore");
 var util = require("substance-util");
 var html = util.html;
 var NodeView = require("../node").View;
+var TextView = require("../text").View;
 var $$ = require("substance-application").$$;
 
 // Lens.Cover.View
@@ -63,7 +64,13 @@ CoverView.Prototype = function() {
       }
     }
 
-    this.content.appendChild($$('.title', {text: node.title }));
+    // HACK: we need to update to a newer substance version to be able to delegate
+    // to sub-views.
+    var titleView = new TextView(this.node, {
+      path: ['document', 'title'],
+      classes: 'title'
+    });
+    this.content.appendChild(titleView.render().el);
 
     var authors = $$('.authors', {
       children: _.map(node.getAuthors(), function(authorPara) {

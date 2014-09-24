@@ -41,7 +41,7 @@ var createAnnotationElement = function(entry) {
 
 var renderWithAnnotations = function(annotations) {
   var that = this;
-  var text = this.node.content;
+  var text = this.property.get();
   var fragment = document.createDocumentFragment();
 
   // this splits the text and annotations into smaller pieces
