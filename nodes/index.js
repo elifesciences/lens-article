@@ -14,6 +14,7 @@ module.exports = {
   "supplement": require("./supplement"),
   "video": require("./video"),
   "contributor": require("./contributor"),
+  "definition": require("./definition"),
   "citation": require("./citation"),
   "formula": require('./formula'),
   "list": require("./list"),

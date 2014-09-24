@@ -5,6 +5,7 @@ var $$ = require("substance-application").$$;
 var _levels = {
   link: 1,
   cross_reference: 1,
+  definition_reference: 1,
   figure_reference: 1,
   person_reference: 1,
   contributor_reference: 1,
