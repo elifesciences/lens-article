@@ -145,29 +145,27 @@ Article.Renderer.Prototype = function() {
 
     var docNodes = this.docCtrl.container.getTopLevelNodes();
     _.each(docNodes, function(n) {
-      this.renderNode(n, frag);
+      var view = this.renderNodeView(n);
+      frag.appendChild(view.el);
     }, this);
-
 
     return frag;
   };
 
 
-  this.renderNode = function(n, frag) {
+  this.renderNodeView = function(n) {
     var view = this.createView(n);
-    frag.appendChild(view.render().el);
-
+    view.render();
     if (n.type === "heading") {
       view.el.appendChild($$('a.top', {
         href: "#",
         html: '<i class="icon-chevron-up"></i>'
       }));
     }
-
-
     // Lets you customize the resulting DOM sticking on the el element
     // Example: Lens focus controls
     if (this.options.afterRender) this.options.afterRender(this.docCtrl, view);
+    return view;
   };
 
 };
