@@ -24,12 +24,14 @@ Citation.type = {
     "doi": "string",
     "source": "string",
     "volume": "string",
+    "citation_type": "string",
     "publisher_name": "string",
     "publisher_location": "string",
     "fpage": "string",
     "lpage": "string",
     "year": "string",
-    "citation_urls": ["array", "string"]
+    "comment": "string",
+    "citation_urls": ["array", "object"]
   }
 };
 
@@ -49,11 +51,13 @@ Citation.description = {
     "doi": "DOI reference",
     "source": "Usually the journal name",
     "volume": "Issue number",
+    "citation_type": "Citation Type",
     "publisher_name": "Publisher Name",
     "publisher_location": "Publisher Location",
     "fpage": "First page",
     "lpage": "Last page",
     "year": "The year of publication",
+    "comment": "Author comment.",
     "citation_urls": "A list of links for accessing the article on the web"
   }
 };
@@ -74,14 +78,19 @@ Citation.example = {
     "BJ Haas",
     "PT LoVerde"
   ],
+  "citation_type": "Journal Article",
   "doi": "http://dx.doi.org/10.1038/nature08160",
   "source": "Nature",
   "volume": "460",
   "fpage": "352",
   "lpage": "8",
   "year": "1984",
+  "comment": "This is a comment.",
   "citation_urls": [
-    "http://www.ncbi.nlm.nih.gov/pubmed/19606141"
+    {
+      "name": "PubMed",
+      "url": "http://www.ncbi.nlm.nih.gov/pubmed/19606141"
+    }
   ]
 };
 
@@ -106,12 +115,7 @@ Citation.prototype.constructor = Citation;
 var getters = {
   header: {
     get: function() {
-      if (this.properties.label) {
-        return [this.properties.label,this.properties.title].join(". ")
-      }
-      else {
-        return this.properties.title;
-      }
+      return _.compact([this.properties.label, this.properties.citation_type || "Citation"]).join(' - ');
     }
   }
 };

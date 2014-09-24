@@ -4,6 +4,7 @@ var _ = require('underscore');
 var util = require('substance-util');
 var html = util.html;
 var NodeView = require("../node").View;
+var TextView = require("../text").View;
 
 var $$ = require("substance-application").$$;
 
@@ -11,6 +12,16 @@ var Renderer = function(view) {
     var frag = document.createDocumentFragment(),
         node = view.node;
 
+    // Add title
+    // -------
+
+    // HACK: TextView needs a refactor so that it can be used as
+    // a property view instead of a node view.
+    var titleView = new TextView(node, {
+      path: [node.id, 'title'],
+      classes: 'title'
+    });
+    frag.appendChild(titleView.render().el);
 
     // Add Authors
     // -------
@@ -24,12 +35,12 @@ var Renderer = function(view) {
     // -------
 
     var source = [];
-    
+
     // Hack for handling unstructured citation types and render prettier
     if (node.source && node.volume === ''){
       source.push(node.source);
     }
-    
+
     if (node.source && node.volume) {
       source.push([node.source, node.volume].join(', ')+": ");
     }
@@ -50,6 +61,11 @@ var Renderer = function(view) {
       html: source.join('')
     }));
 
+    if (node.comment) {
+      var commentView = new TextView(node, { path: [node.id, 'comment'], classes: 'comment' });
+      frag.appendChild(commentView.render().el);
+    }
+
     // Add DOI (if available)
     // -------
 
@@ -68,6 +84,18 @@ var Renderer = function(view) {
 
     // TODO: Add display citations urls
     // -------
+
+    var citationUrlsEl = $$('.citation-urls');
+
+    _.each(node.citation_urls, function(url) {
+      citationUrlsEl.appendChild($$('a.url', {
+        href: url.url,
+        text: url.name,
+        target: "_blank"
+      }))
+    });
+
+    frag.appendChild(citationUrlsEl)
 
     return frag;
 };
