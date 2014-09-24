@@ -66,7 +66,7 @@ var Article = function(options) {
       guid: options.id, // external global document id
       creator: options.creator,
       created_at: options.created_at,
-      views: ["content", "figures", "citations", "info"], // is views really needed on the instance level
+      views: Article.views, // is views really needed on the instance level
       title: "",
       abstract: "",
       authors: []
