@@ -335,6 +335,13 @@ Article.annotations = {
     "properties": {
       "style": "string"
     }
+  },
+
+  "inline_image": {
+    "parent": "annotation",
+    "properties": {
+      "url": "string"
+    }
   }
 
 };
@@ -509,7 +516,6 @@ Article.describe = function() {
 
     // Show it in the content view
     doc.show("content", [headingId, introId], -1);
-
 
     // Include property description
     // --------

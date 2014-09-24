@@ -16,7 +16,8 @@ var _levels = {
   subscript: 2,
   superscript: 2,
   underline: 2,
-  author_callout: 3
+  author_callout: 3,
+  inline_image: 3,
 };
 
 var createAnnotationElement = function(entry) {
@@ -31,6 +32,11 @@ var createAnnotationElement = function(entry) {
     el = $$('span.annotation.'+callout.style, {
       id: entry.id
     });
+  } else if (entry.type === "inline_image") {
+    el = $$('img.annotation.'+entry.type, {
+      id: entry.id,
+      src: this.node.document.get(entry.id).url
+    } );
   } else {
     el = $$('span.annotation.'+entry.type, {
       id: entry.id
