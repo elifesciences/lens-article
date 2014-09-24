@@ -206,7 +206,7 @@ Article.fromSnapshot = function(data, options) {
 // Define available views
 // --------
 
-Article.views = ["content", "figures", "citations", "info"];
+Article.views = ["content", "figures", "citations", "definitions", "info"];
 
 
 // Register node types
@@ -303,6 +303,13 @@ Article.annotations = {
   // Blueish citation references in the text
 
   "citation_reference": {
+    "parent": "annotation",
+    "properties": {
+      "target": "content"
+    }
+  },
+
+  "definition_reference": {
     "parent": "annotation",
     "properties": {
       "target": "content"
