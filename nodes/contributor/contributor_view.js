@@ -25,6 +25,11 @@ ContributorView.Prototype = function() {
   this.render = function() {
     NodeView.prototype.render.call(this);
 
+    // Contributor Name
+    // -------
+
+    this.content.appendChild($$('.contributor-name', {text: this.node.name}));
+
     // Add Affiliations
     // -------
 

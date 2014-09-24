@@ -9,7 +9,6 @@ var Contributor = function(node, doc) {
   Node.call(this, node, doc);
 };
 
-
 // Type definition
 // -----------------
 //
@@ -34,7 +33,6 @@ Contributor.type = {
     "competing_interests": ["array", "string"]
   }
 };
-
 
 // This is used for the auto-generated docs
 // -----------------
@@ -100,7 +98,8 @@ var getters = {};
 var getters = {
   header: {
     get: function() {
-      return this.properties.name;
+      // TODO: extract extract contribution type
+      return "Author";
     }
   }
 };
@@ -112,8 +111,6 @@ _.each(Contributor.type.properties, function(prop, key) {
     }
   };
 });
-
-
 
 Object.defineProperties(Contributor.prototype, getters);
 
