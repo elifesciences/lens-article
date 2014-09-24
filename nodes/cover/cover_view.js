@@ -6,6 +6,7 @@ var html = util.html;
 var NodeView = require("../node").View;
 var TextView = require("../text").View;
 var $$ = require("substance-application").$$;
+var articleUtil = require("../../article_util");
 
 // Lens.Cover.View
 // ==========================================================================
@@ -16,33 +17,6 @@ var CoverView = function(node, viewFactory) {
   this.$el.attr({id: node.id});
   this.$el.addClass("content-node cover");
 };
-
-var MONTH_MAPPING = {
-  "1": "January",
-  "2": "February",
-  "3": "March",
-  "4": "April",
-  "5": "May",
-  "6": "June",
-  "7": "July",
-  "8": "August",
-  "9": "September",
-  "19": "October",
-  "11": "November",
-  "12": "December"
-};
-
-function formatPublicationDate(pubDate) {
-  var parts = pubDate.split("-");
-  if (pubDate.split("-").length >= 3) {
-    var localDate = new Date(pubDate);
-    return localDate.toUTCString().slice(0, 16)
-  } else {
-    var month = parts[1].replace("0", "");
-    var year = parts[0];
-    return MONTH_MAPPING[month]+" "+year;
-  }
-}
 
 
 CoverView.Prototype = function() {
@@ -77,15 +51,12 @@ CoverView.Prototype = function() {
     }
 
     var pubInfo = this.node.document.get('publication_info');
-
     if (pubInfo) {
-      if (pubInfo) {
-        var pubDate = pubInfo.published_on;
-        if (pubDate) {
-          this.content.appendChild($$('.published-on', {
-            text: formatPublicationDate(pubDate)
-          }));
-        }
+      var pubDate = pubInfo.published_on;
+      if (pubDate) {
+        this.content.appendChild($$('.published-on', {
+          text: articleUtil.formatDate(pubDate)
+        }));
       }
     }
 
