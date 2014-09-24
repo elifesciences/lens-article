@@ -17,6 +17,33 @@ var CoverView = function(node, viewFactory) {
   this.$el.addClass("content-node cover");
 };
 
+var MONTH_MAPPING = {
+  "1": "January",
+  "2": "February",
+  "3": "March",
+  "4": "April",
+  "5": "May",
+  "6": "June",
+  "7": "July",
+  "8": "August",
+  "9": "September",
+  "19": "October",
+  "11": "November",
+  "12": "December"
+};
+
+function formatPublicationDate(pubDate) {
+  var parts = pubDate.split("-");
+  if (pubDate.split("-").length >= 3) {
+    var localDate = new Date(pubDate);
+    return localDate.toUTCString().slice(0, 16)
+  } else {
+    var month = parts[1].replace("0", "");
+    var year = parts[0];
+    return MONTH_MAPPING[month]+" "+year;
+  }
+}
+
 
 CoverView.Prototype = function() {
 
@@ -41,7 +68,7 @@ CoverView.Prototype = function() {
           if (bc.image) {
             html = '<img src="'+bc.image+'" title="'+bc.name+'"/>';
           } else {
-            html = bc.name;  
+            html = bc.name;
           }
           return $$('a', {href: bc.url, html: html})
         })
@@ -52,13 +79,11 @@ CoverView.Prototype = function() {
     var pubInfo = this.node.document.get('publication_info');
 
     if (pubInfo) {
-      var localDate = new Date(pubInfo.published_on);
-
       if (pubInfo) {
         var pubDate = pubInfo.published_on;
         if (pubDate) {
           this.content.appendChild($$('.published-on', {
-            text: localDate.toUTCString().slice(0, 16)
+            text: formatPublicationDate(pubDate)
           }));
         }
       }
