@@ -2,7 +2,7 @@
 
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
-
+var _ = require("underscore");
 
 // Substance.Image.View
 // ==========================================================================
@@ -27,130 +27,42 @@ PublicationInfoView.Prototype = function() {
 
   this.render = function() {
     NodeView.prototype.render.call(this);
-
-    var tableRows = [
-      $$('tr', {
-        children: [
-          $$('td', {
-            colspan: 2,
-            children: [
-              $$('div.label', {text: "Article Type"}),
-              $$('div', {text: this.node.article_type})
-            ]
-          })
-        ]
-      }),
-      $$('tr', {
-        children: [
-          $$('td', {
-            children: [
-              $$('div.label', {text: "Subject"}),
-              $$('div.value', {text: this.node.subjects.join(', ')})
-            ]
-          }),
-          $$('td', {
-            children: [
-              $$('div.label', {text: "Organism"}),
-              $$('div.value', {text: this.node.research_organisms.join(', ')})
-            ]
-          })
-        ]
-      }),
-      $$('tr', {
-        children: [
-          $$('td', {
-            colspan: 2,
-            children: [
-              $$('div.label', {text: "Keywords"}),
-              $$('div.value', {text: this.node.keywords.join(', ')})
-            ]
-          })
-        ]
-      })
-    ];
-
-
-    // Display related article if there is any
-    // ----------------
-
-    if (this.node.related_article) {
-      tableRows.push($$('tr', {
-        children: [
-          $$('td', {
-            colspan: 2,
-            children: [
-              $$('div.label', {text: "Related Article"}),
-              $$('a.value', {href: this.node.related_article, text: this.node.related_article})
-            ]
-          })
-        ]
-      }));
-    }
     
-
-    var catTbl = $$('table.categorization', {
-      children: [ $$('tbody', { children: tableRows }) ]
-    });
-
-    this.content.appendChild(catTbl);
-      
     // Prepare for download the JSON
     var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
     var bb = new Blob([json], {type: "application/json"});
 
+
+    var children = [];
+
+    children.push($$('a.link.xml-link', {
+      href: this.node.fulltext_link,
+      html: '<i class="icon-external-link-sign"></i> Original Article'
+    }));
+
+    if (this.node.related_article) {
+      children.push($$('a.link.xml-link', {
+        href: this.node.related_article,
+        html: '<i class="icon-external-link-sign"></i> Related Article'
+      }));      
+    }
+
+    if (this.node.supplements.length > 0) {
+      _.each(this.node.supplements, function(sup) {
+
+        children.push($$('a.link.xml-link', {
+          href: sup.url,
+          html: '<i class="icon-external-link-sign"></i> '+sup.label
+        }));
+      });
+    }
+
     var links = $$('.links', {
-      children: [
-        $$('a.link pdf-link', {
-          href: this.node.pdf_link,
-          html: '<i class="icon-download-alt"></i> PDF'
-        }),
-        $$('a.link.json-link', {
-          href: window.URL ? window.URL.createObjectURL(bb) : "#",
-          html: '<i class="icon-download-alt"></i> JSON'
-        }),
-        $$('a.link.xml-link', {
-          href: this.node.xml_link,
-          html: '<i class="icon-download-alt"></i> XML'
-        }),
-        $$('a.link.doi-link', {
-          href: this.node.doi,
-          html: '<i class="icon-external-link-sign"></i> DOI'
-        })
-      ]
+      children: children
     });
 
     this.content.appendChild(links);
 
-    var dateRows = [
-      $$('tr', {
-        children: [
-          $$('td', {
-            children: [
-              $$('div.label', {text: "Received"}),
-              $$('div.value', {text: this.node.received_on || "-" })
-            ]
-          }),
-          $$('td', {
-            children: [
-              $$('div.label', {text: "Accepted"}),
-              $$('div.value', {text: this.node.accepted_on || "-" })
-            ]
-          }),
-          $$('td', {
-            children: [
-              $$('div.label', {text: "Published"}),
-              $$('div.value', {text: this.node.published_on || "-" })
-            ]
-          })
-        ]
-      })
-    ];
-    
-    var datesTbl = $$('table.dates', {
-      children: [ $$('tbody', { children: dateRows }) ]
-    });
-
-    this.content.appendChild(datesTbl);
     return this;
   };
 

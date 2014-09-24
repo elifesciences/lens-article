@@ -22,8 +22,10 @@ PublicationInfo.type = {
     "subjects": ["array", "string"],
     "pdf_link": "string",
     "xml_link": "string",
+    "fulltext_link": "string",
     "json_link": "string",
     "doi": "string",
+    "supplements": ["array", "object"],
     "related_article": "string"
   }
 };
@@ -46,7 +48,9 @@ PublicationInfo.description = {
     "subjects": "Article Subjects",
     "pdf_link": "A link referencing the PDF version for print",
     "xml_link": "A link referencing the original NLM XML file",
+    "fulltext_link": "A link referencing the original HTML verison of the article",
     "json_link": "A link pointing to the JSON version of the article",
+    "supplements": "A list of links to supplemental material",
     "doi": "Article DOI",
     "related_article": "DOI of related article if there is any"
   }
