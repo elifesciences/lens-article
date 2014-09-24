@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+.lens-article .content-node.table > .content img {
+  width: 100%;
+}
+
 .lens-article .content-node.table .table-wrapper {
   width: 100%;
   overflow: auto;
