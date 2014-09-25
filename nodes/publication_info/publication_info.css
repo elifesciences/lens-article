@@ -19,23 +19,44 @@
   margin-bottom: 20px;
 }
 
+.lens-article .content-node.publication-info .meta-data {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
 .lens-article .content-node.publication-info .label {
   float: left;
-  /*margin-top: 10px;*/
-  font-size: 13px;
+
   width: 100px;
-  color: #666;
+  font-size: 15px;
+  color: #999;
 }
 
 .lens-article .content-node.publication-info .value {
-  float: left;
+  margin-left: 140px;
 }
 
 .lens-article .content-node.publication-info .dates {
-  color: #999;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .article .resources .nodes > .content-node.publication-info > .content {
   border: none;
+  padding: 10px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo {
+  font-size: 16px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 {
+  padding-top: 10px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 .content {
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Source Sans Pro";
+  color: #999;
 }

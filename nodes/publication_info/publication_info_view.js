@@ -26,20 +26,8 @@ PublicationInfoView.Prototype = function() {
 
     var metaData = $$('.meta-data');
 
-    // Published date
-    // 
 
-    if (this.node.published_on) {
-      var publishedOn = $$('.published-on.container', {
-        children: [
-          $$('div.label', {text: "Published"}),
-          $$('div.value', {
-            html: articleUtil.formatDate(this.node.published_on)
-          })
-        ]
-      });
-      metaData.appendChild(publishedOn);
-    }
+
 
     // Article Type
     // 
@@ -101,21 +89,6 @@ PublicationInfoView.Prototype = function() {
       metaData.appendChild(keywordsEl);
     }
 
-    // Related Article
-    // 
-
-    if (this.node.related_article) {
-      var relatedArticleEl = $$('.related-article.container', {
-        children: [
-          $$('div.label', {text: "Article Type"}),
-          $$('div.value', {
-            children: [$$('a', {href: this.node.related_article, text: this.node.related_article})]
-          })
-        ]
-      });
-      metaData.appendChild(relatedArticleEl);
-    }
-
     // DOI
     // 
 
@@ -130,6 +103,23 @@ PublicationInfoView.Prototype = function() {
       });
       metaData.appendChild(doiEl);
     }
+
+    // Related Article
+    // 
+
+    if (this.node.related_article) {
+      var relatedArticleEl = $$('.related-article.container', {
+        children: [
+          $$('div.label', {text: "Related Article"}),
+          $$('div.value', {
+            children: [$$('a', {href: this.node.related_article, text: this.node.related_article})]
+          })
+        ]
+      });
+      metaData.appendChild(relatedArticleEl);
+    }
+
+
 
     // Dates
     //
