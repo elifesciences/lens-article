@@ -24,9 +24,11 @@ PublicationInfo.type = {
     "xml_link": "string",
     "fulltext_link": "string",
     "json_link": "string",
+    "links": ["array", "objects"],
     "doi": "string",
     "supplements": ["array", "object"],
-    "related_article": "string"
+    "related_article": "string",
+    "article_info": "paragraph"
   }
 };
 
@@ -88,6 +90,9 @@ PublicationInfo.example = {
 
 
 PublicationInfo.Prototype = function() {
+  this.getArticleInfo = function() {
+    return this.document.get("articleinfo");
+  }
 };
 
 

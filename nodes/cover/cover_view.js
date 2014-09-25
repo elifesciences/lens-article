@@ -6,6 +6,7 @@ var html = util.html;
 var NodeView = require("../node").View;
 var TextView = require("../text").View;
 var $$ = require("substance-application").$$;
+var articleUtil = require("../../article_util");
 
 // Lens.Cover.View
 // ==========================================================================
@@ -16,33 +17,6 @@ var CoverView = function(node, viewFactory) {
   this.$el.attr({id: node.id});
   this.$el.addClass("content-node cover");
 };
-
-var MONTH_MAPPING = {
-  "1": "January",
-  "2": "February",
-  "3": "March",
-  "4": "April",
-  "5": "May",
-  "6": "June",
-  "7": "July",
-  "8": "August",
-  "9": "September",
-  "19": "October",
-  "11": "November",
-  "12": "December"
-};
-
-function formatPublicationDate(pubDate) {
-  var parts = pubDate.split("-");
-  if (pubDate.split("-").length >= 3) {
-    var localDate = new Date(pubDate);
-    return localDate.toUTCString().slice(0, 16)
-  } else {
-    var month = parts[1].replace("0", "");
-    var year = parts[0];
-    return MONTH_MAPPING[month]+" "+year;
-  }
-}
 
 
 CoverView.Prototype = function() {
@@ -77,17 +51,18 @@ CoverView.Prototype = function() {
     }
 
     var pubInfo = this.node.document.get('publication_info');
-
     if (pubInfo) {
-      if (pubInfo) {
-        var pubDate = pubInfo.published_on;
-        if (pubDate) {
-          this.content.appendChild($$('.published-on', {
-            text: formatPublicationDate(pubDate)
-          }));
-        }
+      var pubDate = pubInfo.published_on;
+      if (pubDate) {
+        this.content.appendChild($$('.published-on', {
+          text: articleUtil.formatDate(pubDate)
+        }));
       }
     }
+
+    // Title View
+    // --------------
+    // 
 
     // HACK: we need to update to a newer substance version to be able to delegate
     // to sub-views.
@@ -96,6 +71,10 @@ CoverView.Prototype = function() {
       classes: 'title'
     });
     this.content.appendChild(titleView.render().el);
+
+    // Render Authors
+    // --------------
+    // 
 
     var authors = $$('.authors', {
       children: _.map(node.getAuthors(), function(authorPara) {
@@ -113,6 +92,28 @@ CoverView.Prototype = function() {
     }));
 
     this.content.appendChild(authors);
+
+    // Render Links
+    // --------------
+    // 
+
+    if (pubInfo && pubInfo.links.length > 0) {
+      var linksEl = $$('.links');
+      _.each(pubInfo.links, function(link) {
+        linksEl.appendChild($$('a.'+link.type, {href: link.url, html: '<i class="icon-external-link-sign"></i> '+ link.name }))
+      });
+
+      // Prepare for download the JSON
+      var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
+      var bb = new Blob([json], {type: "application/json"});
+
+      linksEl.appendChild($$('a.json', {
+        href: window.URL ? window.URL.createObjectURL(bb) : "#",
+        html: '<i class="icon-download-alt"></i> JSON'
+      }));
+
+      this.content.appendChild(linksEl);
+    }
 
     if (pubInfo) {
       var doi = pubInfo.doi;

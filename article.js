@@ -66,7 +66,7 @@ var Article = function(options) {
       guid: options.id, // external global document id
       creator: options.creator,
       created_at: options.created_at,
-      views: ["content", "figures", "citations", "info"], // is views really needed on the instance level
+      views: Article.views, // is views really needed on the instance level
       title: "",
       abstract: "",
       authors: []
@@ -281,11 +281,18 @@ Article.annotations = {
     }
   },
 
+  "resource_reference": {
+    "parent": "annotation",
+    "properties": {
+      "target": "node"
+    }
+  },
+
   // Dark blueish contributor references in the cover
   // They should work everywhere else too
 
   "contributor_reference": {
-    "parent": "annotation",
+    "parent": "resource_reference",
     "properties": {
       "target": "contributor"
     }
@@ -294,7 +301,7 @@ Article.annotations = {
   // Greenish figure references in the text
 
   "figure_reference": {
-    "parent": "annotation",
+    "parent": "resource_reference",
     "properties": {
       "target": "figure"
     }
@@ -303,14 +310,14 @@ Article.annotations = {
   // Blueish citation references in the text
 
   "citation_reference": {
-    "parent": "annotation",
+    "parent": "resource_reference",
     "properties": {
       "target": "content"
     }
   },
 
   "definition_reference": {
-    "parent": "annotation",
+    "parent": "resource_reference",
     "properties": {
       "target": "content"
     }

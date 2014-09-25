@@ -1,13 +1,13 @@
 /* Publication Info */
 
 .lens-article .content-node.publication-info {
-  font-size: 17px;
+  font-size: 16px;
   color: #333;
 }
 
-.article .resources .nodes > .content-node.publication-info > .content {
-  border-top: 1px solid #ddd;
-}
+/*.article .resources .nodes > .content-node.publication-info > .content {*/
+  /*border-top: 1px solid #ddd;*/
+/*}*/
 
 .lens-article .content-node.publication-info table {
   padding: 10px 0;
@@ -15,62 +15,48 @@
   width: 100%;
 }
 
+.lens-article .content-node.publication-info .meta-data > .container {
+  margin-bottom: 20px;
+}
+
+.lens-article .content-node.publication-info .meta-data {
+  padding-bottom: 30px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
 .lens-article .content-node.publication-info .label {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #666;
-}
-
-.lens-article .content-node.publication-info .label.links {
-  padding-right: 30px;
-}
-
-.lens-article .content-node.publication-info .links {
-  overflow: auto;
-}
-
-.lens-article .content-node.publication-info .links .link {
-  margin-top: 10px;
-  padding: 10px;
   float: left;
-  display: block;
-  margin-right: 10px;
-  background: #fff;
-  border-radius: 5px;
-}
 
-.lens-article .content-node.publication-info table.dates {
-  background: #fff;
-  margin-top: 30px;
-}
-
-.lens-article .content-node.publication-info table.dates .value {
-  font-style: normal;
-
-}
-
-.lens-article .content-node.publication-info table.dates td {  
-  border: none;
-  padding-right: 30px;
-  padding-bottom: 10px;
-  width: 33%;
-}
-
-.lens-article .content-node.publication-info table.categorization td {
-  vertical-align: top;
-  border: none;
-  padding-right: 30px;
-  width: 50%;
+  width: 100px;
+  font-size: 15px;
+  color: #999;
 }
 
 .lens-article .content-node.publication-info .value {
-  font-style: italic;
+  margin-left: 140px;
 }
 
-.lens-article .content-node.publication-info a.value {
-  font-style: normal;
+.lens-article .content-node.publication-info .dates {
+  font-size: 16px;
 }
 
-.lens-article .content-node.publication-info .links {
-  padding-right: 30px;
+.article .resources .nodes > .content-node.publication-info > .content {
+  border: none;
+  padding: 10px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo {
+  font-size: 16px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 {
+  padding-top: 10px;
+}
+
+.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 .content {
+  font-size: 15px;
+  font-weight: normal;
+  font-family: "Source Sans Pro";
+  color: #999;
 }
