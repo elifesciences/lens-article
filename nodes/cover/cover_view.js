@@ -60,6 +60,10 @@ CoverView.Prototype = function() {
       }
     }
 
+    // Title View
+    // --------------
+    // 
+
     // HACK: we need to update to a newer substance version to be able to delegate
     // to sub-views.
     var titleView = new TextView(this.node, {
@@ -67,6 +71,10 @@ CoverView.Prototype = function() {
       classes: 'title'
     });
     this.content.appendChild(titleView.render().el);
+
+    // Render Authors
+    // --------------
+    // 
 
     var authors = $$('.authors', {
       children: _.map(node.getAuthors(), function(authorPara) {
@@ -84,6 +92,28 @@ CoverView.Prototype = function() {
     }));
 
     this.content.appendChild(authors);
+
+    // Render Links
+    // --------------
+    // 
+
+    if (pubInfo && pubInfo.links.length > 0) {
+      var linksEl = $$('.links');
+      _.each(pubInfo.links, function(link) {
+        linksEl.appendChild($$('a.'+link.type, {href: link.url, html: '<i class="icon-external-link-sign"></i> '+ link.name }))
+      });
+
+      // Prepare for download the JSON
+      var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
+      var bb = new Blob([json], {type: "application/json"});
+
+      linksEl.appendChild($$('a.json', {
+        href: window.URL ? window.URL.createObjectURL(bb) : "#",
+        html: '<i class="icon-download-alt"></i> JSON'
+      }));
+
+      this.content.appendChild(linksEl);
+    }
 
     if (pubInfo) {
       var doi = pubInfo.doi;
