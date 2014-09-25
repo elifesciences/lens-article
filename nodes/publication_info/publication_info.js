@@ -23,8 +23,10 @@ PublicationInfo.type = {
     "pdf_link": "string",
     "xml_link": "string",
     "json_link": "string",
+    "links": ["array", "objects"],
     "doi": "string",
-    "related_article": "string"
+    "related_article": "string",
+    "article_info": "paragraph"
   }
 };
 
@@ -84,6 +86,9 @@ PublicationInfo.example = {
 
 
 PublicationInfo.Prototype = function() {
+  this.getArticleInfo = function() {
+    return this.document.get("articleinfo");
+  }
 };
 
 
