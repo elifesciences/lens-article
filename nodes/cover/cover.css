@@ -48,6 +48,16 @@
   overflow: auto;
 }
 
+.lens-article .content-node.cover .content .links {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.lens-article .content-node.cover .content .links a {
+  padding-left: 4px;
+  margin-right: 20px;
+}
+
 /* One para per author */
 .lens-article .content-node.cover .authors .text {
   float: left;
