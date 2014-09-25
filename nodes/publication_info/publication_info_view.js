@@ -28,7 +28,7 @@ PublicationInfoView.Prototype = function() {
 
     // Published date
     // 
-
+    
     if (this.node.published_on) {
       var publishedOn = $$('.published-on.container', {
         children: [
@@ -39,6 +39,21 @@ PublicationInfoView.Prototype = function() {
         ]
       });
       metaData.appendChild(publishedOn);
+    }
+
+    // Article Type
+    // 
+
+    if (this.node.article_type) {
+      var articleTypeEl = $$('.article-type.container', {
+        children: [
+          $$('div.label', {text: "Article Type"}),
+          $$('div.value', {
+            text: this.node.article_type
+          })
+        ]
+      });
+      metaData.appendChild(articleTypeEl);
     }
 
     // Subject
