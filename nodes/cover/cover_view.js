@@ -100,17 +100,19 @@ CoverView.Prototype = function() {
     if (pubInfo && pubInfo.links.length > 0) {
       var linksEl = $$('.links');
       _.each(pubInfo.links, function(link) {
-        linksEl.appendChild($$('a.'+link.type, {href: link.url, html: '<i class="icon-external-link-sign"></i> '+ link.name }))
-      });
+        if (link.type === "json" && link.url === "") {
+          // Make downloadable JSON
+          var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
+          var bb = new Blob([json], {type: "application/json"});
 
-      // Prepare for download the JSON
-      var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
-      var bb = new Blob([json], {type: "application/json"});
-
-      linksEl.appendChild($$('a.json', {
-        href: window.URL ? window.URL.createObjectURL(bb) : "#",
-        html: '<i class="icon-download-alt"></i> JSON'
-      }));
+          linksEl.appendChild($$('a.json', {
+            href: window.URL ? window.URL.createObjectURL(bb) : "#",
+            html: '<i class="icon-download-alt"></i> JSON'
+          }));
+        } else {
+          linksEl.appendChild($$('a.'+link.type, {href: link.url, html: '<i class="icon-external-link-sign"></i> '+ link.name }));
+        }
+      }, this);
 
       this.content.appendChild(linksEl);
     }

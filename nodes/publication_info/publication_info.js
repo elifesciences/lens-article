@@ -20,13 +20,9 @@ PublicationInfo.type = {
     "keywords": ["array", "string"],
     "research_organisms": ["array", "string"],
     "subjects": ["array", "string"],
-    "pdf_link": "string",
-    "xml_link": "string",
-    "fulltext_link": "string",
-    "json_link": "string",
     "links": ["array", "objects"],
     "doi": "string",
-    "supplements": ["array", "object"],
+    "supplements": ["array", "object"], // deprecated
     "related_article": "string",
     "article_info": "paragraph"
   }
@@ -48,11 +44,6 @@ PublicationInfo.description = {
     "keywords": "Article's keywords",
     "research_organisms": "Research Organisms",
     "subjects": "Article Subjects",
-    "pdf_link": "A link referencing the PDF version for print",
-    "xml_link": "A link referencing the original NLM XML file",
-    "fulltext_link": "A link referencing the original HTML verison of the article",
-    "json_link": "A link pointing to the JSON version of the article",
-    "supplements": "A list of links to supplemental material",
     "doi": "Article DOI",
     "related_article": "DOI of related article if there is any"
   }
@@ -82,9 +73,6 @@ PublicationInfo.example = {
     "Immunology",
     "Microbiology and infectious disease"
   ],
-  "pdf_link": "http://elife.elifesciences.org/content/1/e00003.full-text.pdf",
-  "xml_link": "https://s3.amazonaws.com/elife-cdn/elife-articles/00003/elife00003.xml",
-  "json_link": "http://cdn.elifesciences.org/documents/elife/00003.json",
   "doi": "http://dx.doi.org/10.7554/eLife.00003"
 };
 
