@@ -2,10 +2,8 @@
 
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
-
 var articleUtil = require("../../article_util");
 var _ = require("underscore");
-
 
 // Lens.PublicationInfo.View
 // ==========================================================================
@@ -140,6 +138,7 @@ PublicationInfoView.Prototype = function() {
       // Last frag
       datesEl.appendChild($$('span', {html: " and "+_.last(dateFragments)+"."}));
     }
+
     metaData.appendChild(datesEl);
 
     this.content.appendChild(metaData);
@@ -147,8 +146,6 @@ PublicationInfoView.Prototype = function() {
 
     // Display article information
     // ----------------
-
-    // this.content.appendChild
 
     var articleInfo = this.node.getArticleInfo();
 
