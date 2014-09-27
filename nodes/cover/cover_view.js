@@ -107,10 +107,16 @@ CoverView.Prototype = function() {
 
           linksEl.appendChild($$('a.json', {
             href: window.URL ? window.URL.createObjectURL(bb) : "#",
-            html: '<i class="icon-download-alt"></i> JSON'
+            html: '<i class="icon-external-link-sign"></i> '+link.name,
+            target: '_blank'
           }));
+
         } else {
-          linksEl.appendChild($$('a.'+link.type, {href: link.url, html: '<i class="icon-external-link-sign"></i> '+ link.name }));
+          linksEl.appendChild($$('a.'+link.type, {
+            href: link.url,
+            html: '<i class="icon-external-link-sign"></i> '+ link.name,
+            target: '_blank'
+          }));
         }
       }, this);
 
