@@ -212,6 +212,8 @@ Article.views = ["content", "figures", "citations", "definitions", "info"];
 
 Article.nodeTypes = require("./nodes");
 
+// Article.util = require("./article_util");
+
 
 // Define annotation types
 // --------

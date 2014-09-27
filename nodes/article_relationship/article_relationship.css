@@ -1,0 +1,78 @@
+
+.article .resources .nodes > .content-node.article-relationship > .content {
+  border: none;
+  padding: 10px;
+}
+
+.article-relationship .relationship-teaser {
+  color: #999;
+  font-size: 14px;
+  background: #eee;
+  height: 15px;
+  /*font-family: 'Avenir LT W01 85 Heavy', 'Montserrat', 'Source Sans Pro';*/
+  margin-bottom: 10px;
+}
+
+.article-relationship .relationship-teaser .type {
+  color: #273b81;
+  background: white;
+  display: inline-block;
+  margin-left: 40px;
+  line-height: 15px;
+  float: left;
+  padding-left: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.article-relationship .relationship-teaser .insight {
+  color: #629f43;
+}
+
+.article-relationship .relationship-teaser .editorial {
+  color: #0961ab;
+}
+
+.article-relationship .relationship-teaser .feature {
+  color: #cf0c4e;
+}
+
+.article-relationship .relationship-teaser .published-on {
+  background: white;
+  display: inline-block;
+  line-height: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+  float: left;
+}
+
+
+.article-relationship .authors {
+  font-size: 16px;
+  color: #4A4A4A;
+  font-weight: 600;
+}
+
+.article-relationship .article-title {
+  color: #999;
+  font-size: 18px;
+  font-family: 'Avenir LT W01 85 Heavy', 'Montserrat', 'Source Sans Pro';
+  padding: 10px 0;
+}
+
+.article-relationship .statement {
+  margin-left: 20px;
+  border-left: 2px solid #ccc;
+  padding-left: 20px;
+}
+
+.article-relationship .statement .text {
+  font-size: 16px;
+  font-style: italic;
+  color: #9B9B9B;
+}
+
+.article-relationship .statement .creator {
+  font-size: 16px;
+  font-weight: 600;
+}

@@ -2,6 +2,7 @@
 
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
+var articleUtil = require("../../article_util");
 
 // Lens.ArticleRelationship.View
 // ==========================================================================
@@ -21,30 +22,44 @@ ArticleRelationshipView.Prototype = function() {
     // Event teaser
     // -------
 
-    var headerEl = $$('.resource-header', {
-      text: ArticleRelationshipView.labels[this.node.relationship_type] || "Related Article"
+    var relationshipType = ArticleRelationshipView.labels[this.node.relationship_type] || "Related Article";
+    var publishDate = " on "+articleUtil.formatDate(this.node.source.published_on);
+
+    var teaserEl = $$('.relationship-teaser.container', {
+      children: [
+        $$('span.type.'+this.node.relationship_type, {text: relationshipType}),
+        $$('span.published-on', {text: publishDate}),
+      ]
     });
-    this.content.appendChild(headerEl);
+
+    this.content.appendChild(teaserEl);
 
     // Authors
     // -------
 
-    this.content.appendChild($$('.authors', { text: this.node.source.authors.join(',') }));
+    this.content.appendChild($$('.authors', { text: this.node.source.authors.join(',') + " cited this article in" }));
 
     // Article title
     // -------
 
-    this.content.appendChild($$('.article-title', { text: this.node.source.title }));
+    this.content.appendChild($$('.article-title', { 
+      children: [
+        $$('a', {
+          href: "#",
+          html: [this.node.source.title, '<i class="icon-external-link-sign"></i>'].join(' ')
+        })
+      ]
+    }));
 
-    // Relationship description
+
+    // Relationship statment
     // -------
 
-    this.content.appendChild($$('.description', { text: this.node.description }));
+    this.content.appendChild($$('.statement', {children: [
+      $$('.text', { text: this.node.description }),
+      $$('.creator', { text: this.node.creator })
+    ]}));
 
-    // Relationship creator
-    // -------
-
-    this.content.appendChild($$('.creator', { text: this.node.creator }));
 
     return this;
   };
