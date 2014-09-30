@@ -127,7 +127,7 @@ PublicationInfoView.Prototype = function() {
     var datesEl = $$('.dates');
 
     // Intro
-    datesEl.appendChild($$('span', {text: "The manuscript was "}));
+    datesEl.appendChild($$('span', {text: "The article was "}));
 
     if (dateFragments.length === 1) {
       datesEl.appendChild($$('span', {html: " "+dateFragments[0]+"."}));

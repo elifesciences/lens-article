@@ -189,6 +189,17 @@ Article.Prototype = function() {
     var node = nodes[nodeId];
     return node;
   };
+
+  // Get all headings of the content view
+  // --------
+
+  this.getHeadings = function() {
+    var headings = _.filter(this.get('content').getNodes(), function(node) {
+      return node.type === "heading";
+    });
+    return headings;
+  }
+
 };
 
 // Factory method
