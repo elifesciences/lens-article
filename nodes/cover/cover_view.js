@@ -18,7 +18,6 @@ var CoverView = function(node, viewFactory) {
   this.$el.addClass("content-node cover");
 };
 
-
 CoverView.Prototype = function() {
 
   // Render it
@@ -34,6 +33,21 @@ CoverView.Prototype = function() {
   this.render = function() {
     NodeView.prototype.render.call(this);
     var node = this.node;
+
+    // Intro + Send feedback
+    // --------------
+    // 
+
+    var introEl = $$('.intro.container', {
+      children: [
+        $$('.intro-text', {
+          html: '<i class="icon-info">&nbsp;&nbsp;<a href="http://lens.elifesciences.org">Lens</a> provides a novel way of looking at research on the web.'
+        }),
+        $$('a.send-feedback', {href: "mailto:lens-feedback@highwire.org?subject=Lens%20Feedback", text: "Send feedback"})
+      ]
+    });
+
+    this.content.appendChild(introEl);
 
     if (node.breadcrumbs && node.breadcrumbs.length > 0) {
       var breadcrumbs = $$('.breadcrumbs', {

@@ -72,3 +72,22 @@
   color: #777;
   padding-left: 1px;
 }
+
+
+.lens-article .intro {
+  font-size: 13px;
+  background: #FFFEF5;
+  border: 1px solid#D8D9C1;
+  color: rgba(0,0,0,0.6);
+  height: 30px;
+  padding: 0 10px;
+  line-height: 30px;
+}
+
+.lens-article .intro .intro-text {
+  float: left;
+}
+
+.lens-article .intro .send-feedback {
+  float: right;
+}
