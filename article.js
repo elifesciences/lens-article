@@ -360,7 +360,13 @@ Article.annotations = {
     "properties": {
       "url": "string"
     }
-  }
+  },
+
+  "label": {
+    "parent": "annotation",
+    "properties": {
+    }
+  },
 
 };
 

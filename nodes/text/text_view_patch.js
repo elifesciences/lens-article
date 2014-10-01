@@ -18,6 +18,7 @@ var _levels = {
   underline: 2,
   author_callout: 3,
   inline_image: 3,
+  label: 3,
 };
 
 var createAnnotationElement = function(entry) {
