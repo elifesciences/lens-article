@@ -19,5 +19,7 @@ module.exports = {
   "formula": require('./formula'),
   "list": require("./list"),
   "codeblock": require("./codeblock"),
+  "scientific_data": require("./scientific_data"),
+  "raptor": require("./raptor"),
   "affiliation": require("./_affiliation")
 };
