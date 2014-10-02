@@ -38,16 +38,16 @@ CoverView.Prototype = function() {
 
     // Intro + Send feedback for HighWire
     // --------------
-    // 
+    //
     // TODO: this should be refactored and live in some configuration object
 
     if (pubInfo.provider === "HighWire") {
       var introEl = $$('.intro.container', {
         children: [
           $$('.intro-text', {
-            html: '<i class="icon-info"></i>&nbsp;&nbsp;<a href="http://lens.elifesciences.org">Lens</a> provides a novel way of looking at research on the web.'
+            html: '<i class="icon-info"></i>&nbsp;&nbsp;Lens provides a novel way of looking at research on the web.'
           }),
-          $$('a.send-feedback', {href: "mailto:lens-feedback@highwire.org?subject=Lens%20Feedback", text: "Send feedback"})
+          $$('a.send-feedback', {href: "http://home.highwire.org/feedback/lens-feedback", text: "Send feedback", target: "_blank" })
         ]
       });
 
@@ -69,7 +69,7 @@ CoverView.Prototype = function() {
       this.content.appendChild(breadcrumbs);
     }
 
-    
+
     if (pubInfo) {
       var pubDate = pubInfo.published_on;
       if (pubDate) {
@@ -81,7 +81,7 @@ CoverView.Prototype = function() {
 
     // Title View
     // --------------
-    // 
+    //
 
     // HACK: we need to update to a newer substance version to be able to delegate
     // to sub-views.
@@ -93,7 +93,7 @@ CoverView.Prototype = function() {
 
     // Render Authors
     // --------------
-    // 
+    //
 
     var authors = $$('.authors', {
       children: _.map(node.getAuthors(), function(authorPara) {
@@ -114,7 +114,7 @@ CoverView.Prototype = function() {
 
     // Render Links
     // --------------
-    // 
+    //
 
     if (pubInfo && pubInfo.links.length > 0) {
       var linksEl = $$('.links');
