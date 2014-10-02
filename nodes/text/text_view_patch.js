@@ -19,6 +19,7 @@ var _levels = {
   author_callout: 3,
   inline_image: 3,
   label: 3,
+  custom: 3
 };
 
 var createAnnotationElement = function(entry) {
@@ -38,6 +39,10 @@ var createAnnotationElement = function(entry) {
       id: entry.id,
       src: this.node.document.get(entry.id).url
     } );
+  } else if (entry.type === "custom") {
+    el = $$('span.annotation.'+this.node.document.get(entry.id).name, {
+      id: entry.id
+    });
   } else {
     el = $$('span.annotation.'+entry.type, {
       id: entry.id

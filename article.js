@@ -198,7 +198,7 @@ Article.Prototype = function() {
       return node.type === "heading";
     });
     return headings;
-  }
+  };
 
 };
 
@@ -367,6 +367,13 @@ Article.annotations = {
     "properties": {
     }
   },
+
+  "custom": {
+    "parent": "annotation",
+    "properties": {
+      "name": "string"
+    }
+  }
 
 };
 
