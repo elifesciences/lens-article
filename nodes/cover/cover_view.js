@@ -32,22 +32,27 @@ CoverView.Prototype = function() {
 
   this.render = function() {
     NodeView.prototype.render.call(this);
-    var node = this.node;
 
-    // Intro + Send feedback
+    var node = this.node;
+    var pubInfo = this.node.document.get('publication_info');
+
+    // Intro + Send feedback for HighWire
     // --------------
     // 
+    // TODO: this should be refactored and live in some configuration object
 
-    var introEl = $$('.intro.container', {
-      children: [
-        $$('.intro-text', {
-          html: '<i class="icon-info">&nbsp;&nbsp;<a href="http://lens.elifesciences.org">Lens</a> provides a novel way of looking at research on the web.'
-        }),
-        $$('a.send-feedback', {href: "mailto:lens-feedback@highwire.org?subject=Lens%20Feedback", text: "Send feedback"})
-      ]
-    });
+    if (pubInfo.provider === "HighWire") {
+      var introEl = $$('.intro.container', {
+        children: [
+          $$('.intro-text', {
+            html: '<i class="icon-info"></i>&nbsp;&nbsp;<a href="http://lens.elifesciences.org">Lens</a> provides a novel way of looking at research on the web.'
+          }),
+          $$('a.send-feedback', {href: "mailto:lens-feedback@highwire.org?subject=Lens%20Feedback", text: "Send feedback"})
+        ]
+      });
 
-    this.content.appendChild(introEl);
+      this.content.appendChild(introEl);
+    }
 
     if (node.breadcrumbs && node.breadcrumbs.length > 0) {
       var breadcrumbs = $$('.breadcrumbs', {
@@ -64,7 +69,7 @@ CoverView.Prototype = function() {
       this.content.appendChild(breadcrumbs);
     }
 
-    var pubInfo = this.node.document.get('publication_info');
+    
     if (pubInfo) {
       var pubDate = pubInfo.published_on;
       if (pubDate) {

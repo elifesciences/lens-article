@@ -16,6 +16,7 @@ PublicationInfo.type = {
     "accepted_on": "string",
     "published_on": "string",
     "journal": "string",
+    "provider": "string",
     "article_type": "string",
     "keywords": ["array", "string"],
     "research_organisms": ["array", "string"],
@@ -40,6 +41,7 @@ PublicationInfo.description = {
     "accepted_on": "Paper accepted on",
     "published_on": "Paper published on",
     "journal": "The Journal",
+    "provider": "Who is hosting this article",
     "article_type": "Research Article vs. Insight, vs. Correction etc.",
     "keywords": "Article's keywords",
     "research_organisms": "Research Organisms",
@@ -56,6 +58,7 @@ PublicationInfo.example = {
   "accepted_on": "2012-09-05",
   "published_on": "2012-11-13",
   "journal": "eLife",
+  "provider": "eLife",
   "article_type": "Research Article",
   "keywords": [
     "innate immunity",
