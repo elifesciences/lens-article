@@ -21,5 +21,6 @@ module.exports = {
   "codeblock": require("./codeblock"),
   "scientific_data": require("./scientific_data"),
   "raptor": require("./raptor"),
-  "affiliation": require("./_affiliation")
+  "affiliation": require("./_affiliation"),
+  "footnote": require("./footnote"),
 };

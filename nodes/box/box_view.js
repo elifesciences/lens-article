@@ -26,12 +26,18 @@ BoxView.Prototype = function() {
   this.render = function() {
     NodeView.prototype.render.call(this);
 
+    if (this.node.label) {
+      var labelEl = $$('.label', {
+        text: this.node.label
+      });
+      this.content.appendChild(labelEl);
+    }
+
     // Create children views
     // --------
-    // 
+    //
 
     var children = this.node.children;
-
     _.each(children, function(nodeId) {
       var child = this.node.document.get(nodeId);
       var childView = this.viewFactory.createView(child);

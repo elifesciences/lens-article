@@ -5,7 +5,6 @@ var $$ = require("substance-application").$$;
 var articleUtil = require("../../article_util");
 var _ = require("underscore");
 
-
 // Lens.PublicationInfo.View
 // ==========================================================================
 
@@ -26,19 +25,20 @@ PublicationInfoView.Prototype = function() {
 
     var metaData = $$('.meta-data');
 
-    // Published date
+
+    // Article Type
     // 
 
-    if (this.node.published_on) {
-      var publishedOn = $$('.published-on.container', {
+    if (this.node.article_type) {
+      var articleTypeEl = $$('.article-type.container', {
         children: [
-          $$('div.label', {text: "Published"}),
+          $$('div.label', {text: "Article Type"}),
           $$('div.value', {
-            html: articleUtil.formatDate(this.node.published_on)
+            text: this.node.article_type
           })
         ]
       });
-      metaData.appendChild(publishedOn);
+      metaData.appendChild(articleTypeEl);
     }
 
     // Subject
@@ -54,6 +54,21 @@ PublicationInfoView.Prototype = function() {
         ]
       });
       metaData.appendChild(subjectEl);
+    }
+
+    // Organisms
+    // 
+
+    if (this.node.research_organisms && this.node.research_organisms.length > 0) {
+      var organismsEl = $$('.subject.container', {
+        children: [
+          $$('div.label', {text: "Organism"}),
+          $$('div.value', {
+            text: this.node.research_organisms.join(', ')
+          })
+        ]
+      });
+      metaData.appendChild(organismsEl);
     }
 
     // Keywords
@@ -86,6 +101,21 @@ PublicationInfoView.Prototype = function() {
       metaData.appendChild(doiEl);
     }
 
+    // Related Article
+    // 
+
+    if (this.node.related_article) {
+      var relatedArticleEl = $$('.related-article.container', {
+        children: [
+          $$('div.label', {text: "Related Article"}),
+          $$('div.value', {
+            children: [$$('a', {href: this.node.related_article, text: this.node.related_article})]
+          })
+        ]
+      });
+      metaData.appendChild(relatedArticleEl);
+    }
+
     // Dates
     //
 
@@ -97,7 +127,7 @@ PublicationInfoView.Prototype = function() {
     var datesEl = $$('.dates');
 
     // Intro
-    datesEl.appendChild($$('span', {text: "The manuscript was "}));
+    datesEl.appendChild($$('span', {text: "The article was "}));
 
     if (dateFragments.length === 1) {
       datesEl.appendChild($$('span', {html: " "+dateFragments[0]+"."}));
@@ -108,6 +138,7 @@ PublicationInfoView.Prototype = function() {
       // Last frag
       datesEl.appendChild($$('span', {html: " and "+_.last(dateFragments)+"."}));
     }
+
     metaData.appendChild(datesEl);
 
     this.content.appendChild(metaData);
@@ -116,108 +147,11 @@ PublicationInfoView.Prototype = function() {
     // Display article information
     // ----------------
 
-    // this.content.appendChild
-
     var articleInfo = this.node.getArticleInfo();
 
     var articleInfoView = this.viewFactory.createView(articleInfo);
     var articleInfoViewEl = articleInfoView.render().el;
-    // articleInfoView.classList.add('caption-title');
     this.content.appendChild(articleInfoViewEl);
-
-    // metaData.appendChild($$('.bla', {text: ));
-
-    // var tableRows = [
-    //   $$('tr', {
-    //     children: [
-    //       $$('td', {
-    //         colspan: 2,
-    //         children: [
-    //           $$('div.label', {text: "Article Type"}),
-    //           $$('div', {text: this.node.article_type})
-    //         ]
-    //       })
-    //     ]
-    //   }),
-    //   $$('tr', {
-    //     children: [
-    //       $$('td', {
-    //         children: [
-    //           $$('div.label', {text: "Subject"}),
-    //           $$('div.value', {text: this.node.subjects.join(', ')})
-    //         ]
-    //       }),
-    //       $$('td', {
-    //         children: [
-    //           $$('div.label', {text: "Organism"}),
-    //           $$('div.value', {text: this.node.research_organisms.join(', ')})
-    //         ]
-    //       })
-    //     ]
-    //   }),
-    //   $$('tr', {
-    //     children: [
-    //       $$('td', {
-    //         colspan: 2,
-    //         children: [
-    //           $$('div.label', {text: "Keywords"}),
-    //           $$('div.value', {text: this.node.keywords.join(', ')})
-    //         ]
-    //       })
-    //     ]
-    //   })
-    // ];
-
-
-    // Display related article if there is any
-    // ----------------
-
-    // if (this.node.related_article) {
-    //   tableRows.push($$('tr', {
-    //     children: [
-    //       $$('td', {
-    //         colspan: 2,
-    //         children: [
-    //           $$('div.label', {text: "Related Article"}),
-    //           $$('a.value', {href: this.node.related_article, text: this.node.related_article})
-    //         ]
-    //       })
-    //     ]
-    //   }));
-    // }
-
-    // var catTbl = $$('table.categorization', {
-    //   children: [ $$('tbody', { children: tableRows }) ]
-    // });
-
-    // this.content.appendChild(catTbl);
-      
-    // Prepare for download the JSON
-    // var json = JSON.stringify(this.node.document.toJSON(), null, '  ');
-    // var bb = new Blob([json], {type: "application/json"});
-
-    // var links = $$('.links', {
-    //   children: [
-    //     $$('a.link pdf-link', {
-    //       href: this.node.pdf_link,
-    //       html: '<i class="icon-download-alt"></i> PDF'
-    //     }),
-    //     $$('a.link.json-link', {
-    //       href: window.URL ? window.URL.createObjectURL(bb) : "#",
-    //       html: '<i class="icon-download-alt"></i> JSON'
-    //     }),
-    //     $$('a.link.xml-link', {
-    //       href: this.node.xml_link,
-    //       html: '<i class="icon-download-alt"></i> XML'
-    //     }),
-    //     $$('a.link.doi-link', {
-    //       href: this.node.doi,
-    //       html: '<i class="icon-external-link-sign"></i> DOI'
-    //     })
-    //   ]
-    // });
-
-    // this.content.appendChild(links);
 
     return this;
   };
