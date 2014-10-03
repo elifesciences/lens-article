@@ -21,19 +21,19 @@ FigureView.Prototype = function() {
     this.el.innerHTML = "";
     this.content = $$('div.content');
 
-    // Add graphic (img element)
-    var imgEl = $$('.image-wrapper', {
-      children: [
-        $$("a", {
-          href: this.node.url,
-          target: "_blank",
-          children: [$$("img", {src: this.node.url})]
-        })
-      ]
-    });
-
-    this.content.appendChild(imgEl);
-
+    if (this.node.url) {
+      // Add graphic (img element)
+      var imgEl = $$('.image-wrapper', {
+        children: [
+          $$("a", {
+            href: this.node.url,
+            target: "_blank",
+            children: [$$("img", {src: this.node.url})]
+          })
+        ]
+      });
+      this.content.appendChild(imgEl);      
+    }
 
     var caption = this.node.getCaption();
     if (caption) {
