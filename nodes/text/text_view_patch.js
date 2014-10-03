@@ -16,7 +16,10 @@ var _levels = {
   subscript: 2,
   superscript: 2,
   underline: 2,
-  author_callout: 3
+  author_callout: 3,
+  inline_image: 3,
+  label: 3,
+  custom: 3
 };
 
 var createAnnotationElement = function(entry) {
@@ -29,6 +32,15 @@ var createAnnotationElement = function(entry) {
   } else if (entry.type === "author_callout") {
     var callout = this.node.document.get(entry.id);
     el = $$('span.annotation.'+callout.style, {
+      id: entry.id
+    });
+  } else if (entry.type === "inline_image") {
+    el = $$('img.annotation.'+entry.type, {
+      id: entry.id,
+      src: this.node.document.get(entry.id).url
+    } );
+  } else if (entry.type === "custom") {
+    el = $$('span.annotation.'+this.node.document.get(entry.id).name, {
       id: entry.id
     });
   } else {

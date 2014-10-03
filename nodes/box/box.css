@@ -1,5 +1,5 @@
 /*
-Box 
+Box
 --------------------------------------- */
 
 .content-node.box > .content {
@@ -30,4 +30,9 @@ Box
 
 .surface.content .content-node.box .content {
   background: #fbfbfb;
+}
+
+.surface.content .content-node.box > .content > .label  {
+  font-weight: 600;
+  padding-bottom: 20px;
 }

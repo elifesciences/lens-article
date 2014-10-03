@@ -20,5 +20,6 @@ module.exports = {
   "list": require("./list"),
   "codeblock": require("./codeblock"),
   "affiliation": require("./_affiliation"),
-  "article_relationship": require("./article_relationship")
+  "article_relationship": require("./article_relationship"),
+  "footnote": require("./footnote")
 };
