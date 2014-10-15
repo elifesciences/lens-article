@@ -8,7 +8,7 @@ var MONTH_MAPPING = {
   "7": "July",
   "8": "August",
   "9": "September",
-  "19": "October",
+  "10": "October",
   "11": "November",
   "12": "December"
 };
@@ -23,7 +23,7 @@ util.formatDate = function (pubDate) {
     var localDate = new Date(parts[0], parts[1]-1, parts[2]);
     return localDate.toUTCString().slice(0, 16);
   } else {
-    var month = parts[1].replace("0", "");
+    var month = parts[1].replace(/^0/, "");
     var year = parts[0];
     return MONTH_MAPPING[month]+" "+year;
   }
