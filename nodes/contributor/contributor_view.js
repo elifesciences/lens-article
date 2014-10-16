@@ -9,8 +9,8 @@ var $$ = require("substance-application").$$;
 // Lens.Contributor.View
 // ==========================================================================
 
-var ContributorView = function(node) {
-  NodeView.call(this, node);
+var ContributorView = function(node, viewFactory) {
+  NodeView.call(this, node, viewFactory);
 
   this.$el.attr({id: node.id});
   this.$el.addClass("content-node contributor");
@@ -29,6 +29,9 @@ ContributorView.Prototype = function() {
     // -------
 
     this.content.appendChild($$('.contributor-name', {text: this.node.name}));
+
+
+
 
     // Add Affiliations
     // -------
@@ -131,6 +134,26 @@ ContributorView.Prototype = function() {
         children: _.map(this.node.members, function(member) {
           return $$('.member', {text: member});
         })
+      }));
+    }
+
+
+    // Contributor Bio
+    // -------
+
+    if (this.node.image || this.node.bio.length > 0) {
+      var bio = $$('.bio');
+      var childs = [$$('img', {src: this.node.image}), bio];
+
+      _.each(this.node.bio, function(par) {
+        var parNode = this.node.document.get(par);
+        var paragraphView = this.viewFactory.createView(parNode);
+        var paragraphViewEl = paragraphView.render().el;
+        bio.appendChild(paragraphViewEl);
+      }, this);
+
+      this.content.appendChild($$('.contributor-bio.container', {
+        children: childs
       }));
     }
 

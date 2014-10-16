@@ -143,7 +143,6 @@ PublicationInfoView.Prototype = function() {
 
     this.content.appendChild(metaData);
 
-
     // Display article information
     // ----------------
 
