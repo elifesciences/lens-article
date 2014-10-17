@@ -26,6 +26,7 @@ Contributor.type = {
     "image": "string", // optional
     "emails": ["array", "string"],
     "contribution": "string",
+    "bio": ["array", "paragraph"],
     "deceased": "boolean",
     "members": ["array", "string"],
     "orcid": "string",

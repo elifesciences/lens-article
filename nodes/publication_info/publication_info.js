@@ -101,6 +101,10 @@ _.each(PublicationInfo.type.properties, function(prop, key) {
   getters[key] = {
     get: function() {
       return this.properties[key];
+    },
+    set: function(val) {
+      this.properties[key] = val;
+      return this;
     }
   };
 });

@@ -34,31 +34,44 @@ var Renderer = function(view) {
     // Add Source
     // -------
 
-    var source = [];
+
+    var sourceText = "",
+        sourceFrag = "",
+        pagesFrag = "",
+        publisherFrag = "";
 
     // Hack for handling unstructured citation types and render prettier
-    if (node.source && node.volume === ''){
-      source.push(node.source);
-    }
-
-    if (node.source && node.volume) {
-      source.push([node.source, node.volume].join(', ')+": ");
+    if (node.source && node.volume === '') {
+      var sourceFrag = node.source;
+    } else if (node.source && node.volume) {
+      var sourceFrag = [node.source, node.volume].join(', ');
     }
 
     if (node.fpage && node.lpage) {
-      source.push([node.fpage, node.lpage].join('-')+", ");
+      pagesFrag = [node.fpage, node.lpage].join('-');
     }
 
     if (node.publisher_name && node.publisher_location) {
-      source.push([node.publisher_name, node.publisher_location].join(', ')+", ");
+      publisherFrag = [node.publisher_name, node.publisher_location].join(', ');
     }
 
-    if (node.year) {
-      source.push(node.year);
+    sourceText = sourceFrag;
+
+    // Add separator only if there's more to display
+    if (sourceFrag && pagesFrag || publisherFrag) {
+      sourceText += ": ";
+    }
+
+    if (pagesFrag && publisherFrag) {
+      sourceText += [pagesFrag, publisherFrag].join(", ");
+    } else {
+      // One of them without a separator char
+      sourceText += pagesFrag;
+      sourceText += publisherFrag;
     }
 
     frag.appendChild($$('.source', {
-      html: source.join('')
+      html: sourceText
     }));
 
     if (node.comment) {
