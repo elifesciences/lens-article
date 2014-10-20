@@ -24,3 +24,23 @@ Citations
 .lens-article .content-node.citation .content .citation-urls .url {
   padding-right: 20px;
 }
+
+
+/*
+Key Reference Styles (dynamically injected, not part of the citation model)
+--------------------------------------- */
+
+.lens-article .content-node.citation .content .key-reference {
+  border-top: #eee 4px solid;
+  padding-top: 20px;
+}
+
+.lens-article .content-node.citation .content .key-reference .creator {
+  color: #6EAA2C;
+  font-size: 16px;
+}
+
+.lens-article .content-node.citation .content .key-reference .description {
+  font-size: 16px;
+  color: #666;
+}
