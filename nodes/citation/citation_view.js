@@ -51,10 +51,22 @@ var Renderer = function(view) {
       pagesFrag = [node.fpage, node.lpage].join('-');
     }
 
+    // Publisher Frag
+
+    var elems = [];
+
     if (node.publisher_name && node.publisher_location) {
-      publisherFrag = [node.publisher_name, node.publisher_location].join(', ');
+      elems.push(node.publisher_name);
+      elems.push(node.publisher_location);
     }
 
+    if (node.year) {
+      elems.push(node.year);
+    }
+
+    publisherFrag = elems.join(', ');
+
+    // Put them together
     sourceText = sourceFrag;
 
     // Add separator only if there's more to display
