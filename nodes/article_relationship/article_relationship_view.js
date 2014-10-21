@@ -1,5 +1,6 @@
 "use strict";
 
+var _ = require("underscore");
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
 var articleUtil = require("../../article_util");
@@ -37,7 +38,7 @@ ArticleRelationshipView.Prototype = function() {
     // Authors
     // -------
 
-    this.content.appendChild($$('.authors', { text: this.node.source.authors.join(',') + " cited this article in" }));
+    this.content.appendChild($$('.authors', { text: this.node.source.authors.join(', ') + " cited this article in" }));
 
     // Article title
     // -------
@@ -45,21 +46,20 @@ ArticleRelationshipView.Prototype = function() {
     this.content.appendChild($$('.article-title', { 
       children: [
         $$('a', {
-          href: "#",
+          target: '_blank',
+          href: this.node.source.url,
           html: [this.node.source.title, '<i class="icon-external-link-sign"></i>'].join(' ')
         })
       ]
     }));
-
 
     // Relationship statment
     // -------
 
     this.content.appendChild($$('.statement', {children: [
       $$('.text', { text: this.node.description }),
-      $$('.creator', { text: this.node.creator })
+      $$('.creator', { text: _.pluck(this.node.creators, 'name') })
     ]}));
-
 
     return this;
   };
@@ -71,8 +71,8 @@ ArticleRelationshipView.prototype = new ArticleRelationshipView.Prototype();
 ArticleRelationshipView.labels = {
   'advance': 'Advance',
   'insight': 'Insight',
-  'co-published': 'Co-Published',
-  'key-reference': 'Key Reference'
+  'co_publication': 'Co-Published',
+  'key_reference': 'Key Reference'
 };
 
 module.exports = ArticleRelationshipView;
