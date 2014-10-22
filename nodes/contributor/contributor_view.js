@@ -141,7 +141,7 @@ ContributorView.Prototype = function() {
     // Contributor Bio
     // -------
 
-    if (this.node.image || this.node.bio.length > 0) {
+    if (this.node.image || (this.node.bio && this.node.bio.length > 0) ) {
       var bio = $$('.bio');
       var childs = [$$('img', {src: this.node.image}), bio];
 
