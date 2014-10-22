@@ -16,11 +16,12 @@ ArticleRelationship.type = {
   "id": "article_relationship",
   "parent": "content",
   "properties": {
-    "source": "object",
-    "target": "object",
+    "meta": "object",
+    "related_article": "object",
     "relationship_type": "string",
     "description": "string",
-    "creator": ["array","string"]
+    "creator": ["array","string"],
+    "created_at": "date"
   }
 };
 

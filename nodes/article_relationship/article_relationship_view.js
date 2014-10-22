@@ -24,7 +24,7 @@ ArticleRelationshipView.Prototype = function() {
     // -------
 
     var relationshipType = ArticleRelationshipView.labels[this.node.relationship_type] || "Related Article";
-    var publishDate = " on "+articleUtil.formatDate(this.node.source.published_on);
+    var publishDate = " on "+articleUtil.formatDate(this.node.related_article.published_on);
 
     var teaserEl = $$('.relationship-teaser.container', {
       children: [
@@ -38,7 +38,7 @@ ArticleRelationshipView.Prototype = function() {
     // Authors
     // -------
 
-    this.content.appendChild($$('.authors', { text: this.node.source.authors.join(', ') + " cited this article in" }));
+    this.content.appendChild($$('.authors', { text: this.node.related_article.authors.join(', ') + " cited this article in" }));
 
     // Article title
     // -------
@@ -47,8 +47,8 @@ ArticleRelationshipView.Prototype = function() {
       children: [
         $$('a', {
           target: '_blank',
-          href: this.node.source.url,
-          html: [this.node.source.title, '<i class="icon-external-link-sign"></i>'].join(' ')
+          href: this.node.related_article.url,
+          html: [this.node.related_article.title, '<i class="icon-external-link-sign"></i>'].join(' ')
         })
       ]
     }));
@@ -71,8 +71,7 @@ ArticleRelationshipView.prototype = new ArticleRelationshipView.Prototype();
 ArticleRelationshipView.labels = {
   'advance': 'Advance',
   'insight': 'Insight',
-  'co_publication': 'Co-Published',
-  'key_reference': 'Key Reference'
+  'co-published': 'Co-Published'
 };
 
 module.exports = ArticleRelationshipView;
