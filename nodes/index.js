@@ -21,4 +21,5 @@ module.exports = {
   "codeblock": require("./codeblock"),
   "affiliation": require("./_affiliation"),
   "footnote": require("./footnote"),
+  "math_environment": require("./math_environment")
 };
