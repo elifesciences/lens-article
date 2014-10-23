@@ -7,13 +7,13 @@ var PublicationInfo = function(node, doc) {
   Node.call(this, node, doc);
 };
 
-
 PublicationInfo.type = {
   "id": "publication_info",
   "parent": "content",
   "properties": {
     "received_on": "string",
     "accepted_on": "string",
+    "revised_on": "string",
     "published_on": "string",
     "journal": "string",
     "provider": "string",
@@ -23,12 +23,10 @@ PublicationInfo.type = {
     "subjects": ["array", "string"],
     "links": ["array", "objects"],
     "doi": "string",
-    "supplements": ["array", "object"], // deprecated
     "related_article": "string",
     "article_info": "paragraph"
   }
 };
-
 
 PublicationInfo.description = {
   "name": "PublicationInfo",
@@ -79,18 +77,15 @@ PublicationInfo.example = {
   "doi": "http://dx.doi.org/10.7554/eLife.00003"
 };
 
-
 PublicationInfo.Prototype = function() {
   this.getArticleInfo = function() {
     return this.document.get("articleinfo");
   }
 };
 
-
 PublicationInfo.Prototype.prototype = Node.prototype;
 PublicationInfo.prototype = new PublicationInfo.Prototype();
 PublicationInfo.prototype.constructor = PublicationInfo;
-
 
 // Generate getters
 // --------

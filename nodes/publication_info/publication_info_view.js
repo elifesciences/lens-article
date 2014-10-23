@@ -122,6 +122,7 @@ PublicationInfoView.Prototype = function() {
     var dateFragments = [];
     if (this.node.received_on) dateFragments.push("received on <b>"+articleUtil.formatDate(this.node.received_on)+"</b>");
     if (this.node.accepted_on) dateFragments.push("accepted on <b>"+articleUtil.formatDate(this.node.accepted_on)+"</b>");
+    if (this.node.revised_on) dateFragments.push("revised on <b>"+articleUtil.formatDate(this.node.revised_on)+"</b>");
     if (this.node.published_on) dateFragments.push("published on <b>"+articleUtil.formatDate(this.node.published_on)+"</b>");
 
     var datesEl = $$('.dates');
