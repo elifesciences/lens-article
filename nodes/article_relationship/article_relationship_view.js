@@ -23,7 +23,7 @@ ArticleRelationshipView.Prototype = function() {
     // Event teaser
     // -------
 
-    var relationshipType = ArticleRelationshipView.labels[this.node.relationship_type] || "Related Article";
+    var relationshipType = this.node.relationship_type_name || "Related Article";
     var publishDate = " on "+articleUtil.formatDate(this.node.related_article.published_on);
 
     var teaserEl = $$('.relationship-teaser.container', {
@@ -57,8 +57,9 @@ ArticleRelationshipView.Prototype = function() {
     // -------
 
     this.content.appendChild($$('.statement', {children: [
-      $$('.text', { text: this.node.description }),
-      $$('.creator', { text: _.pluck(this.node.creators, 'name') })
+      $$('.text', { html: this.node.description }),
+      $$('.creator', {text: this.node.creator})
+      // $$('.creator', { html: ["<b>"+this.node.creator+"</b>", new Date(this.node.created_at).toDateString()].join(' on ') })
     ]}));
 
     return this;
@@ -68,10 +69,10 @@ ArticleRelationshipView.Prototype = function() {
 ArticleRelationshipView.Prototype.prototype = NodeView.prototype;
 ArticleRelationshipView.prototype = new ArticleRelationshipView.Prototype();
 
-ArticleRelationshipView.labels = {
-  'advance': 'Advance',
-  'insight': 'Insight',
-  'co-published': 'Co-Published'
-};
+// ArticleRelationshipView.labels = {
+//   'advance': 'Advance',
+//   'insight': 'Insight',
+//   'co-published': 'Co-Published'
+// };
 
 module.exports = ArticleRelationshipView;

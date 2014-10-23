@@ -73,6 +73,7 @@
 }
 
 .article-relationship .statement .creator {
+  padding-top: 10px;
   font-size: 16px;
   font-weight: 600;
 }

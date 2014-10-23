@@ -19,6 +19,7 @@ ArticleRelationship.type = {
     "meta": "object",
     "related_article": "object",
     "relationship_type": "string",
+    "relationship_type_name": "string",
     "description": "string",
     "creator": ["array","string"],
     "created_at": "date"

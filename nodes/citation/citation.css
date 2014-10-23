@@ -25,7 +25,6 @@ Citations
   padding-right: 20px;
 }
 
-
 /*
 Key Reference Styles (dynamically injected, not part of the citation model)
 --------------------------------------- */
@@ -37,10 +36,14 @@ Key Reference Styles (dynamically injected, not part of the citation model)
 
 .lens-article .content-node.citation .content .key-reference .creator {
   color: #6EAA2C;
-  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 5px 0px;
 }
 
 .lens-article .content-node.citation .content .key-reference .description {
   font-size: 16px;
-  color: #666;
+  font-style: italic;
+  color: #888;
 }
