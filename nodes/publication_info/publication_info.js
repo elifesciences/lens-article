@@ -1,12 +1,10 @@
 "use strict";
 
-var Node = require("substance-document").Node;
-var _ = require("underscore");
+var Document = require("substance-document");
 
 var PublicationInfo = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
-
 
 PublicationInfo.type = {
   "id": "publication_info",
@@ -81,34 +79,17 @@ PublicationInfo.example = {
 
 
 PublicationInfo.Prototype = function() {
+
   this.getArticleInfo = function() {
     return this.document.get("articleinfo");
-  }
+  };
+
 };
 
-
-PublicationInfo.Prototype.prototype = Node.prototype;
+PublicationInfo.Prototype.prototype = Document.Node.prototype;
 PublicationInfo.prototype = new PublicationInfo.Prototype();
 PublicationInfo.prototype.constructor = PublicationInfo;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-_.each(PublicationInfo.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    },
-    set: function(val) {
-      this.properties[key] = val;
-      return this;
-    }
-  };
-});
-
-Object.defineProperties(PublicationInfo.prototype, getters);
+Document.Node.defineProperties(PublicationInfo);
 
 module.exports = PublicationInfo;

@@ -56,7 +56,7 @@ Figure.Prototype = function() {
     return (!!this.properties.caption);
   };
 
-  this.getNodes = function() {
+  this.getChildrenIds = function() {
     var nodes = [];
     if (this.properties.caption) {
       nodes.push(this.properties.caption);
@@ -67,19 +67,16 @@ Figure.Prototype = function() {
   this.getCaption = function() {
     if (this.properties.caption) return this.document.get(this.properties.caption);
   };
+
+  this.getHeader = function() {
+    return this.properties.label;
+  };
 };
 
 Figure.Prototype.prototype = Document.Composite.prototype;
 Figure.prototype = new Figure.Prototype();
 Figure.prototype.constructor = Figure;
 
-Document.Node.defineProperties(Figure.prototype, ["source_id", "label", "url", "caption", "attrib"]);
-
-Object.defineProperties(Figure.prototype, {
-  // Used as a resource header
-  header: {
-    get: function() { return this.properties.label; }
-  }
-});
+Document.Node.defineProperties(Figure.prototype, Object.keys(Figure.type.properties));
 
 module.exports = Figure;

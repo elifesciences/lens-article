@@ -1,12 +1,12 @@
-var _ = require('underscore');
-var Node = require('substance-document').Node;
+
+var Document = require('substance-document');
 
 // Lens.Definition
 // -----------------
 //
 
 var Definition = function(node) {
-  Node.call(this, node);
+  Document.Node.call(this, node);
 };
 
 // Type definition
@@ -35,7 +35,7 @@ Definition.description = {
   ],
   "properties": {
     "title": "The article's title",
-    "description": "Definition description", 
+    "description": "Definition description",
   }
 };
 
@@ -60,37 +60,22 @@ Definition.Prototype = function() {
     return this.properties.citation_urls.length > 0 ? this.properties.citation_urls
                                                     : [this.properties.doi];
   };
+
+  this.getHeader = function() {
+    if (this.properties.label) {
+      return [this.properties.label,this.properties.title].join(". ");
+    }
+    else {
+      return this.properties.title;
+    }
+  };
+
 };
 
-Definition.Prototype.prototype = Node.prototype;
+Definition.Prototype.prototype = Document.Node.prototype;
 Definition.prototype = new Definition.Prototype();
 Definition.prototype.constructor = Definition;
 
-
-// Generate getters
-// --------
-
-var getters = {
-  header: {
-    get: function() {
-      if (this.properties.label) {
-        return [this.properties.label,this.properties.title].join(". ")
-      }
-      else {
-        return this.properties.title;
-      }
-    }
-  }
-};
-
-_.each(Definition.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-Object.defineProperties(Definition.prototype, getters);
+Document.Node.defineProperties(Definition);
 
 module.exports = Definition;

@@ -1,12 +1,12 @@
 var _ = require('underscore');
-var Node = require('substance-document').Node;
+var Document = require('substance-document');
 
 // Lens.Cover
 // -----------------
 //
 
 var Cover = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
 
 // Type definition
@@ -56,36 +56,16 @@ Cover.Prototype = function() {
     }, this);
   };
 
+  this.getTitle = function() {
+    return this.document.title;
+  };
+
 };
 
-Cover.Prototype.prototype = Node.prototype;
+Cover.Prototype.prototype = Document.Node.prototype;
 Cover.prototype = new Cover.Prototype();
 Cover.prototype.constructor = Cover;
 
-// Generate getters
-// --------
-
-var getters = {};
-
-
-Object.defineProperties(Cover.prototype, {
-  title: {
-    get: function() {
-      return this.document.title;
-    }
-  },
-  authors: {
-    // Expand author id's to corresponding person nodes
-    get: function() {
-      return this.document.authors;
-    }
-  },
-  breadcrumbs: {
-    // Expand author id's to corresponding person nodes
-    get: function() {
-      return this.properties.breadcrumbs;
-    }
-  }
-});
+Document.Node.defineProperties(Cover);
 
 module.exports = Cover;

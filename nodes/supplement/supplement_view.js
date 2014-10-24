@@ -1,50 +1,37 @@
 "use strict";
 
-var _ = require("underscore");
-var util = require("substance-util");
-var html = util.html;
+var _ = require('underscore');
 var CompositeView = require("../composite").View;
 var $$ = require("substance-application").$$;
+var ResourceView = require('../resource/resource_view');
 
 // Lens.Supplement.View
 // ==========================================================================
 
-var SupplementView = function(node, viewFactory) {
+var SupplementView = function(node, viewFactory, options) {
   CompositeView.call(this, node, viewFactory);
 
-  this.$el.attr({id: node.id});
-  this.$el.addClass("content-node supplement");
+  // Mix-in
+  ResourceView.call(this, options);
+
 };
 
 SupplementView.Prototype = function() {
 
-  // Render it
-  // --------
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
 
-  this.render = function() {
-    var node = this.node;
+  this.renderBody = function() {
 
-    this.content = $$('div.content');
-
-    var caption = node.getCaption();
-    if (caption) {
-      var captionView = this.viewFactory.createView(caption);
-      var captionEl = captionView.render().el;
-      this.content.appendChild(captionEl);
-      this.childrenViews.push(captionView);
-    }
+    this.renderChildren();
 
     var file = $$('div.file', {
       children: [
-        $$('a', {href: node.url, html: '<i class="icon-download-alt"/> Download' })
+        $$('a', {href: this.node.url, html: '<i class="icon-download-alt"/> Download' })
       ]
     });
-
     this.content.appendChild(file);
-    this.el.appendChild(this.content);
-
-    return this;
-  }
+  };
 };
 
 SupplementView.Prototype.prototype = CompositeView.prototype;

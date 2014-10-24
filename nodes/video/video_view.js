@@ -1,37 +1,32 @@
 "use strict";
 
 var _ = require("underscore");
-var util = require("substance-util");
-var html = util.html;
-var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
+var NodeView = require("../node").View;
+var ResourceView = require('../resource/resource_view');
+
 
 // Lens.Video.View
 // ==========================================================================
 
-var VideoView = function(node, viewFactory) {
+var VideoView = function(node, viewFactory, options) {
   NodeView.call(this, node, viewFactory);
 
-  this.$el.attr({id: node.id});
-  this.$el.addClass("content-node video");
+  // Mix-in
+  ResourceView.call(this, options);
+
 };
 
 
 
 VideoView.Prototype = function() {
 
-  // Render it
-  // --------
-  //
-  // .content
-  //   video
-  //     source
-  //   .title
-  //   .caption
-  //   .doi
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
 
-  this.render = function() {
-    NodeView.prototype.render.call(this);
+  this.isZoomable = true;
+
+  this.renderBody = function() {
 
     // Enrich with video content
     // --------
@@ -90,7 +85,7 @@ VideoView.Prototype = function() {
 
     // Add caption if there is any
     if (this.node.caption) {
-      var caption = this.viewFactory.createView(this.node.caption);
+      var caption = this.createView(this.node.caption);
       this.content.appendChild(caption.render().el);
       this.captionView = caption;
     }
@@ -107,9 +102,8 @@ VideoView.Prototype = function() {
         ]
       }));
     }
+  };
 
-    return this;
-  }
 };
 
 VideoView.Prototype.prototype = NodeView.prototype;
