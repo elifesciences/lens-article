@@ -1,8 +1,11 @@
 "use strict";
 
 module.exports = {
-  /* Annotation types */
+  /* basic/abstract node types */
+  "node": require("./node"),
+  "composite": require("./composite"),
   "annotation": require("./annotation"),
+  /* Annotation types */
   "emphasis": require("./emphasis"),
   "strong": require("./strong"),
   "subscript": require("./subscript"),
