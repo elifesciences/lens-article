@@ -1,26 +1,32 @@
 "use strict";
 
+var _ = require('underscore');
 var CompositeView = require("../composite").View;
 var $$ = require ("substance-application").$$;
+var ResourceView = require('../resource/resource_view');
 
 // Substance.Figure.View
 // ==========================================================================
 
-var FigureView = function(node, viewFactory) {
+var FigureView = function(node, viewFactory, options) {
   CompositeView.call(this, node, viewFactory);
+
+  // Mix-in
+  ResourceView.call(this, options);
 };
 
 FigureView.Prototype = function() {
+
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
+
+  this.isZoomable = true;
 
   // Rendering
   // =============================
   //
 
-  this.render = function() {
-
-    this.el.innerHTML = "";
-    this.content = $$('div.content');
-
+  this.renderBody = function() {
     if (this.node.url) {
       // Add graphic (img element)
       var imgEl = $$('.image-wrapper', {
@@ -32,26 +38,17 @@ FigureView.Prototype = function() {
           })
         ]
       });
-      this.content.appendChild(imgEl);      
+      this.content.appendChild(imgEl);
     }
 
-    var caption = this.node.getCaption();
-    if (caption) {
-      var captionView = this.viewFactory.createView(caption);
-      var captionEl = captionView.render().el;
-      this.content.appendChild(captionEl);
-      this.childrenViews.push(captionView);
-    }
+    this.renderChildren();
 
     // Attrib
     if (this.node.attrib) {
-      console.log('ATTRIB!!');
       this.content.appendChild($$('.figure-attribution', {text: this.node.attrib}));
     }
-
-    this.el.appendChild(this.content);
-    return this;
   };
+
 };
 
 FigureView.Prototype.prototype = CompositeView.prototype;

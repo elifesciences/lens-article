@@ -1,12 +1,12 @@
-var _ = require('underscore');
-var Node = require('substance-document').Node;
+
+var Document = require('substance-document');
 
 // Lens.Video
 // -----------------
 //
 
 var Video = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
 
 // Type definition
@@ -15,7 +15,6 @@ var Video = function(node, doc) {
 
 Video.type = {
   "id": "video",
-
   "parent": "content",
   "properties": {
     "source_id": "string",
@@ -27,7 +26,6 @@ Video.type = {
     "poster": "string"
   }
 };
-
 
 Video.config = {
   "zoomable": true
@@ -71,43 +69,25 @@ Video.example = {
 
 Video.Prototype = function() {
 
+  this.getHeader = function() {
+    return this.properties.label;
+  };
+
+  this.getCaption = function() {
+    // HACK: this is not yet a real solution
+    if (this.properties.caption) {
+      return this.document.get(this.properties.caption);
+    } else {
+      return "";
+    }
+  };
+
 };
 
-Video.Prototype.prototype = Node.prototype;
+Video.Prototype.prototype = Document.Node.prototype;
 Video.prototype = new Video.Prototype();
 Video.prototype.constructor = Video;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-_.each(Video.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-
-Object.defineProperties(Video.prototype, _.extend(getters, {
-  header: {
-    get: function() {
-      return this.properties.label;
-    }
-  },
-  caption: {
-    get: function() {
-      // HACK: this is not yet a real solution
-      if (this.properties.caption) {
-        return this.document.get(this.properties.caption);
-      } else {
-        return "";
-      }
-    }
-  }
-}));
+Document.Node.defineProperties(Video);
 
 module.exports = Video;

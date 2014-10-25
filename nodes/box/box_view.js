@@ -1,9 +1,7 @@
 "use strict";
 
-var _ = require("underscore");
-var util = require("substance-util");
-var html = util.html;
-var NodeView = require("../node").View;
+var NodeView = require('../node').View;
+var CompositeView = require("../composite").View;
 var $$ = require("substance-application").$$;
 
 
@@ -11,10 +9,7 @@ var $$ = require("substance-application").$$;
 // ==========================================================================
 
 var BoxView = function(node, viewFactory) {
-  NodeView.call(this, node, viewFactory);
-
-  this.$el.attr({id: node.id});
-  this.$el.addClass("content-node box");
+  CompositeView.call(this, node, viewFactory);
 };
 
 BoxView.Prototype = function() {
@@ -33,17 +28,7 @@ BoxView.Prototype = function() {
       this.content.appendChild(labelEl);
     }
 
-    // Create children views
-    // --------
-    //
-
-    var children = this.node.children;
-    _.each(children, function(nodeId) {
-      var child = this.node.document.get(nodeId);
-      var childView = this.viewFactory.createView(child);
-      var childViewEl = childView.render().el;
-      this.content.appendChild(childViewEl);
-    }, this);
+    this.renderChildren();
 
     this.el.appendChild(this.content);
 

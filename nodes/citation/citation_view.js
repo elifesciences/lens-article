@@ -1,23 +1,37 @@
 "use strict";
 
 var _ = require('underscore');
-var util = require('substance-util');
-var html = util.html;
-var NodeView = require("../node").View;
-var TextView = require("../text").View;
-
 var $$ = require("substance-application").$$;
+var NodeView = require("../node").View;
+var ResourceView = require('../resource/resource_view');
 
-var Renderer = function(view) {
-    var frag = document.createDocumentFragment(),
-        node = view.node;
+
+// Lens.Citation.View
+// ==========================================================================
+
+
+var CitationView = function(node, viewFactory, options) {
+  NodeView.apply(this, arguments);
+
+  // Mix-in
+  ResourceView.call(this, options);
+
+};
+
+
+CitationView.Prototype = function() {
+
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
+
+  this.renderBody = function() {
+    var frag = document.createDocumentFragment();
+    var node = this.node;
 
     // Add title
     // -------
 
-    // HACK: TextView needs a refactor so that it can be used as
-    // a property view instead of a node view.
-    var titleView = new TextView(node, {
+    var titleView = this.createTextView({
       path: [node.id, 'title'],
       classes: 'title'
     });
@@ -30,10 +44,8 @@ var Renderer = function(view) {
       html: node.authors.join(', ')
     }));
 
-
     // Add Source
     // -------
-
 
     var sourceText = "",
         sourceFrag = "",
@@ -42,9 +54,9 @@ var Renderer = function(view) {
 
     // Hack for handling unstructured citation types and render prettier
     if (node.source && node.volume === '') {
-      var sourceFrag = node.source;
+      sourceFrag = node.source;
     } else if (node.source && node.volume) {
-      var sourceFrag = [node.source, node.volume].join(', ');
+      sourceFrag = [node.source, node.volume].join(', ');
     }
 
     if (node.fpage && node.lpage) {
@@ -87,7 +99,7 @@ var Renderer = function(view) {
     }));
 
     if (node.comment) {
-      var commentView = new TextView(node, { path: [node.id, 'comment'], classes: 'comment' });
+      var commentView = this.createTextView({ path: [node.id, 'comment'], classes: 'comment' });
       frag.appendChild(commentView.render().el);
     }
 
@@ -117,33 +129,12 @@ var Renderer = function(view) {
         href: url.url,
         text: url.name,
         target: "_blank"
-      }))
+      }));
     });
 
-    frag.appendChild(citationUrlsEl)
+    frag.appendChild(citationUrlsEl);
 
-    return frag;
-};
-
-
-// Lens.Citation.View
-// ==========================================================================
-
-
-var CitationView = function(node) {
-  NodeView.call(this, node);
-
-  this.$el.attr({id: node.id});
-  this.$el.addClass('citation');
-};
-
-
-CitationView.Prototype = function() {
-
-  this.render = function() {
-    NodeView.prototype.render.call(this);
-    this.content.appendChild(new Renderer(this));
-    return this;
+    this.content.appendChild(frag);
   };
 
 };

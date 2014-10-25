@@ -3,58 +3,22 @@
 var _ = require("underscore");
 var util = require("substance-util");
 var Document = require("substance-document");
-var $$ = require("substance-application").$$;
 
 // Lens.Article
 // -----------------
 
 var Article = function(options) {
-  options = options || {};
-
-  // Check if format is compatible
-
-  // Extend Schema
-  // --------
-
-  options.schema = util.deepclone(Document.schema);
-
-  options.schema.id = "lens-article";
-  options.schema.version = "0.3.0";
-
-  // Merge in custom types
-  _.each(Article.types, function(type, key) {
-    options.schema.types[key] = type;
-  });
-
-  // Register annotation types
-  _.each(Article.annotations, function(aType, key) {
-    options.schema.types[key] = aType;
-  });
-
-
-  // Merge in node types
-  _.each(Article.nodeTypes, function(nodeSpec, key) {
-    options.schema.types[key] = nodeSpec.Model.type;
-  });
-
-  // Merge in custom indexes
-  _.each(Article.indexes, function(index, key) {
-    options.schema.indexes[key] = index;
-  });
-
-  // Call parent constructor
-  // --------
+  options = Article.prepareOptions(options);
 
   Document.call(this, options);
 
   // Index for easy mapping from NLM sourceIds to generated nodeIds
   // Needed for resolving figrefs / citationrefs etc.
   this.bySourceId = this.addIndex("by_source_id", {
-    types: ["content"],
     property: "source_id"
   });
 
-  this.nodeTypes = Article.nodeTypes;
+  this.nodeTypes = options.nodeTypes;
 
   // Seed the doc
   // --------
@@ -83,99 +47,8 @@ var Article = function(options) {
   }
 };
 
-
-// Renders an article
-// --------
-//
-
-Article.Renderer = function(docCtrl, options) {
-  this.docCtrl = docCtrl;
-
-  this.nodeTypes = Article.nodeTypes;
-
-  this.options = options || {};
-
-  // Collect all node views
-  this.nodes = {};
-
-  // Build views
-  _.each(this.docCtrl.getNodes(), function(node) {
-    this.nodes[node.id] = this.createView(node);
-  }, this);
-
-};
-
-Article.Renderer.Prototype = function() {
-
-  // Create a node view
-  // --------
-  //
-  // Experimental: using a factory which creates a view for a given node type
-  // As we want to be able to reuse views
-  // However, as the matter is still under discussion consider the solution here only as provisional.
-  // We should create views, not only elements, as we need more, e.g., event listening stuff
-  // which needs to be disposed later.
-
-  this.createView = function(node) {
-    var NodeView = this.nodeTypes[node.type].View;
-
-    if (!NodeView) {
-      throw new Error('Node type "'+node.type+'" not supported');
-    }
-
-    // Note: passing the factory to the node views
-    // to allow creation of nested views
-    var nodeView = new NodeView(node, this);
-
-    // we connect the listener here to avoid to pass the document itself into the nodeView
-    nodeView.listenTo(this.docCtrl, "operation:applied", nodeView.onGraphUpdate);
-    return nodeView;
-  };
-
-  // Render it
-  // --------
-  //
-
-  this.render = function() {
-    _.each(this.nodes, function(nodeView) {
-      nodeView.dispose();
-    });
-
-    var frag = document.createDocumentFragment();
-
-    var docNodes = this.docCtrl.container.getTopLevelNodes();
-    _.each(docNodes, function(n) {
-      this.renderNode(n, frag);
-    }, this);
-
-
-    return frag;
-  };
-
-
-  this.renderNode = function(n, frag) {
-    var view = this.createView(n);
-    frag.appendChild(view.render().el);
-
-    if (n.type === "heading") {
-      view.el.appendChild($$('a.top', {
-        href: "#",
-        html: '<i class="icon-chevron-up"></i>'
-      }));
-    }
-
-
-    // Lets you customize the resulting DOM sticking on the el element
-    // Example: Lens focus controls
-    if (this.options.afterRender) this.options.afterRender(this.docCtrl, view);
-  };
-
-};
-
-Article.Renderer.prototype = new Article.Renderer.Prototype();
-
-
 Article.Prototype = function() {
+
   this.fromSnapshot = function(data, options) {
     return Article.fromSnapshot(data, options);
   };
@@ -202,6 +75,24 @@ Article.Prototype = function() {
 
 };
 
+Article.prepareOptions = function(options) {
+  // prepare configuration for
+  options = options || {};
+  options.nodeTypes = _.extend(Article.nodeTypes, options.nodeTypes);
+  options.schema = Article.getSchema(options.nodeTypes);
+  return options;
+};
+
+Article.getSchema = function(nodeTypes) {
+  var schema = util.deepclone(Document.schema);
+  schema.id = "lens-article";
+  schema.version = "0.3.0";
+  _.each(nodeTypes, function(nodeSpec, key) {
+    schema.types[key] = nodeSpec.Model.type;
+  });
+  return schema;
+};
+
 // Factory method
 // --------
 //
@@ -219,254 +110,20 @@ Article.fromSnapshot = function(data, options) {
 
 Article.views = ["content", "figures", "citations", "definitions", "info", "math"];
 
-
 // Register node types
 // --------
 
 Article.nodeTypes = require("./nodes");
 
+Article.ViewFactory = require('./view_factory');
 
-// Define annotation types
-// --------
-
-Article.annotations = {
-
-  "strong": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "emphasis": {
-    "properties": {
-    },
-    "parent": "annotation"
-  },
-
-  "subscript": {
-    "properties": {
-    },
-    "parent": "annotation"
-  },
-
-  "superscript": {
-    "properties": {
-    },
-    "parent": "annotation"
-  },
-
-  "underline": {
-    "properties": {
-    },
-    "parent": "annotation"
-  },
-
-  "code": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "link": {
-    "parent": "annotation",
-    "properties": {
-      "url": "string"
-    }
-  },
-
-  "idea": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "error": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "question": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "resource_reference": {
-    "parent": "annotation",
-    "properties": {
-      "target": "node"
-    }
-  },
-
-  // Dark blueish contributor references in the cover
-  // They should work everywhere else too
-
-  "contributor_reference": {
-    "parent": "resource_reference",
-    "properties": {
-      "target": "contributor"
-    }
-  },
-
-  // Greenish figure references in the text
-
-  "figure_reference": {
-    "parent": "resource_reference",
-    "properties": {
-      "target": "figure"
-    }
-  },
-
-  // Blueish citation references in the text
-
-  "citation_reference": {
-    "parent": "resource_reference",
-    "properties": {
-      "target": "content"
-    }
-  },
-
-  "definition_reference": {
-    "parent": "resource_reference",
-    "properties": {
-      "target": "content"
-    }
-  },
-
-  "cross_reference": {
-    "parent": "annotation",
-    "properties": {
-      "target": "content"
-    }
-  },
-
-  "formula_reference": {
-    "parent": "annotation",
-    "properties": {
-      "target": "content"
-    }
-  },
-
-  "author_callout": {
-    "parent": "annotation",
-    "properties": {
-      "style": "string"
-    }
-  },
-
-  "inline_image": {
-    "parent": "annotation",
-    "properties": {
-      "url": "string"
-    }
-  },
-
-  "label": {
-    "parent": "annotation",
-    "properties": {
-    }
-  },
-
-  "custom": {
-    "parent": "annotation",
-    "properties": {
-      "name": "string"
-    }
-  }
-
-};
-
-// Custom type definitions
-// --------
-//
-// Holds comments
-
-Article.types = {
-
-  // Abstarct Annotation Node
-  // --------
-
-  "annotation": {
-    "properties": {
-      "path": ["array", "string"], // -> e.g. ["text_1", "content"]
-      "range": "object"
-    }
-  },
-
-  // Abstract Figure Type
-  // --------
-
-  "figure": {
-    "properties": {
-    }
-  },
-
-  // "file": {
-  //   "properties": {
-  //   }
-  // },
-
-  "institution": {
-    "properties": {
-    }
-  },
-
-  "email": {
-    "properties": {
-    }
-  },
-
-  "funding": {
-    "properties": {
-    }
-  },
-
-  "caption": {
-    "properties": {
-    }
-  },
-
-  // Abstract Citation Type
-  // --------
-
-  "citation": {
-    "properties": {
-    }
-  },
-
-  // Document
-  // --------
-
-  "document": {
-    "properties": {
-      "views": ["array", "view"],
-      "guid": "string",
-      "creator": "string",
-      "title": "string",
-      "authors": ["array", "contributor"],
-      "on_behalf_of": "string",
-      "abstract": "string"
-    }
-  },
-
-  // Comments
-  // --------
-
-  "comment": {
-    "properties": {
-      "content": "string",
-      "created_at": "string", // should be date
-      "creator": "string", // should be date
-      "node": "node" // references either a content node or annotation
-    }
-  }
-};
+// HACK: ResourceView is only used as a mixin for resource view implementations
+// There no specific model for it, thus can not be registered in nodeTypes
+Article.ResourceView = require('./resource_view');
 
 // From article definitions generate a nice reference document
 // --------
 //
-
 
 var ARTICLE_DOC_SEED = {
   "id": "lens_article",

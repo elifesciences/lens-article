@@ -1,46 +1,44 @@
 "use strict";
 
 var _ = require("underscore");
-var util = require("substance-util");
-var html = util.html;
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
+var ResourceView = require('../resource/resource_view');
 
 // Lens.Contributor.View
 // ==========================================================================
 
-var ContributorView = function(node, viewFactory) {
+var ContributorView = function(node, viewFactory, options) {
   NodeView.call(this, node, viewFactory);
 
-  this.$el.attr({id: node.id});
-  this.$el.addClass("content-node contributor");
+  // Mix-in
+  ResourceView.call(this, options);
 };
 
 ContributorView.Prototype = function() {
+
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
 
   // Render it
   // --------
   //
 
-  this.render = function() {
-    NodeView.prototype.render.call(this);
+  this.renderBody = function() {
 
     // Contributor Name
     // -------
 
     this.content.appendChild($$('.contributor-name', {text: this.node.name}));
 
-
-
-
     // Add Affiliations
     // -------
 
     this.content.appendChild($$('.affiliations', {
       children: _.map(this.node.getAffiliations(), function(aff) {
-        
+
         var affText = _.compact([
-          aff.department, 
+          aff.department,
           aff.institution,
           aff.city,
           aff.country
@@ -79,7 +77,7 @@ ContributorView.Prototype = function() {
 
     // Emails
     // -------
-    
+
     if (this.node.emails.length > 0) {
       this.content.appendChild($$('.label', {text: 'For correspondence'}));
       this.content.appendChild($$('.emails', {
@@ -105,7 +103,7 @@ ContributorView.Prototype = function() {
 
     // Competing interests
     // -------
-    
+
     if (this.node.competing_interests.length > 0) {
       this.content.appendChild($$('.label', {text: 'Competing Interests'}));
       this.content.appendChild($$('.competing-interests', {
@@ -118,7 +116,7 @@ ContributorView.Prototype = function() {
 
     // ORCID if available
     // -------
-    
+
     if (this.node.orcid) {
       this.content.appendChild($$('.label', { text: 'ORCID' }));
       this.content.appendChild($$('a.orcid', { href: this.node.orcid, text: this.node.orcid }));
@@ -146,10 +144,7 @@ ContributorView.Prototype = function() {
       var childs = [$$('img', {src: this.node.image}), bio];
 
       _.each(this.node.bio, function(par) {
-        var parNode = this.node.document.get(par);
-        var paragraphView = this.viewFactory.createView(parNode);
-        var paragraphViewEl = paragraphView.render().el;
-        bio.appendChild(paragraphViewEl);
+        bio.appendChild(this.createView(par).render().el);
       }, this);
 
       this.content.appendChild($$('.contributor-bio.container', {
@@ -165,7 +160,6 @@ ContributorView.Prototype = function() {
       this.content.appendChild($$('.label', {text: "* Deceased"}));
     }
 
-    return this;
   };
 
 };

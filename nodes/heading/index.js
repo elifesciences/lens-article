@@ -1,4 +1,6 @@
 "use strict";
-var SubstanceNodes = require("substance-nodes");
 
-module.exports = SubstanceNodes["heading"];
+module.exports = {
+  Model: require("./heading"),
+  View: require("./heading_view")
+};

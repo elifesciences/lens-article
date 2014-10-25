@@ -1,0 +1,29 @@
+/* Heading Node
+-------------------------------------------------------------------------------*/
+
+.content-node.heading {
+}
+
+.content-node.heading .content {
+  min-height: 40px;
+}
+
+.content-node.heading { }
+
+.content-node.heading .content {
+  font-family: 'Montserrat';
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.content-node.heading.level-1 .content {
+  font-size: 24px;
+}
+
+.content-node.heading.level-2 .content {
+  font-size: 20px;
+}
+
+.content-node.heading.level-3 .content {
+  font-size: 17px;
+}

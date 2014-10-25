@@ -1,5 +1,6 @@
 "use strict";
 
-var SubstanceNodes = require("substance-nodes");
-
-module.exports = SubstanceNodes["codeblock"];
+module.exports = {
+  Model: require("./codeblock"),
+  View: require("./codeblock_view")
+};

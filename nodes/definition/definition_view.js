@@ -1,30 +1,30 @@
 "use strict";
 
 var _ = require('underscore');
-var util = require('substance-util');
-var html = util.html;
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
+var ResourceView = require('../resource/resource_view');
 
 
 // Lens.Definition.View
 // ==========================================================================
 
-var DefinitionView = function(node) {
-  NodeView.call(this, node);
+var DefinitionView = function(node, viewFactory, options) {
+  NodeView.call(this, node, viewFactory);
 
-  this.$el.attr({id: node.id});
-  this.$el.addClass('definition');
+  // Mix-in
+  ResourceView.call(this, options);
+
 };
 
 
 DefinitionView.Prototype = function() {
 
-  this.render = function() {
-    NodeView.prototype.render.call(this);
+  // Mix-in
+  _.extend(this, ResourceView.prototype);
 
+  this.renderBody = function() {
     this.content.appendChild($$('.description', {text: this.node.description }));
-    return this;
   };
 
 };

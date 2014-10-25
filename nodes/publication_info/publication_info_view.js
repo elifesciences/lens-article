@@ -11,8 +11,6 @@ var _ = require("underscore");
 var PublicationInfoView = function(node, viewFactory) {
   NodeView.call(this, node, viewFactory);
 
-  this.$el.addClass('publication-info');
-  this.$el.attr('id', this.node.id);
 };
 
 PublicationInfoView.Prototype = function() {
@@ -27,7 +25,7 @@ PublicationInfoView.Prototype = function() {
 
 
     // Article Type
-    // 
+    //
 
     if (this.node.article_type) {
       var articleTypeEl = $$('.article-type.container', {
@@ -42,7 +40,7 @@ PublicationInfoView.Prototype = function() {
     }
 
     // Subject
-    // 
+    //
 
     if (this.node.subjects && this.node.subjects.length > 0) {
       var subjectEl = $$('.subject.container', {
@@ -57,7 +55,7 @@ PublicationInfoView.Prototype = function() {
     }
 
     // Organisms
-    // 
+    //
 
     if (this.node.research_organisms && this.node.research_organisms.length > 0) {
       var organismsEl = $$('.subject.container', {
@@ -72,7 +70,7 @@ PublicationInfoView.Prototype = function() {
     }
 
     // Keywords
-    // 
+    //
 
     if (this.node.keywords && this.node.keywords.length > 0) {
       var keywordsEl = $$('.keywords.container', {
@@ -87,7 +85,7 @@ PublicationInfoView.Prototype = function() {
     }
 
     // DOI
-    // 
+    //
 
     if (this.node.doi) {
       var doiEl = $$('.doi.container', {
@@ -102,7 +100,7 @@ PublicationInfoView.Prototype = function() {
     }
 
     // Related Article
-    // 
+    //
 
     if (this.node.related_article) {
       var relatedArticleEl = $$('.related-article.container', {

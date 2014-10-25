@@ -1,12 +1,12 @@
 var _ = require('underscore');
-var Node = require('substance-document').Node;
+var Document = require('substance-document');
 
 // Lens.Citation
 // -----------------
 //
 
 var Citation = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
 
 // Type definition
@@ -96,6 +96,7 @@ Citation.example = {
 
 
 Citation.Prototype = function() {
+
   // Returns the citation URLs if available
   // Falls back to the DOI url
   // Always returns an array;
@@ -103,31 +104,16 @@ Citation.Prototype = function() {
     return this.properties.citation_urls.length > 0 ? this.properties.citation_urls
                                                     : [this.properties.doi];
   };
+
+  this.getHeader = function() {
+    return _.compact([this.properties.label, this.properties.citation_type || "Citation"]).join(' - ');
+  };
 };
 
-Citation.Prototype.prototype = Node.prototype;
+Citation.Prototype.prototype = Document.Node.prototype;
 Citation.prototype = new Citation.Prototype();
 Citation.prototype.constructor = Citation;
 
-// Generate getters
-// --------
-
-var getters = {
-  header: {
-    get: function() {
-      return _.compact([this.properties.label, this.properties.citation_type || "Citation"]).join(' - ');
-    }
-  }
-};
-
-_.each(Citation.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-Object.defineProperties(Citation.prototype, getters);
+Document.Node.defineProperties(Citation);
 
 module.exports = Citation;
