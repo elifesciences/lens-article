@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
-var NodeView = require("substance-nodes")['node'].View;
+var NodeView = require("./nodes/node").View;
 var $$ = require ("substance-application").$$;
 
 var DEFAULT_OPTIONS = {
