@@ -1,8 +1,6 @@
 /* Textish Styles
 -------------------------------------------------------------------------------*/
 
-/* Is this necessary in view mode? */
-
 .content-node.text .content {
   white-space: pre-wrap;
   white-space: -moz-pre-wrap;

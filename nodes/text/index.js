@@ -1,3 +1,6 @@
 "use strict";
 
-module.exports = require("substance-nodes")['text'];
+module.exports = {
+  Model: require("./text_node"),
+  View: require("./text_view")
+};

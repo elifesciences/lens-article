@@ -1,5 +1,8 @@
 "use strict";
 
-var SubstanceNodes = require("substance-nodes");
+var Document = require("substance-document");
 
-module.exports = SubstanceNodes["composite"];
+module.exports = {
+  Model: Document.Composite,
+  View: require("./composite_view")
+};
