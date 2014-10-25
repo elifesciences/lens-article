@@ -117,6 +117,10 @@ Article.nodeTypes = require("./nodes");
 
 Article.ViewFactory = require('./view_factory');
 
+// HACK: ResourceView is only used as a mixin for resource view implementations
+// There no specific model for it, thus can not be registered in nodeTypes
+Article.ResourceView = require('./resource_view');
+
 // From article definitions generate a nice reference document
 // --------
 //
