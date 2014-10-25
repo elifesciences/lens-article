@@ -1,3 +1,6 @@
 "use strict";
-var SubstanceNodes = require("substance-nodes");
-module.exports = SubstanceNodes["webresource"];
+
+module.exports = {
+  Model: require("./web_resource"),
+  View: require("../node").View
+};
