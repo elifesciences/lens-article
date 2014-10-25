@@ -59,7 +59,7 @@ Supplement.example = {
 
 Supplement.Prototype = function() {
 
-  this.getNodes = function() {
+  this.getChildrenIds = function() {
     var nodes = [];
     if (this.properties.caption) {
       nodes.push(this.properties.caption);
@@ -74,35 +74,16 @@ Supplement.Prototype = function() {
       return null;
     }
   };
+
+  this.getHeader = function() {
+    return this.properties.label;
+  };
 };
 
 Supplement.Prototype.prototype = Document.Composite.prototype;
 Supplement.prototype = new Supplement.Prototype();
 Supplement.prototype.constructor = Supplement;
 
-// Generate getters
-// --------
-
-var getters = {};
-
-_.each(Supplement.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-// Get the header for resource header display
-// --------
-
-getters["header"] = {
-  get: function() {
-    return this.properties.label;
-  }
-};
-
-
-Object.defineProperties(Supplement.prototype, getters);
+Document.Node.defineProperties(Supplement);
 
 module.exports = Supplement;

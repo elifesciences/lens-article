@@ -1,10 +1,9 @@
 "use strict";
 
-var Node = require("substance-document").Node;
-var _ = require("underscore");
+var Document = require("substance-document");
 
 var Affiliation = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
 
 Affiliation.type = {
@@ -48,28 +47,12 @@ Affiliation.example = {
   "type": "affiliation"
 };
 
-Affiliation.Prototype = function() {
+Affiliation.Prototype = function() {};
 
-};
-
-Affiliation.Prototype.prototype = Node.prototype;
+Affiliation.Prototype.prototype = Document.Node.prototype;
 Affiliation.prototype = new Affiliation.Prototype();
 Affiliation.prototype.constructor = Affiliation;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-_.each(Affiliation.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-Object.defineProperties(Affiliation.prototype, getters);
+Document.Node.defineProperties(Affiliation);
 
 module.exports = Affiliation;

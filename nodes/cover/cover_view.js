@@ -1,10 +1,7 @@
 "use strict";
 
 var _ = require("underscore");
-var util = require("substance-util");
-var html = util.html;
 var NodeView = require("../node").View;
-var TextView = require("../text").View;
 var $$ = require("substance-application").$$;
 var articleUtil = require("../../article_util");
 
@@ -14,8 +11,6 @@ var articleUtil = require("../../article_util");
 var CoverView = function(node, viewFactory) {
   NodeView.call(this, node, viewFactory);
 
-  this.$el.attr({id: node.id});
-  this.$el.addClass("content-node cover");
 };
 
 CoverView.Prototype = function() {
@@ -63,7 +58,7 @@ CoverView.Prototype = function() {
           } else {
             html = bc.name;
           }
-          return $$('a', {href: bc.url, html: html})
+          return $$('a', {href: bc.url, html: html});
         })
       });
       this.content.appendChild(breadcrumbs);
@@ -83,9 +78,7 @@ CoverView.Prototype = function() {
     // --------------
     //
 
-    // HACK: we need to update to a newer substance version to be able to delegate
-    // to sub-views.
-    var titleView = new TextView(this.node, {
+    var titleView = this.createTextView({
       path: ['document', 'title'],
       classes: 'title'
     });
@@ -152,7 +145,7 @@ CoverView.Prototype = function() {
     }
 
     return this;
-  }
+  };
 };
 
 CoverView.Prototype.prototype = NodeView.prototype;

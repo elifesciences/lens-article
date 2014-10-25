@@ -1,12 +1,12 @@
 var _ = require('underscore');
-var Node = require('substance-document').Node;
+var Document = require('substance-document');
 
 // Lens.Contributor
 // -----------------
 //
 
 var Contributor = function(node, doc) {
-  Node.call(this, node, doc);
+  Document.Node.call(this, node, doc);
 };
 
 // Type definition
@@ -79,40 +79,23 @@ Contributor.example = {
 
 
 Contributor.Prototype = function() {
+
   this.getAffiliations = function() {
     return _.map(this.properties.affiliations, function(affId) {
       return this.document.get(affId);
     }, this);
-  }
+  };
+
+  this.getHeader = function() {
+    return this.properties.role || 'Author';
+  };
+
 };
 
-Contributor.Prototype.prototype = Node.prototype;
+Contributor.Prototype.prototype = Document.Node.prototype;
 Contributor.prototype = new Contributor.Prototype();
 Contributor.prototype.constructor = Contributor;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-var getters = {
-  header: {
-    get: function() {
-      // TODO: extract extract contribution type
-      return "Author";
-    }
-  }
-};
-
-_.each(Contributor.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-Object.defineProperties(Contributor.prototype, getters);
+Document.Node.defineProperties(Contributor);
 
 module.exports = Contributor;

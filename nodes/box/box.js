@@ -1,14 +1,15 @@
-var _ = require('underscore');
-var Node = require('substance-document').Node;
+"use strict";
+
+var Document = require('substance-document');
+var Composite = Document.Composite;
 
 // Lens.Box
 // -----------------
 //
 
 var Box = function(node, doc) {
-  Node.call(this, node, doc);
+  Composite.call(this, node, doc);
 };
-
 
 // Type definition
 // -----------------
@@ -53,35 +54,16 @@ Box.example = {
 
 Box.Prototype = function() {
 
+  this.getChildrenIds = function() {
+    return this.properties.children;
+  };
+
 };
 
-Box.Prototype.prototype = Node.prototype;
+Box.Prototype.prototype = Composite.prototype;
 Box.prototype = new Box.Prototype();
 Box.prototype.constructor = Box;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-var getters = {
-  header: {
-    get: function() {
-      return this.properties.label;
-    }
-  }
-};
-
-_.each(Box.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-
-Object.defineProperties(Box.prototype, getters);
+Document.Node.defineProperties(Box);
 
 module.exports = Box;

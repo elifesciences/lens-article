@@ -47,33 +47,24 @@ Caption.example = {
 
 Caption.Prototype = function() {
 
-  this.hasTitle = function() {
-    return (!!this.properties.title);
+  this.getChildrenIds = function() {
+    return this.properties.children || [];
   };
 
-  // The nodes the composite should spit out
-  this.getNodes = function() {
-    var nodes = [];
-
-    if (this.properties.children) {
-      nodes = nodes.concat(this.properties.children);
-    }
-    return nodes;
+  this.hasTitle = function() {
+    return (!!this.properties.title);
   };
 
   this.getTitle = function() {
     if (this.properties.title) return this.document.get(this.properties.title);
   };
 
-  // this.getCaption = function() {
-  //   if (this.properties.caption) return this.document.get(this.properties.caption);
-  // };
 };
 
 Caption.Prototype.prototype = Document.Composite.prototype;
 Caption.prototype = new Caption.Prototype();
 Caption.prototype.constructor = Caption;
 
-Document.Node.defineProperties(Caption.prototype, ["title", "children"]);
+Document.Node.defineProperties(Caption);
 
 module.exports = Caption;
