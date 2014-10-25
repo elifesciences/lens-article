@@ -12,6 +12,7 @@ PublicationInfo.type = {
   "properties": {
     "received_on": "string",
     "accepted_on": "string",
+    "revised_on": "string",
     "published_on": "string",
     "journal": "string",
     "provider": "string",
@@ -21,7 +22,6 @@ PublicationInfo.type = {
     "subjects": ["array", "string"],
     "links": ["array", "objects"],
     "doi": "string",
-    "supplements": ["array", "object"], // deprecated
     "related_article": "string",
     "article_info": "paragraph"
   }
