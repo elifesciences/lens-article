@@ -24,9 +24,9 @@
 }
 
 .lens-article .content-node.cover .title {
-  font-family: 'Avenir LT W01 85 Heavy', 'Montserrat', 'Source Sans Pro';
+  font-weight: 600;
   line-height: 1.3em;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 .lens-article .content-node.cover .published-on {
