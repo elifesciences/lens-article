@@ -40,7 +40,7 @@ CoverView.Prototype = function() {
       var introEl = $$('.intro.container', {
         children: [
           $$('.intro-text', {
-            html: '<i class="icon-info"></i>&nbsp;&nbsp;Lens provides a novel way of looking at research on the web.'
+            html: '<i class="icon-info"></i>&nbsp;&nbsp;<b>Lens</b> provides a novel way of viewing research'
           }),
           $$('a.send-feedback', {href: "http://home.highwire.org/feedback/lens-feedback", text: "Send feedback", target: "_blank" })
         ]
