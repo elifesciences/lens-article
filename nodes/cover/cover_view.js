@@ -64,12 +64,16 @@ CoverView.Prototype = function() {
       this.content.appendChild(breadcrumbs);
     }
 
-
     if (pubInfo) {
       var pubDate = pubInfo.published_on;
       if (pubDate) {
+        var items = [articleUtil.formatDate(pubDate)];
+        if (pubInfo.journal && !node.breadcrumbs) {
+          items.push('<i> in '+pubInfo.journal+'</i>');
+        }
+
         this.content.appendChild($$('.published-on', {
-          text: articleUtil.formatDate(pubDate)
+          html: items.join('')
         }));
       }
     }
