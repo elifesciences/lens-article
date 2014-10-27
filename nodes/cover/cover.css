@@ -89,4 +89,10 @@
 
 .lens-article .intro .send-feedback {
   float: right;
+  color: #E40000;
+  font-weight: bold;
+}
+
+.lens-article .intro .send-feedback:hover {
+  color: #ff0000;
 }
