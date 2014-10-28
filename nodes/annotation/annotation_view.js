@@ -1,6 +1,7 @@
 
-var AnnotationView = function(node) {
+var AnnotationView = function(node, viewFactory) {
   this.node = node;
+  this.viewFactory = viewFactory;
   this.el = this.createElement();
   this.el.dataset.id = node.id;
   this.$el = $(this.el);
