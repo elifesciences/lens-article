@@ -11,8 +11,8 @@
 .content-node.heading { }
 
 .content-node.heading .content {
-  font-family: 'Montserrat';
-  font-weight: bold;
+  color: rgba(0,0,0,0.8);
+  font-weight: 600;
   line-height: 40px;
 }
 
@@ -21,9 +21,9 @@
 }
 
 .content-node.heading.level-2 .content {
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .content-node.heading.level-3 .content {
-  font-size: 17px;
+  font-size: 18px;
 }
