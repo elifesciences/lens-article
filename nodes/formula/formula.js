@@ -1,12 +1,12 @@
-var _ = require('underscore');
-var Node = require('substance-document').Node;
+
+var Document = require('substance-document');
 
 // Formula
 // -----------------
 //
 
 var Formula = function(node) {
-  Node.call(this, node);
+  Document.Node.call(this, node);
 };
 
 // Type definition
@@ -18,10 +18,12 @@ Formula.type = {
   "parent": "content",
   "properties": {
     "source_id": "string",
+    "inline": "boolean",
+    // a reference label as typically used in display formulas
     "label": "string",
-    "data": "string",
-    "format": "string", // MathML, LaTeX, image
-    "inline": "boolean"
+    // we support multiple representations of the formula
+    "format": ["array", "string"],
+    "data": ["array", "string"],
   }
 };
 
@@ -59,24 +61,10 @@ Formula.Prototype = function() {
   this.inline = false;
 };
 
-Formula.Prototype.prototype = Node.prototype;
+Formula.Prototype.prototype = Document.Node.prototype;
 Formula.prototype = new Formula.Prototype();
-Formula.prototype.constuctor = new Formula;
+Formula.prototype.constuctor = Formula;
 
-
-// Generate getters
-// --------
-
-var getters = {};
-
-_.each(Formula.type.properties, function(prop, key) {
-  getters[key] = {
-    get: function() {
-      return this.properties[key];
-    }
-  };
-});
-
-Object.defineProperties(Formula.prototype, getters);
+Document.Node.defineProperties(Formula);
 
 module.exports = Formula;
