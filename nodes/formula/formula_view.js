@@ -7,12 +7,14 @@ var NodeView = require('../node').View;
 
 var FormulaView = function(node, viewFactory) {
   NodeView.call(this, node, viewFactory);
-  if (this.node.inline) {
-    this.$el.addClass('inline');
-  }
 };
 
 FormulaView.Prototype = function() {
+
+  var _types = {
+    "latex": "math/tex",
+    "mathml": "math/mml"
+  };
 
   // Render the formula
   // --------
@@ -22,8 +24,39 @@ FormulaView.Prototype = function() {
       this.$el.addClass('inline');
     }
     if (this.node.data) {
+      // TODO: we should allow to make it configurable
+      // which math source format should be used in first place
+      // For now, we take the first available format which is not image
+      // and use the image to configure MathJax's preview.
+      var hasPreview = false;
+      var hasSource = false;
       for (var i=0; i<this.node.data.length; i++) {
-        this.renderFormula(this.node.format[i], this.node.data[i]);
+        var format = this.node.format[i];
+        var data = this.node.data[i];
+        switch (format) {
+          case "mathml":
+          case "latex":
+            if (!hasSource) {
+              var type = _types[format];
+              if (!this.node.inline) type += "; mode=display";
+              var $scriptEl = $('<script>')
+                .attr('type', type)
+                .html(data);
+              this.$el.append($scriptEl);
+              hasSource = true;
+            }
+            break;
+          case "image":
+            if (!hasPreview) {
+              var $preview = $('<div>').addClass('MathJax_Preview');
+              $preview.append($('<img>').attr('src', data));
+              this.$el.append($preview);
+              hasPreview = true;
+            }
+            break;
+          default:
+            console.error("Unknown formula format:", format);
+        }
       }
     }
     // Add label to block formula
@@ -32,27 +65,6 @@ FormulaView.Prototype = function() {
       this.$el.append($('<div class="label">').html(this.node.label));
     }
     return this;
-  };
-
-  this.renderFormula = function(format, data) {
-    var elType = this.node.inline ? '<span>' : '<div>';
-    switch (format) {
-    case "mathml":
-      this.$el.append($(elType).html(data));
-      break;
-    case "image":
-      this.$el.append('<img src="'+data+'"/>');
-      break;
-    case "latex":
-      if (this.node.inline) {
-        this.$el.append($(elType).html("\\("+data+"\\)"));
-      } else {
-        this.$el.append($(elType).html("\\["+data+"\\]"));
-      }
-      break;
-    default:
-      console.error("Unknown formula format:", format);
-    }
   };
 };
 
