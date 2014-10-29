@@ -56,7 +56,7 @@ PublicationInfo.example = {
   "history": [
     { "type": "received", "date": "2012-06-20" },
     { "type": "accepted", "date": "2012-09-05" }
-  ]
+  ],
   "journal": "eLife",
   "provider": "eLife",
   "article_type": "Research Article",
