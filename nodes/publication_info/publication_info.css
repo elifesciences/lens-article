@@ -27,7 +27,6 @@
 
 .lens-article .content-node.publication-info .label {
   float: left;
-
   width: 100px;
   font-size: 15px;
   color: #999;
@@ -46,17 +45,21 @@
   padding: 10px;
 }
 
-.article .resources .nodes > .content-node.publication-info #articleinfo {
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] {
   font-size: 16px;
 }
 
-.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 {
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading.level-3 {
   padding-top: 10px;
 }
 
-.article .resources .nodes > .content-node.publication-info #articleinfo .heading.level-3 .content {
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .heading.level-3 .content {
   font-size: 15px;
   font-weight: normal;
   font-family: "Source Sans Pro";
   color: #999;
+}
+
+.article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] .content-node {
+  padding-top: 10px;
 }
