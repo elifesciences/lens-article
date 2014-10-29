@@ -3,7 +3,17 @@
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
 var articleUtil = require("../../article_util");
-var _ = require("underscore");
+
+var _labels = {
+  "received": "received",
+  "accepted" : "accepted",
+  "revised": "revised",
+  "corrected": "corrected",
+  "rev-recd": "revised",
+  "rev-request": "returned for modification",
+  "published": "published",
+  "default": "updated",
+};
 
 // Lens.PublicationInfo.View
 // ==========================================================================
@@ -114,31 +124,9 @@ PublicationInfoView.Prototype = function() {
       metaData.appendChild(relatedArticleEl);
     }
 
-    // Dates
-    //
+    var historyEl = this.describePublicationHistory();
 
-    var dateFragments = [];
-    if (this.node.received_on) dateFragments.push("received on <b>"+articleUtil.formatDate(this.node.received_on)+"</b>");
-    if (this.node.accepted_on) dateFragments.push("accepted on <b>"+articleUtil.formatDate(this.node.accepted_on)+"</b>");
-    if (this.node.revised_on) dateFragments.push("revised on <b>"+articleUtil.formatDate(this.node.revised_on)+"</b>");
-    if (this.node.published_on) dateFragments.push("published on <b>"+articleUtil.formatDate(this.node.published_on)+"</b>");
-
-    var datesEl = $$('.dates');
-
-    // Intro
-    datesEl.appendChild($$('span', {text: "The article was "}));
-
-    if (dateFragments.length === 1) {
-      datesEl.appendChild($$('span', {html: " "+dateFragments[0]+"."}));
-    } else {
-      // All but last frag
-      datesEl.appendChild($$('span', {html: dateFragments.slice(0,-1).join(", ")}));
-
-      // Last frag
-      datesEl.appendChild($$('span', {html: " and "+_.last(dateFragments)+"."}));
-    }
-
-    metaData.appendChild(datesEl);
+    metaData.appendChild(historyEl);
 
     this.content.appendChild(metaData);
 
@@ -152,6 +140,51 @@ PublicationInfoView.Prototype = function() {
     this.content.appendChild(articleInfoViewEl);
 
     return this;
+  };
+
+  // Creates an element with a narrative description of the publication history
+
+  this.describePublicationHistory = function() {
+    var datesEl = $$('.dates');
+    var i;
+
+    var dateEntries = [];
+    if (this.node.history && this.node.history.length > 0) {
+      dateEntries = dateEntries.concat(this.node.history);
+    }
+    if (this.node.published_on) {
+      dateEntries.push({
+        type: 'published',
+        date: this.node.published_on
+      });
+    }
+
+    // If there is any pub history, create a narrative following
+    // 'The article was ((<action> on <date>, )+ and) <action> on <date>'
+    // E.g.,
+    // 'This article was published on 11. Oct. 2014'
+    // 'This article was accepted on 06.05.2014, and published on 11. Oct. 2014'
+
+    if (dateEntries.length > 0) {
+      datesEl.appendChild(document.createTextNode("The article was "));
+      for (i = 0; i < dateEntries.length; i++) {
+        // conjunction with ', ' or ', and'
+        if (i > 0) {
+          datesEl.appendChild(document.createTextNode(', '));
+          if (i === dateEntries.length-1) {
+            datesEl.appendChild(document.createTextNode('and '));
+          }
+        }
+        var entry = dateEntries[i];
+        datesEl.appendChild(document.createTextNode((_labels[entry.type] || _labels.default)+ ' on '));
+        datesEl.appendChild($$('b', {
+          text: articleUtil.formatDate(entry.date)
+        }));
+      }
+    }
+    datesEl.appendChild(document.createTextNode('.'));
+
+    return datesEl;
   };
 
   this.dispose = function() {
