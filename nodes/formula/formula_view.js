@@ -64,7 +64,7 @@ FormulaView.Prototype = function() {
               // HACK: MJ has troubles to detect the script element for
               // our display-formulas. This hack is a fallback, that adds mml
               // without the script.
-              var HACK = false;
+              var HACK = true;
               if (HACK) {
                 if (this.node.inline) {
                   $scriptEl.append($mml);
