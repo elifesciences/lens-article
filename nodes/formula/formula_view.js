@@ -16,6 +16,12 @@ FormulaView.Prototype = function() {
     "mathml": "math/mml"
   };
 
+  var _precedence = {
+    "image": 0,
+    "mathml": 1,
+    "latex": 2
+  };
+
   // Render the formula
   // --------
 
@@ -23,16 +29,28 @@ FormulaView.Prototype = function() {
     if (this.node.inline) {
       this.$el.addClass('inline');
     }
-    if (this.node.data) {
+
+    var inputs = [], i;
+    for (i=0; i<this.node.data.length; i++) {
+      inputs.push({
+        format: this.node.format[i],
+        data: this.node.data[i]
+      });
+    }
+    inputs.sort(function(a, b) {
+      return _precedence[a.format] - _precedence[b.format];
+    });
+
+    if (inputs.length > 0) {
       // TODO: we should allow to make it configurable
       // which math source format should be used in first place
       // For now, we take the first available format which is not image
       // and use the image to configure MathJax's preview.
       var hasPreview = false;
       var hasSource = false;
-      for (var i=0; i<this.node.data.length; i++) {
-        var format = this.node.format[i];
-        var data = this.node.data[i];
+      for (i=0; i<inputs.length; i++) {
+        var format = inputs[i].format;
+        var data = inputs[i].data;
         switch (format) {
           case "mathml":
           case "latex":
