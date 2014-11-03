@@ -52,7 +52,19 @@ FormulaView.Prototype = function() {
         var format = inputs[i].format;
         var data = inputs[i].data;
         switch (format) {
+          // HACK: ATM, in certain cases there are MJ issues
+          // until then we just put the mml into root, and do not render the preview
           case "mathml":
+            if (!hasSource) {
+              this.$el.append($(data));
+              hasSource = true;
+              // prevent preview for the time being (HACK), as otherwise there will be two presentations
+              if (hasPreview) {
+                this.$preview.hide();
+                hasPreview = true;
+              }
+            }
+            break;
           case "latex":
             if (!hasSource) {
               var type = _types[format];
@@ -69,6 +81,7 @@ FormulaView.Prototype = function() {
               var $preview = $('<div>').addClass('MathJax_Preview');
               $preview.append($('<img>').attr('src', data));
               this.$el.append($preview);
+              this.$preview = $preview;
               hasPreview = true;
             }
             break;
