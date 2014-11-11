@@ -8,6 +8,9 @@
   min-height: 40px;
 }
 
+.content-node.heading .label { display: inline; padding-right: 10px; }
+.content-node.heading .title, .content-node.heading .content .title .content { display: inline; }
+
 .content-node.heading { }
 
 .content-node.heading .content {

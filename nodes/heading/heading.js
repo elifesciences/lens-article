@@ -17,6 +17,7 @@ Heading.type = {
   "properties": {
     "source_id": "string",
     "content": "string",
+    "label": "string",
     "level": "number"
   }
 };
@@ -43,7 +44,8 @@ Heading.description = {
     "Denotes a section or sub section in your article."
   ],
   "properties": {
-    "content": "Heading content",
+    "content": "Heading title",
+    "label": "Heading label",
     "level": "Heading level. Ranges from 1..4"
   }
 };
@@ -56,6 +58,6 @@ Heading.Prototype.prototype = Text.prototype;
 Heading.prototype = new Heading.Prototype();
 Heading.prototype.constructor = Heading;
 
-DocumentNode.defineProperties(Heading.prototype, ["level"]);
+DocumentNode.defineProperties(Heading);
 
 module.exports = Heading;
