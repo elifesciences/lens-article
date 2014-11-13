@@ -48,9 +48,8 @@ FigureView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var textView = this.createTextView({
-      path: [this.node.id, 'label'],
-      classes: 'name'
+    var textView = this.createTextPropertyView([this.node.id, 'label'], {
+      classes: "name"
     });
     var el = textView.render().el;
     el.setAttribute("sbs-click", "toggleResource("+this.node.id+")");
