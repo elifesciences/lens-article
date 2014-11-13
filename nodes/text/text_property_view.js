@@ -11,7 +11,9 @@ var $$ = require("substance-application").$$;
 //
 
 var TextPropertyView = function(doc, path, viewFactory, options) {
-  View.call(this);
+  options = options || {};
+  options.elementType = options.elementType || 'span';
+  View.call(this, options);
 
   this.path = path;
   this.document = doc;
