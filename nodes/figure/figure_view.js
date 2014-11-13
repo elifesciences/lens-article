@@ -40,13 +40,21 @@ FigureView.Prototype = function() {
       });
       this.content.appendChild(imgEl);
     }
-
     this.renderChildren();
-
     // Attrib
     if (this.node.attrib) {
       this.content.appendChild($$('.figure-attribution', {text: this.node.attrib}));
     }
+  };
+
+  this.renderLabel = function() {
+    var textView = this.createTextView({
+      path: [this.node.id, 'label'],
+      classes: 'name'
+    });
+    var el = textView.render().el;
+    el.setAttribute("sbs-click", "toggleResource("+this.node.id+")");
+    return el;
   };
 
 };
