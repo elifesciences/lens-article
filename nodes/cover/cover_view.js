@@ -45,7 +45,7 @@ CoverView.Prototype = function() {
       this.content.appendChild(breadcrumbs);
     }
 
-    
+
     if (pubInfo) {
       var pubDate = pubInfo.published_on;
       if (pubDate) {
@@ -64,11 +64,7 @@ CoverView.Prototype = function() {
     // --------------
     //
 
-    var titleView = this.createTextView({
-      path: ['document', 'title'],
-      classes: 'title'
-    });
-
+    var titleView = this.createTextPropertyView(['document', 'title'], { classes: 'title' });
     this.content.appendChild(titleView.render().el);
 
     // Render Authors
