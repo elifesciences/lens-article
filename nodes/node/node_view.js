@@ -1,4 +1,7 @@
+"use strict";
+
 var View = require("substance-application").View;
+var TextPropertyView = require("../text/text_property_view");
 
 // Substance.Node.View
 // -----------------
@@ -39,7 +42,13 @@ NodeView.Prototype = function() {
 
 
   this.createTextView = function(options) {
+    console.error('FIXME: NodeView.createTextView() is deprecated. Use NodeView.createTextPropertyView() instead.');
     var view = this.viewFactory.createView(this.node, options, 'text');
+    return view;
+  };
+
+  this.createTextPropertyView = function(path, options) {
+    var view = new TextPropertyView(this.node.document, path, this.viewFactory, options);
     return view;
   };
 

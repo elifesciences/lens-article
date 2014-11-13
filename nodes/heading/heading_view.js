@@ -19,8 +19,7 @@ HeadingView.Prototype = function() {
     NodeView.prototype.render.call(this);
 
     // Heading title
-    var titleView = this.createTextView({
-      path: [this.node.id, 'content'],
+    var titleView = this.createTextPropertyView([this.node.id, 'content'], {
       classes: 'title'
     });
 

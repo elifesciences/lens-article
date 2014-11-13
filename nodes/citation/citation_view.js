@@ -30,10 +30,7 @@ CitationView.Prototype = function() {
     // Add title
     // -------
 
-    var titleView = this.createTextView({
-      path: [node.id, 'title'],
-      classes: 'title'
-    });
+    var titleView = this.createTextPropertyView([node.id, 'title'], { classes: 'title' });
     frag.appendChild(titleView.render().el);
 
     // Add Authors
