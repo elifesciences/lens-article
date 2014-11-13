@@ -39,11 +39,7 @@ ResourceView.Prototype = function() {
     var node = this.node;
     if (this.options.header) {
       var headerEl = $$('.resource-header');
-      headerEl.appendChild($$('a.name', {
-          href: "#",
-          html: this.getHeader(),
-          "sbs-click": "toggleResource("+node.id+")"
-        }));
+      headerEl.appendChild(this.renderLabel());
       if (this.options.zoom) {
         headerEl.appendChild($$('a.toggle-fullscreen', {
           "href": "#",
@@ -59,6 +55,15 @@ ResourceView.Prototype = function() {
       this.headerEl = headerEl;
       this.el.insertBefore(headerEl, this.content);
     }
+  };
+
+  this.renderLabel = function() {
+    var labelEl = $$('a.name', {
+      href: "#",
+      html: this.getHeader(),
+      "sbs-click": "toggleResource("+this.node.id+")"
+    })
+    return labelEl;
   };
 
   this.renderBody = function() {
