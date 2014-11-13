@@ -3,8 +3,7 @@
 var _ = require('underscore');
 var $$ = require("substance-application").$$;
 var NodeView = require("../node").View;
-var ResourceView = require('../resource/resource_view');
-
+var ResourceView = require('../../resource_view');
 
 // Lens.Citation.View
 // ==========================================================================
