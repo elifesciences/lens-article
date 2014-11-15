@@ -6,8 +6,8 @@ var TextPropertyView = require("../text/text_property_view");
 // Substance.Node.View
 // -----------------
 
-var NodeView = function(node, viewFactory) {
-  View.call(this);
+var NodeView = function(node, viewFactory, options) {
+  View.call(this, options);
   this.node = node;
   this.viewFactory = viewFactory;
   if (!viewFactory) {
