@@ -1,9 +1,8 @@
 "use strict";
 
+var util = require("substance-util");
+var Fragmenter = util.Fragmenter;
 var View = require("substance-application").View;
-
-var Document = require("substance-document");
-var Annotator = Document.Annotator;
 var $$ = require("substance-application").$$;
 
 // Substance.TextPropertyView
@@ -75,7 +74,7 @@ TextPropertyView.Prototype = function() {
 
     // this splits the text and annotations into smaller pieces
     // which is necessary to generate proper HTML.
-    var fragmenter = new Annotator.Fragmenter();
+    var fragmenter = new Fragmenter();
     fragmenter.onText = function(context, text) {
       context.appendChild(document.createTextNode(text));
     };
