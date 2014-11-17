@@ -43,6 +43,8 @@
   padding: 5px;
   font-size: 12px;
   border: 1px solid lightgrey;
+  /* Enable white-space: nowrap; if author controls wrapping (<br> in HTML)
+  /* white-space: nowrap; */ 
 }
 
 .lens-article .content-node.html-table .footers {

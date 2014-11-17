@@ -29,6 +29,7 @@ FormulaView.Prototype = function() {
     if (this.node.inline) {
       this.$el.addClass('inline');
     }
+
     var inputs = [], i;
     for (i=0; i<this.node.data.length; i++) {
       inputs.push({
@@ -47,44 +48,24 @@ FormulaView.Prototype = function() {
       // and use the image to configure MathJax's preview.
       var hasPreview = false;
       var hasSource = false;
-      var $preview;
       for (i=0; i<inputs.length; i++) {
         var format = inputs[i].format;
         var data = inputs[i].data;
         switch (format) {
+          // HACK: ATM, in certain cases there are MJ issues
+          // until then we just put the mml into root, and do not render the preview
           case "mathml":
             if (!hasSource) {
-              var type = _types[format];
-              var $scriptEl = $('<script>').attr('type', type);
-              var $mml = $(data);
-              // Note: we need to declare the mml namespace
-              // as MathJax seems to parse the XML literally.
-              $mml.attr('xmlns:mml', "mml");
-
-              // HACK: MJ has troubles to detect the script element for
-              // our display-formulas. This hack is a fallback, that adds mml
-              // without the script.
-              var HACK = true;
-              if (HACK) {
-                if (this.node.inline) {
-                  $scriptEl.append($mml);
-                  this.$el.append($scriptEl);
-                } else {
-                  this.$el.append($mml);
-                  if ($preview) {
-                    $preview.remove();
-                  }
-                  hasPreview = true;
-                }
-              } else {
-                $scriptEl.append($mml);
-                this.$el.append($scriptEl);
-              }
-
+              this.$el.append($(data));
               hasSource = true;
+              // prevent preview for the time being (HACK), as otherwise there will be two presentations
+              if (hasPreview) {
+                this.$preview.hide();
+                hasPreview = true;
+              }
             }
             break;
-        case "latex":
+          case "latex":
             if (!hasSource) {
               var type = _types[format];
               if (!this.node.inline) type += "; mode=display";
@@ -97,17 +78,10 @@ FormulaView.Prototype = function() {
             break;
           case "image":
             if (!hasPreview) {
-              $preview = $('<div>').addClass('MathJax_Preview');
+              var $preview = $('<div>').addClass('MathJax_Preview');
               $preview.append($('<img>').attr('src', data));
               this.$el.append($preview);
-              hasPreview = true;
-            }
-            break;
-          case "svg":
-            if (!hasPreview) {
-              $preview = $('<div>').addClass('MathJax_Preview');
-              $preview.append($(data));
-              this.$el.append($preview);
+              this.$preview = $preview;
               hasPreview = true;
             }
             break;
