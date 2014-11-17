@@ -181,8 +181,8 @@ PublicationInfoView.Prototype = function() {
           text: articleUtil.formatDate(entry.date)
         }));
       }
+      datesEl.appendChild(document.createTextNode('.'));
     }
-    datesEl.appendChild(document.createTextNode('.'));
 
     return datesEl;
   };

@@ -77,8 +77,8 @@ CitationView.Prototype = function() {
     // Put them together
     sourceText = sourceFrag;
 
-    // Add separator only if there's more to display
-    if (sourceFrag && pagesFrag || publisherFrag) {
+    // Add separator only if there's content already, and more to display
+    if (sourceFrag && (pagesFrag || publisherFrag)) {
       sourceText += ": ";
     }
 
