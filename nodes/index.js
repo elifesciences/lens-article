@@ -1,8 +1,11 @@
 "use strict";
 
 module.exports = {
-  /* Annotation types */
+  /* basic/abstract node types */
+  "node": require("./node"),
+  "composite": require("./composite"),
   "annotation": require("./annotation"),
+  /* Annotation types */
   "emphasis": require("./emphasis"),
   "strong": require("./strong"),
   "subscript": require("./subscript"),
@@ -11,6 +14,7 @@ module.exports = {
   "code": require("./code"),
   "author_callout": require("./author_callout"),
   "custom_annotation": require("./custom_annotation"),
+  "inline-formula": require("./inline_formula"),
   /* Reference types */
   "resource_reference": require("./resource_reference"),
   "contributor_reference": require("./contributor_reference"),

@@ -1,0 +1,29 @@
+{
+  "modules": [
+    {
+      "repository": "https://github.com/substance/application.git",
+      "folder": "node_modules/substance-application",
+      "branch": "lens"
+    },
+    {
+      "repository": "https://github.com/substance/data.git",
+      "folder": "node_modules/substance-data",
+      "branch": "lens"
+    },
+    {
+      "repository": "https://github.com/substance/document.git",
+      "folder": "node_modules/substance-document",
+      "branch": "lens"
+    },
+    {
+      "repository": "https://github.com/substance/util.git",
+      "folder": "node_modules/substance-util",
+      "branch": "lens"
+    },
+    {
+      "repository": "https://github.com/elifesciences/lens-article.git",
+      "folder": ".",
+      "branch": "master"
+    }
+  ]
+}

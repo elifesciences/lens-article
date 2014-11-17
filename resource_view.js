@@ -41,7 +41,7 @@ ResourceView.Prototype = function() {
       var headerEl = $$('.resource-header');
       headerEl.appendChild($$('a.name', {
           href: "#",
-          text: this.node.getHeader(),
+          html: this.getHeader(),
           "sbs-click": "toggleResource("+node.id+")"
         }));
       if (this.options.zoom) {
@@ -56,6 +56,7 @@ ResourceView.Prototype = function() {
         "sbs-click": "toggleResource("+node.id+")",
         "html": "<i class=\"icon-eye-open\"></i><i class=\"icon-eye-close\"></i>"
       }));
+      this.headerEl = headerEl;
       this.el.insertBefore(headerEl, this.content);
     }
   };
@@ -63,6 +64,9 @@ ResourceView.Prototype = function() {
   this.renderBody = function() {
   };
 
+  this.getHeader = function() {
+    return this.node.getHeader();
+  };
 };
 ResourceView.prototype = new ResourceView.Prototype();
 

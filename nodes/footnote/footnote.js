@@ -54,6 +54,6 @@ Footnote.Prototype.prototype = Paragraph.prototype;
 Footnote.prototype = new Footnote.Prototype();
 Footnote.prototype.constructor = Footnote;
 
-DocumentNode.defineProperties(Footnote.prototype, ["label"]);
+DocumentNode.defineProperties(Footnote);
 
 module.exports = Footnote;

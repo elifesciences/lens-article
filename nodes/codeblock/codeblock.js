@@ -44,7 +44,7 @@ Codeblock.description = {
 Codeblock.example = {
   "type": "codeblock",
   "id": "codeblock_1",
-  "content": "var text = \"Sun\";\nvar op1 = Operator.TextOperation.Delete(2, \"n\");\ntext = op2.apply(op1.apply(text));\nconsole.log(text);",
+  "content": "var text = \"Sun\";\nvar op1 = null;\ntext = op2.apply(op1.apply(text));\nconsole.log(text);",
 };
 
 Codeblock.Prototype = function() {};

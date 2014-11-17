@@ -36,7 +36,7 @@ BoxView.Prototype = function() {
   };
 };
 
-BoxView.Prototype.prototype = NodeView.prototype;
+BoxView.Prototype.prototype = CompositeView.prototype;
 BoxView.prototype = new BoxView.Prototype();
 
 module.exports = BoxView;

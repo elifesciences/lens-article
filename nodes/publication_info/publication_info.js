@@ -10,8 +10,8 @@ PublicationInfo.type = {
   "id": "publication_info",
   "parent": "content",
   "properties": {
-    "received_on": "string",
-    "accepted_on": "string",
+    // history: array of { type: 'string', date: 'string'}
+    "history": [ "array", "object" ],
     "published_on": "string",
     "journal": "string",
     "provider": "string",
@@ -21,7 +21,6 @@ PublicationInfo.type = {
     "subjects": ["array", "string"],
     "links": ["array", "objects"],
     "doi": "string",
-    "supplements": ["array", "object"], // deprecated
     "related_article": "string",
     "article_info": "paragraph"
   }
@@ -38,6 +37,7 @@ PublicationInfo.description = {
     "received_on": "Submission received",
     "accepted_on": "Paper accepted on",
     "published_on": "Paper published on",
+    "history": "History of the submission cycle",
     "journal": "The Journal",
     "provider": "Who is hosting this article",
     "article_type": "Research Article vs. Insight, vs. Correction etc.",
@@ -52,9 +52,11 @@ PublicationInfo.description = {
 
 PublicationInfo.example = {
   "id": "publication_info",
-  "received_on": "2012-06-20",
-  "accepted_on": "2012-09-05",
   "published_on": "2012-11-13",
+  "history": [
+    { "type": "received", "date": "2012-06-20" },
+    { "type": "accepted", "date": "2012-09-05" }
+  ],
   "journal": "eLife",
   "provider": "eLife",
   "article_type": "Research Article",

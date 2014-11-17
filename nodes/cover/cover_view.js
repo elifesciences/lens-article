@@ -10,7 +10,6 @@ var articleUtil = require("../../article_util");
 
 var CoverView = function(node, viewFactory) {
   NodeView.call(this, node, viewFactory);
-
 };
 
 CoverView.Prototype = function() {
@@ -31,24 +30,6 @@ CoverView.Prototype = function() {
     var node = this.node;
     var pubInfo = this.node.document.get('publication_info');
 
-    // Intro + Send feedback for HighWire
-    // --------------
-    //
-    // TODO: this should be refactored and live in some configuration object
-
-    if (pubInfo.provider === "HighWire") {
-      var introEl = $$('.intro.container', {
-        children: [
-          $$('.intro-text', {
-            html: '<i class="icon-info"></i>&nbsp;&nbsp;Lens provides a novel way of looking at research on the web.'
-          }),
-          $$('a.send-feedback', {href: "http://home.highwire.org/feedback/lens-feedback", text: "Send feedback", target: "_blank" })
-        ]
-      });
-
-      this.content.appendChild(introEl);
-    }
-
     if (node.breadcrumbs && node.breadcrumbs.length > 0) {
       var breadcrumbs = $$('.breadcrumbs', {
         children: _.map(node.breadcrumbs, function(bc) {
@@ -68,8 +49,13 @@ CoverView.Prototype = function() {
     if (pubInfo) {
       var pubDate = pubInfo.published_on;
       if (pubDate) {
+        var items = [articleUtil.formatDate(pubDate)];
+        if (pubInfo.journal && !node.breadcrumbs) {
+          items.push('<i> in '+pubInfo.journal+'</i>');
+        }
+
         this.content.appendChild($$('.published-on', {
-          text: articleUtil.formatDate(pubDate)
+          html: items.join('')
         }));
       }
     }
@@ -82,6 +68,7 @@ CoverView.Prototype = function() {
       path: ['document', 'title'],
       classes: 'title'
     });
+
     this.content.appendChild(titleView.render().el);
 
     // Render Authors

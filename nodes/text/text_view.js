@@ -78,6 +78,8 @@ TextView.Prototype = function() {
     var fragment = document.createDocumentFragment();
     var doc = this.node.document;
 
+    var annotationViews = [];
+
     // this splits the text and annotations into smaller pieces
     // which is necessary to generate proper HTML.
     var fragmenter = new Annotator.Fragmenter();
@@ -87,12 +89,18 @@ TextView.Prototype = function() {
     fragmenter.onEnter = function(entry, parentContext) {
       var anno = doc.get(entry.id);
       var annotationView = that.viewFactory.createView(anno);
-      var el = annotationView.render().el;
-      parentContext.appendChild(el);
-      return el;
+      parentContext.appendChild(annotationView.el);
+      annotationViews.push(annotationView);
+      return annotationView.el;
     };
     // this calls onText and onEnter in turns...
     fragmenter.start(fragment, text, annotations);
+
+    // allow all annotationViews to (re-)render to allow annotations with custom
+    // rendering (e.g., inline-formulas)
+    for (var i = 0; i < annotationViews.length; i++) {
+      annotationViews[i].render();
+    }
 
     // set the content
     this.content.innerHTML = "";

@@ -7,10 +7,10 @@ var InlineImage = function(node, doc) {
 };
 
 InlineImage.type = {
-  id: "link",
+  id: "inline-image",
   parent: "annotation",
   properties: {
-    "url": "string"
+    "target": "image"
   }
 };
 
