@@ -1,0 +1,55 @@
+/* Table */
+
+.lens-article .content-node.table > .content {
+  padding: 20px;
+}
+
+.lens-article .content-node.table > .content img {
+  width: 100%;
+}
+
+.lens-article .content-node.table .table-wrapper {
+  width: 100%;
+  overflow: auto;
+}
+
+.lens-article .content-node.table .caption {
+  padding-top: 20px;
+}
+
+.lens-article .content-node.table table {
+  position: relative;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-bottom: 20px;
+  margin: 0 auto;
+}
+
+.lens-article .content-node.table thead tr {
+  background: #eee;
+}
+
+.lens-article .content-node.table thead td {
+  font-weight: bold;
+}
+
+/* Table sub tags */
+.lens-article .content-node.table table sub {
+  vertical-align: baseline;
+  position: relative;
+  top: 0.4em;
+  font-size: 11px;
+}
+
+.lens-article .content-node.table table td {
+  padding: 5px;
+  font-size: 12px;
+  border: 1px solid lightgrey;
+}
+
+.lens-article .content-node.table .footers {
+  padding: 0 20px;
+  padding-top: 10px;
+  font-size: 12px;
+  background: #fff;
+}
