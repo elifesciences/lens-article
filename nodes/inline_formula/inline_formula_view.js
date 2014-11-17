@@ -1,14 +1,12 @@
-var AnnotationView = require('../annotation').View;
+"use strict";
+
+var ResourceReferenceView = require('../resource_reference').View;
 
 var InlineFormulaView = function(node, viewFactory) {
-  AnnotationView.call(this, node, viewFactory);
+  ResourceReferenceView.call(this, node, viewFactory);
 };
 
 InlineFormulaView.Prototype = function() {
-
-  this.createElement = function() {
-    return document.createElement('span');
-  };
 
   this.render = function() {
     var formula = this.node.document.get(this.node.target);
@@ -18,7 +16,7 @@ InlineFormulaView.Prototype = function() {
   };
 
 };
-InlineFormulaView.Prototype.prototype = AnnotationView.prototype;
+InlineFormulaView.Prototype.prototype = ResourceReferenceView.prototype;
 InlineFormulaView.prototype = new InlineFormulaView.Prototype();
 
 module.exports = InlineFormulaView;

@@ -1,3 +1,5 @@
+"use strict";
+
 var AnnotationView = function(node, viewFactory) {
   this.node = node;
   this.viewFactory = viewFactory;
