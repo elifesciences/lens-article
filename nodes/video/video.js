@@ -91,26 +91,26 @@ Video.Prototype = function() {
     }
     var videoEl = htmlDocument.createElement('video');
     var sourceEl;
-    if (node.url) {
+    if (this.url) {
       sourceEl = htmlDocument.createElement('source');
       sourceEl.setAttribute('data-property', 'url_mp4');
-      sourceEl.setAttribute('src', node.url);
+      sourceEl.setAttribute('src', this.url);
       sourceEl.setAttribute('type', "video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;");
-      videoEl.append(source);
+      videoEl.append(sourceEl);
     }
-    if (node.url_ogv) {
+    if (this.url_ogv) {
       sourceEl = htmlDocument.createElement('source');
       sourceEl.setAttribute('data-property', 'url_ogv');
-      sourceEl.setAttribute('src', node.url_ogv);
+      sourceEl.setAttribute('src', this.url_ogv);
       sourceEl.setAttribute('type', "video/ogg; codecs=&quot;theora, vorbis&quot;");
-      videoEl.append(source);
+      videoEl.append(sourceEl);
     }
-    if (node.url_webm) {
+    if (this.url_webm) {
       sourceEl = htmlDocument.createElement('source');
       sourceEl.setAttribute('data-property', 'url_webm');
-      sourceEl.setAttribute('src', node.url_webm);
+      sourceEl.setAttribute('src', this.url_webm);
       sourceEl.setAttribute('type', "video/webm; codecs=&quot;vp8, vorbis%quot;");
-      videoEl.append(source);
+      videoEl.append(sourceEl);
     }
     figureEl.appendChild(videoEl);
 

@@ -1,6 +1,6 @@
 "use strict";
 
-var TextView = require('../text/text_view');
+var TextView = require('../text').View;
 
 // Substance.Codeblock.View
 // ==========================================================================

@@ -77,7 +77,7 @@ Supplement.Prototype = function() {
       figureEl.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     var linkEl = htmlDocument.createElement('a');
-    img.setAttribute('href', this.url);
+    linkEl.setAttribute('href', this.url);
     figureEl.appendChild(linkEl);
     var caption = this.getCaption();
     if (caption) {
