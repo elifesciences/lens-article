@@ -8,7 +8,7 @@ var $$ = require("substance-application").$$;
 // -----------------
 //
 
-var TextView = function(node, viewFactory, options) {
+var LensTextView = function(node, viewFactory, options) {
   NodeView.call(this, node, viewFactory);
 
   options = this.options = options || {};
@@ -31,7 +31,7 @@ var TextView = function(node, viewFactory, options) {
   this._annotations = {};
 };
 
-TextView.Prototype = function() {
+LensTextView.Prototype = function() {
 
   // Rendering
   // =============================
@@ -108,7 +108,7 @@ TextView.Prototype = function() {
   };
 };
 
-TextView.Prototype.prototype = NodeView.prototype;
-TextView.prototype = new TextView.Prototype();
+LensTextView.Prototype.prototype = NodeView.prototype;
+LensTextView.prototype = new LensTextView.Prototype();
 
-module.exports = TextView;
+module.exports = LensTextView;

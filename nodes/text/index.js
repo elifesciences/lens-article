@@ -1,6 +1,6 @@
 "use strict";
 
 module.exports = {
-  Model: require("./text_node"),
-  View: require("./text_view")
+  Model: require("./lens_text_node"),
+  View: require("./lens_text_view")
 };
