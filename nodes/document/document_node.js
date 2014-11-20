@@ -21,6 +21,14 @@ DocumentNode.type = {
 };
 
 DocumentNode.Prototype = function() {
+  this.getAuthors = function() {
+    var authors = [];
+    this.authors.forEach(function(id) {
+      var author = this.document.get(id);
+      if (author) authors.push(author);
+    }, this)
+    return authors;
+  };
 };
 
 DocumentNode.Prototype.prototype = Document.Node.prototype;
