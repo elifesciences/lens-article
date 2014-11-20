@@ -50,7 +50,7 @@ List.example = {
 
 List.Prototype = function() {
 
-  this.__super__ = Composite.prototype;
+  var __super__ = Composite.prototype;
 
   this.getLength = function() {
     return this.properties.items.length;
@@ -68,7 +68,7 @@ List.Prototype = function() {
 
   this.toHtml = function(htmlDocument) {
     var elType = this.ordered ? 'ol' : 'ul';
-    var listEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: elType });
+    var listEl = __super__.toHtml.call(this, htmlDocument, { elementType: elType });
     var pEls = this.childrenToHtml(htmlDocument);
     for (var i = 0; i < pEls.length; i++) {
       // reattach the content of the paragraph element to a <li> element

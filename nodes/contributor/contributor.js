@@ -79,7 +79,7 @@ Contributor.example = {
 
 Contributor.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.getAffiliations = function() {
     return _.map(this.properties.affiliations, function(affId) {
@@ -92,7 +92,7 @@ Contributor.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var contributor = this.__super__.toHtml(htmlDocument);
+    var contributor = __super__.toHtml(htmlDocument);
 
     contributor.setAttribute('data-deceased', this.deceased);
 

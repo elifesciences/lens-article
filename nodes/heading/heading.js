@@ -50,11 +50,11 @@ Heading.description = {
 
 Heading.Prototype = function() {
 
-  this.__super__ = TextNode.prototype;
+  var __super__ = TextNode.prototype;
 
   this.toHtml = function(htmlDocument) {
-    var el = this.__super__.toHtml.call(this, htmlDocument);
-    console.error("Not yet implemented: toHtml for type '%s'", this.type);
+    var elementType = 'h'+this.level;
+    var el = __super__.toHtml.call(this, htmlDocument, {elementType: elementType});
     return el;
   };
 

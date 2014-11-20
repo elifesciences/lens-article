@@ -6,14 +6,14 @@ var LensNode = require('../node').Model;
 
 var LensComposite = function (node, document) {
   LensNode.call(this, node, document);
-}
+};
+
 LensComposite.Prototype = function() {
 
   // Mix-in Document.Composite
   _.extend(this, Document.Composite.prototype);
 
-  this.__super__ = LensNode.prototype;
-
+  var __super__ = LensNode.prototype;
 
   this.getLength = function() {
     return this.properties.children.length;
@@ -27,6 +27,17 @@ LensComposite.Prototype = function() {
     return _.map(this.properties.children, function(id) {
       return this.document.get(id);
     }, this);
+  };
+
+  // need to copy that method to be able to delegate to the correct
+  // super class
+  this.toHtml = function(htmlDocument, options) {
+    var el = __super__.toHtml.call(this, htmlDocument, options);
+    var childrenEls = this.childrenToHtml(htmlDocument);
+    for (var i = 0; i < childrenEls.length; i++) {
+      this.el.appendChild(childrenEls[i]);
+    }
+    return el;
   };
 
 };

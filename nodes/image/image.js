@@ -45,10 +45,10 @@ ImageNode.description = {
 
 ImageNode.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.toHtml = function(htmlDocument) {
-    var el = this.__super__.toHtml.call(this, htmlDocument, {elementType: 'img'});
+    var el = __super__.toHtml.call(this, htmlDocument, {elementType: 'img'});
     el.setAttribute('source', this.url);
     return el;
   };

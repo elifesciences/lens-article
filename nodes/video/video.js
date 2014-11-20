@@ -69,7 +69,7 @@ Video.example = {
 
 Video.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.getHeader = function() {
     return this.properties.label;
@@ -85,7 +85,7 @@ Video.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
       figureEl.appendChild(this.propertyToHtml('label'));
     }

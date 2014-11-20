@@ -1,4 +1,3 @@
-var _ = require('underscore');
 
 var DocumentNode = require("../node").Model;
 
@@ -58,7 +57,7 @@ Supplement.example = {
 
 Supplement.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.getCaption = function() {
     if (this.properties.caption) {
@@ -73,7 +72,7 @@ Supplement.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
       figureEl.appendChild(this.propertyToHtml('label'));
     }

@@ -53,14 +53,14 @@ Box.example = {
 
 Box.Prototype = function() {
 
-  this.__super__ = Composite.prototype;
+  var __super__ = Composite.prototype;
 
   this.getChildrenIds = function() {
     return this.properties.children;
   };
 
-  this.toHtml = function(htmlDocument) {
-    var box = this.__super__.toHtml.call(this, htmlDocument);
+  this.toHtml = function(htmlDocument, options) {
+    var box = __super__.toHtml.call(this, htmlDocument, options);
     if (this.properties.label) {
       box.appendChild(this.propertyToHtml('label'));
     }

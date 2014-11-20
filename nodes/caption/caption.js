@@ -59,7 +59,7 @@ Caption.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var caption = this.__super__.toHtml.call(this, htmlDocument, { elementType: "figcaption" });
+    var caption = __super__.toHtml.call(this, htmlDocument, { elementType: "figcaption" });
     if (this.properties.title) {
       caption.appendChild(this.propertyToHtml('title'));
     }

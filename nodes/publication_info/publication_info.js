@@ -82,14 +82,14 @@ PublicationInfo.example = {
 
 PublicationInfo.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.getArticleInfo = function() {
     return this.document.get("articleinfo");
   };
 
   this.toHtml = function(htmlDocument) {
-    var el = this.__super__.toHtml.call(this, htmlDocument);
+    var el = __super__.toHtml.call(this, htmlDocument);
     console.error("Not yet implemented: toHtml for type '%s'", this.type);
     return el;
   };

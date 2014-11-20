@@ -59,10 +59,10 @@ Formula.example = {
 Formula.Prototype = function() {
   this.inline = false;
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
-  this.toHtml = function(htmlDocument) {
-    var el = this.__super__.toHtml.call(this, htmlDocument);
+  this.toHtml = function(htmlDocument, options) {
+    var el = __super__.toHtml.call(this, htmlDocument, options);
     console.error("Not yet implemented: toHtml for type '%s'", this.type);
     return el;
   };

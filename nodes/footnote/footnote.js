@@ -43,12 +43,12 @@ Footnote.example = {
 
 Footnote.Prototype = function() {
 
-  this.__super__ = Composite.prototype;
+  var __super__ = Composite.prototype;
 
   // as suggested here: http://www.w3.org/TR/html5/common-idioms.html#footnotes
   // footnotes are commonly represented via 'section' element
   this.toHtml = function(htmlDocument) {
-    var fnEl = this.__super__.toHtml.call(this, htmlDocument, {elementType: "section"});
+    var fnEl = __super__.toHtml.call(this, htmlDocument, {elementType: "section"});
     if (this.properties.label) {
       fnEl.appendChild(this.propertyToHtml('label', { elementType: "label" }));
     }

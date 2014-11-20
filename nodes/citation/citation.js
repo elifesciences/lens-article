@@ -99,7 +99,7 @@ Citation.example = {
 
 Citation.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   // Returns the citation URLs if available
   // Falls back to the DOI url
@@ -114,7 +114,7 @@ Citation.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var citation = this.__super__.toHtml(htmlDocument);
+    var citation = __super__.toHtml(htmlDocument);
 
     citation.setAttribute('data-citation-type', this.citation_type);
 

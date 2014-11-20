@@ -50,7 +50,7 @@ Cover.example = {
 
 Cover.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.getAuthors = function() {
     return _.map(this.properties.authors, function(paragraphId) {
@@ -63,7 +63,7 @@ Cover.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var coverEl = this.__super__.toHtml(htmlDocument);
+    var coverEl = __super__.toHtml(htmlDocument);
     var pubInfo = this.document.get('publication_info');
 
     if (pubInfo) {

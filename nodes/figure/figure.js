@@ -51,7 +51,7 @@ Figure.example = {
 
 Figure.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.hasCaption = function() {
     return (!!this.properties.caption);
@@ -66,7 +66,7 @@ Figure.Prototype = function() {
   };
 
   this.toHtml = function(htmlDocument) {
-    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
       figureEl.appendChild(this.propertyToHtml('label'));
     }

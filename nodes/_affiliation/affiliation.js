@@ -48,10 +48,10 @@ Affiliation.example = {
 
 Affiliation.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.toHtml = function(htmlDocument) {
-    var aff = this.__super__.toHtml(htmlDocument);
+    var aff = __super__.toHtml(htmlDocument);
 
     if (this.properties.label) {
       aff.appendChild(this.propertyToHtml('label'));

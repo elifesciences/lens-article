@@ -10,11 +10,11 @@ var LensNode = function(node, document) {
 
 LensNode.Prototype = function() {
 
-  this.__super__ = DocumentNode.prototype;
+  var __super__ = DocumentNode.prototype;
 
   this.toHtml = function(htmlDocument, options) {
-    var el = this.__super__.toHtml.call(this, htmlDocument, options);
-    el.setAttribute('data-source-id', this.source_id);
+    var el = __super__.toHtml.call(this, htmlDocument, options);
+    if (this.source_id) el.setAttribute('data-source-id', this.source_id);
     return el;
   };
 
