@@ -39,7 +39,16 @@ Paragraph.example = {
   "content ": "Foo bar."
 };
 
-Paragraph.Prototype = function() {};
+Paragraph.Prototype = function() {
+
+  var __super__ = TextNode.prototype;
+
+  this.toHtml = function(htmlDocument) {
+    var el = __super__.toHtml.call(this, htmlDocument, { elementType: 'p' });
+    return el;
+  };
+
+};
 
 Paragraph.Prototype.prototype = TextNode.prototype;
 Paragraph.prototype = new Paragraph.Prototype();
