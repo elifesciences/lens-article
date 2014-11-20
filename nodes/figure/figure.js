@@ -68,11 +68,11 @@ Figure.Prototype = function() {
   this.toHtml = function(htmlDocument) {
     var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
-      figureEl.appendChild(this.propertyToHtml('label'));
+      figureEl.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     var imgEl = htmlDocument.createElement('img');
     imgEl.setAttribute('source', this.url);
-    figureEl.appendChild(imgEl)
+    figureEl.appendChild(imgEl);
     var caption = this.getCaption();
     if (caption) {
       figureEl.appendChild(caption.toHtml(htmlDocument));

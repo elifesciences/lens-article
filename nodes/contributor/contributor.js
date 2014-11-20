@@ -101,7 +101,7 @@ Contributor.Prototype = function() {
       imgEl.setAttribute('source', this.image);
 
     }
-    contributor.appendChild(this.propertyToHtml("name"));
+    contributor.appendChild(this.propertyToHtml(htmlDocument, "name"));
 
     if (this.bio && this.bio.length > 0) {
       var bioEl = htmlDocument.createElement('div');
@@ -115,7 +115,7 @@ Contributor.Prototype = function() {
 
     ["role", "contribution"].forEach(function(prop) {
       if (this.properties[prop]) {
-        contributor.appendChild(this.propertyToHtml(prop));
+        contributor.appendChild(this.propertyToHtml(htmlDocument, prop));
       }
     });
 

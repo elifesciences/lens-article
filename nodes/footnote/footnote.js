@@ -50,7 +50,7 @@ Footnote.Prototype = function() {
   this.toHtml = function(htmlDocument) {
     var fnEl = __super__.toHtml.call(this, htmlDocument, {elementType: "section"});
     if (this.properties.label) {
-      fnEl.appendChild(this.propertyToHtml('label', { elementType: "label" }));
+      fnEl.appendChild(this.propertyToHtml(htmlDocument, 'label', { elementType: "label" }));
     }
     var childrenEls = this.childrenToHtml(htmlDocument);
     for (var i = 0; i < childrenEls.length; i++) {

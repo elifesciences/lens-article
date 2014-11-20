@@ -75,7 +75,7 @@ Definition.Prototype = function() {
     var defEl = __super__.toHtml(htmlDocument);
     ["title", "description"].forEach(function(prop) {
       if (this.properties[prop]) {
-        defEl.appendChild(this.propertyToHtml(prop));
+        defEl.appendChild(this.propertyToHtml(htmlDocument, prop));
       }
     });
     return defEl;

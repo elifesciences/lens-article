@@ -89,7 +89,7 @@ Cover.Prototype = function() {
       coverEl.appendChild(pubInfoEl);
     }
 
-    coverEl.appendChild(this.propertyToHtml(['document', 'title']));
+    coverEl.appendChild(this.propertyToHtml(htmlDocument, ['document', 'title']));
 
     // TODO: render more (authors, links, etc.)
 

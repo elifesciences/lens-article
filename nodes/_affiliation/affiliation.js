@@ -54,19 +54,19 @@ Affiliation.Prototype = function() {
     var aff = __super__.toHtml(htmlDocument);
 
     if (this.properties.label) {
-      aff.appendChild(this.propertyToHtml('label'));
+      aff.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     if (this.properties.city) {
-      aff.appendChild(this.propertyToHtml('city'));
+      aff.appendChild(this.propertyToHtml(htmlDocument, 'city'));
     }
     if (this.properties.country) {
-      aff.appendChild(this.propertyToHtml('country'));
+      aff.appendChild(this.propertyToHtml(htmlDocument, 'country'));
     }
     if (this.properties.department) {
-      aff.appendChild(this.propertyToHtml('department'));
+      aff.appendChild(this.propertyToHtml(htmlDocument, 'department'));
     }
     if (this.properties.institution) {
-      aff.appendChild(this.propertyToHtml('institution'));
+      aff.appendChild(this.propertyToHtml(htmlDocument, 'institution'));
     }
     return aff;
   };

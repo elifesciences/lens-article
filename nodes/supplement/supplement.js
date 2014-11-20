@@ -74,7 +74,7 @@ Supplement.Prototype = function() {
   this.toHtml = function(htmlDocument) {
     var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
-      figureEl.appendChild(this.propertyToHtml('label'));
+      figureEl.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     var linkEl = htmlDocument.createElement('a');
     img.setAttribute('href', this.url);

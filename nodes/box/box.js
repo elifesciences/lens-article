@@ -62,7 +62,7 @@ Box.Prototype = function() {
   this.toHtml = function(htmlDocument, options) {
     var box = __super__.toHtml.call(this, htmlDocument, options);
     if (this.properties.label) {
-      box.appendChild(this.propertyToHtml('label'));
+      box.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     var childrenEls = this.childrenToHtml(htmlDocument);
     for (var i = 0; i < childrenEls.length; i++) {

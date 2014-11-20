@@ -87,7 +87,7 @@ Video.Prototype = function() {
   this.toHtml = function(htmlDocument) {
     var figureEl = __super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
     if (this.properties.label) {
-      figureEl.appendChild(this.propertyToHtml('label'));
+      figureEl.appendChild(this.propertyToHtml(htmlDocument, 'label'));
     }
     var videoEl = htmlDocument.createElement('video');
     var sourceEl;

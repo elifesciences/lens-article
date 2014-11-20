@@ -120,7 +120,7 @@ Citation.Prototype = function() {
 
     ["label", "title"].forEach(function(prop) {
       if (this.properties[prop]) {
-        citation.appendChild(this.propertyToHtml(prop));
+        citation.appendChild(this.propertyToHtml(htmlDocument, prop));
       }
     });
 
@@ -133,7 +133,7 @@ Citation.Prototype = function() {
 
     ["source", "volume", "fpage", "lpage", "year", "comment"].forEach(function(prop) {
       if (this.properties[prop]) {
-        citation.appendChild(this.propertyToHtml(prop));
+        citation.appendChild(this.propertyToHtml(htmlDocument, prop));
       }
     });
 
