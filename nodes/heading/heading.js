@@ -1,10 +1,10 @@
 "use strict";
 
-var DocumentNode = require("substance-document").Node;
-var Text = require("../text/text_node");
+var DocumentNode = require("../node").Model;
+var TextNode = require("../text").Model;
 
 var Heading = function(node, document) {
-  Text.call(this, node, document);
+  TextNode.call(this, node, document);
 };
 
 // Type definition
@@ -49,10 +49,18 @@ Heading.description = {
 };
 
 Heading.Prototype = function() {
-  this.splitInto = 'paragraph';
+
+  this.__super__ = TextNode.prototype;
+
+  this.toHtml = function(htmlDocument) {
+    var el = this.__super__.toHtml.call(this, htmlDocument);
+    console.error("Not yet implemented: toHtml for type '%s'", this.type);
+    return el;
+  };
+
 };
 
-Heading.Prototype.prototype = Text.prototype;
+Heading.Prototype.prototype = TextNode.prototype;
 Heading.prototype = new Heading.Prototype();
 Heading.prototype.constructor = Heading;
 

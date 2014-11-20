@@ -1,29 +1,17 @@
 "use strict";
 
-var CompositeView = require("../composite/composite_view");
+var TextView = require('../text').View;
 
-// Substance.Paragraph.View
+// Substance.Heading.View
 // ==========================================================================
 
-var ParagraphView = function(node, viewFactory) {
-  CompositeView.call(this, node, viewFactory);
+var ParagraphView = function() {
+  TextView.apply(this, arguments);
 };
 
-ParagraphView.Prototype = function() {
+ParagraphView.Prototype = function() {};
 
-  this.render = function() {
-    this.content = document.createElement("DIV");
-    this.content.classList.add("content");
-
-    this.renderChildren();
-
-    this.el.appendChild(this.content);
-
-    return this;
-  };
-};
-
-ParagraphView.Prototype.prototype = CompositeView.prototype;
+ParagraphView.Prototype.prototype = TextView.prototype;
 ParagraphView.prototype = new ParagraphView.Prototype();
 
 module.exports = ParagraphView;

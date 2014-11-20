@@ -1,19 +1,18 @@
 "use strict";
 
-var Document = require("substance-document");
-var DocumentNode = Document.Node;
-var Paragraph = require('../paragraph').Model;
-
+var DocumentNode = require('../node').Model;
+var Composite = require('../composite').Model;
 
 var Footnote = function(node, document) {
-  Paragraph.call(this, node, document);
+  Composite.call(this, node, document);
 };
 
 Footnote.type = {
   "id": "footnote",
-  "parent": "paragraph",
+  "parent": "composite",
   "properties": {
-    "label": "string"
+    "label": "string",
+    "children": ["array", "node"]
   }
 };
 
@@ -39,18 +38,30 @@ Footnote.example = {
   "type": "footnote",
   "id": "footnote_1",
   "label": "a",
-  "children ": [
-    "text_1",
-    "image_1",
-    "text_2"
-  ]
+  "content ": [ "p_1", "p_2" ]
 };
 
 Footnote.Prototype = function() {
 
+  this.__super__ = Composite.prototype;
+
+  // as suggested here: http://www.w3.org/TR/html5/common-idioms.html#footnotes
+  // footnotes are commonly represented via 'section' element
+  this.toHtml = function(htmlDocument) {
+    var fnEl = this.__super__.toHtml.call(this, htmlDocument, {elementType: "section"});
+    if (this.properties.label) {
+      fnEl.appendChild(this.propertyToHtml('label', { elementType: "label" }));
+    }
+    var childrenEls = this.childrenToHtml(htmlDocument);
+    for (var i = 0; i < childrenEls.length; i++) {
+      fnEl.appendChild(childrenEls[i]);
+    }
+    return fnEl;
+  };
+
 };
 
-Footnote.Prototype.prototype = Paragraph.prototype;
+Footnote.Prototype.prototype = Composite.prototype;
 Footnote.prototype = new Footnote.Prototype();
 Footnote.prototype.constructor = Footnote;
 

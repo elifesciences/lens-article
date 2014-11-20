@@ -1,12 +1,12 @@
 
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
 
 // Lens.Definition
 // -----------------
 //
 
 var Definition = function(node) {
-  Document.Node.call(this, node);
+  DocumentNode.call(this, node);
 };
 
 // Type definition
@@ -15,9 +15,8 @@ var Definition = function(node) {
 
 Definition.type = {
   "id": "definition", // type name
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "title": "string",
     "description": "string"
   }
@@ -30,11 +29,9 @@ Definition.type = {
 Definition.description = {
   "name": "Definition",
   "remarks": [
-    "A journal citation.",
-    "This element can be used to describe all kinds of citations."
   ],
   "properties": {
-    "title": "The article's title",
+    "title": "",
     "description": "Definition description",
   }
 };
@@ -53,6 +50,9 @@ Definition.example = {
 
 
 Definition.Prototype = function() {
+
+  this.__super__ = DocumentNode.prototype;
+
   // Returns the citation URLs if available
   // Falls back to the DOI url
   // Always returns an array;
@@ -64,18 +64,29 @@ Definition.Prototype = function() {
   this.getHeader = function() {
     if (this.properties.label) {
       return [this.properties.label,this.properties.title].join(". ");
-    }
-    else {
+    } else {
       return this.properties.title;
     }
   };
 
+  this.toHtml = function(htmlDocument) {
+    // TODO: alternatively we could use <p><dfn></p> or <dl><dt/><dd/></dl>
+    // However, both do not exactly correspond to what we want
+    var defEl = this.__super__.toHtml(htmlDocument);
+    ["title", "description"].forEach(function(prop) {
+      if (this.properties[prop]) {
+        defEl.appendChild(this.propertyToHtml(prop));
+      }
+    });
+    return defEl;
+  };
+
 };
 
-Definition.Prototype.prototype = Document.Node.prototype;
+Definition.Prototype.prototype = DocumentNode.prototype;
 Definition.prototype = new Definition.Prototype();
 Definition.prototype.constructor = Definition;
 
-Document.Node.defineProperties(Definition);
+DocumentNode.defineProperties(Definition);
 
 module.exports = Definition;

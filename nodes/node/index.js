@@ -1,6 +1,6 @@
 "use strict";
 
 module.exports = {
-  Model: require("./node"),
-  View: require("./node_view")
+  Model: require("./lens_node"),
+  View: require("./lens_node_view")
 };

@@ -1,9 +1,9 @@
 "use strict";
 
-var Document = require("substance-document");
+var DocumentNode = require("../node").Model;
 
 var PublicationInfo = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 PublicationInfo.type = {
@@ -82,16 +82,24 @@ PublicationInfo.example = {
 
 PublicationInfo.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.getArticleInfo = function() {
     return this.document.get("articleinfo");
   };
 
+  this.toHtml = function(htmlDocument) {
+    var el = this.__super__.toHtml.call(this, htmlDocument);
+    console.error("Not yet implemented: toHtml for type '%s'", this.type);
+    return el;
+  };
+
 };
 
-PublicationInfo.Prototype.prototype = Document.Node.prototype;
+PublicationInfo.Prototype.prototype = DocumentNode.prototype;
 PublicationInfo.prototype = new PublicationInfo.Prototype();
 PublicationInfo.prototype.constructor = PublicationInfo;
 
-Document.Node.defineProperties(PublicationInfo);
+DocumentNode.defineProperties(PublicationInfo);
 
 module.exports = PublicationInfo;

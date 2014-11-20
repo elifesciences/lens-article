@@ -1,12 +1,12 @@
 
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
 
 // Formula
 // -----------------
 //
 
 var Formula = function(node) {
-  Document.Node.call(this, node);
+  DocumentNode.call(this, node);
 };
 
 // Type definition
@@ -15,9 +15,8 @@ var Formula = function(node) {
 
 Formula.type = {
   "id": "formula",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "inline": "boolean",
     // a reference label as typically used in display formulas
     "label": "string",
@@ -59,12 +58,21 @@ Formula.example = {
 
 Formula.Prototype = function() {
   this.inline = false;
+
+  this.__super__ = DocumentNode.prototype;
+
+  this.toHtml = function(htmlDocument) {
+    var el = this.__super__.toHtml.call(this, htmlDocument);
+    console.error("Not yet implemented: toHtml for type '%s'", this.type);
+    return el;
+  };
+
 };
 
-Formula.Prototype.prototype = Document.Node.prototype;
+Formula.Prototype.prototype = DocumentNode.prototype;
 Formula.prototype = new Formula.Prototype();
 Formula.prototype.constuctor = Formula;
 
-Document.Node.defineProperties(Formula);
+DocumentNode.defineProperties(Formula);
 
 module.exports = Formula;

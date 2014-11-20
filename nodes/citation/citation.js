@@ -1,23 +1,27 @@
+
 var _ = require('underscore');
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
 
 // Lens.Citation
 // -----------------
 //
 
 var Citation = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
 // -----------------
 //
 
+// TODO: this should really be overhauled. It is not really desirable to come up with
+// a custom scheme here. We should follow CiteProc.json. Then we can use data from other service, as well as
+// citation formatter such as citeproc.
+
 Citation.type = {
   "id": "article_citation", // type name
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "title": "string",
     "label": "string",
     "authors": ["array", "string"],
@@ -62,8 +66,6 @@ Citation.description = {
   }
 };
 
-
-
 // Example Citation
 // -----------------
 //
@@ -97,6 +99,8 @@ Citation.example = {
 
 Citation.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   // Returns the citation URLs if available
   // Falls back to the DOI url
   // Always returns an array;
@@ -108,12 +112,52 @@ Citation.Prototype = function() {
   this.getHeader = function() {
     return _.compact([this.properties.label, this.properties.citation_type || "Citation"]).join(' - ');
   };
+
+  this.toHtml = function(htmlDocument) {
+    var citation = this.__super__.toHtml(htmlDocument);
+
+    citation.setAttribute('data-citation-type', this.citation_type);
+
+    ["label", "title"].forEach(function(prop) {
+      if (this.properties[prop]) {
+        citation.appendChild(this.propertyToHtml(prop));
+      }
+    });
+
+    this.authors.forEach(function(author) {
+      var el = htmlDocument.createElement('span');
+      el.setAttribute('data-property', 'author');
+      el.textContent = author;
+      citation.appendChild(el);
+    });
+
+    ["source", "volume", "fpage", "lpage", "year", "comment"].forEach(function(prop) {
+      if (this.properties[prop]) {
+        citation.appendChild(this.propertyToHtml(prop));
+      }
+    });
+
+    this.citation_urls.forEach(function(citationUrl) {
+      var el = htmlDocument.createElement('span');
+      el.setAttribute('data-property', 'url');
+      var label = htmlDocument.createElement('label');
+      label.textContent = citationUrl.name;
+      var link = htmlDocument.createElement('a');
+      link.setAttribute('href', citationUrl.url);
+      el.appendChild(label);
+      el.appendChild(link);
+      citation.appendChild(el);
+    });
+
+    return citation;
+  };
+
 };
 
-Citation.Prototype.prototype = Document.Node.prototype;
+Citation.Prototype.prototype = DocumentNode.prototype;
 Citation.prototype = new Citation.Prototype();
 Citation.prototype.constructor = Citation;
 
-Document.Node.defineProperties(Citation);
+DocumentNode.defineProperties(Citation);
 
 module.exports = Citation;

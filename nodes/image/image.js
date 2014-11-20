@@ -1,10 +1,9 @@
 "use strict";
 
-var DocumentNode = require("substance-document").Node;
-var WebResource = require("../web_resource").Model;
+var DocumentNode = require("../node").Model;
 
 var ImageNode = function(node, document) {
-  WebResource.call(this, node, document);
+  DocumentNode.call(this, node, document);
 };
 
 // Type definition
@@ -13,9 +12,9 @@ var ImageNode = function(node, document) {
 
 ImageNode.type = {
   "id": "image",
-  "parent": "webresource",
+  "parent": "node",
   "properties": {
-    "source_id": "string"
+    "url": "string"
   }
 };
 
@@ -39,12 +38,23 @@ ImageNode.description = {
   "remarks": [
     "Represents a web-resource for an image."
   ],
-  "properties": {}
+  "properties": {
+    "url": "URL to a image",
+  }
 };
 
-ImageNode.Prototype = function() {};
+ImageNode.Prototype = function() {
 
-ImageNode.Prototype.prototype = WebResource.prototype;
+  this.__super__ = DocumentNode.prototype;
+
+  this.toHtml = function(htmlDocument) {
+    var el = this.__super__.toHtml.call(this, htmlDocument, {elementType: 'img'});
+    el.setAttribute('source', this.url);
+    return el;
+  };
+};
+
+ImageNode.Prototype.prototype = DocumentNode.prototype;
 ImageNode.prototype = new ImageNode.Prototype();
 ImageNode.prototype.constructor = ImageNode;
 

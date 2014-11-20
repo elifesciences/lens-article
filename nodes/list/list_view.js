@@ -1,6 +1,6 @@
 "use strict";
 
-var CompositeView = require("../composite/composite_view");
+var CompositeView = require("../composite").View;
 var List = require("./list");
 
 // Substance.Image.View

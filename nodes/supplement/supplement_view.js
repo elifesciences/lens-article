@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
-var CompositeView = require("../composite").View;
+var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
 var ResourceView = require('../resource/resource_view');
 
@@ -9,11 +9,9 @@ var ResourceView = require('../resource/resource_view');
 // ==========================================================================
 
 var SupplementView = function(node, viewFactory, options) {
-  CompositeView.call(this, node, viewFactory);
-
+  NodeView.call(this, node, viewFactory);
   // Mix-in
   ResourceView.call(this, options);
-
 };
 
 SupplementView.Prototype = function() {
@@ -22,9 +20,11 @@ SupplementView.Prototype = function() {
   _.extend(this, ResourceView.prototype);
 
   this.renderBody = function() {
-
-    this.renderChildren();
-
+    if (this.caption) {
+      var captionView = this.createChildView(this.caption);
+      var captionViewEl = captionView.render().el;
+      this.content.appendChild(captionViewEl);
+    }
     var file = $$('div.file', {
       children: [
         $$('a', {href: this.node.url, html: '<i class="icon-download-alt"/> Download' })
@@ -34,7 +34,7 @@ SupplementView.Prototype = function() {
   };
 };
 
-SupplementView.Prototype.prototype = CompositeView.prototype;
+SupplementView.Prototype.prototype = NodeView.prototype;
 SupplementView.prototype = new SupplementView.Prototype();
 SupplementView.prototype.constructor = SupplementView;
 

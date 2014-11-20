@@ -1,12 +1,12 @@
-var _ = require('underscore');
-var Document = require('substance-document');
+
+var DocumentNode = require('../node').Model;
 
 // Lens.HTMLTable
 // -----------------
 //
 
 var HTMLTable = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
@@ -15,9 +15,8 @@ var HTMLTable = function(node, doc) {
 
 HTMLTable.type = {
   "id": "html_table",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "label": "string",
     "content": "string",
     "footers": ["array", "string"],
@@ -40,7 +39,6 @@ HTMLTable.description = {
     "A table figure which is expressed in HTML notation"
   ],
   "properties": {
-    "source_id": "string",
     "label": "Label shown in the resource header.",
     "title": "Full table title",
     "content": "HTML data",
@@ -66,6 +64,8 @@ HTMLTable.example = {
 
 HTMLTable.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.getCaption = function() {
     if (this.properties.caption) return this.document.get(this.properties.caption);
   };
@@ -73,12 +73,19 @@ HTMLTable.Prototype = function() {
   this.getHeader = function() {
     return this.properties.label;
   };
+
+  this.toHtml = function(htmlDocument) {
+    var el = this.__super__.toHtml.call(this, htmlDocument);
+    console.error("Not yet implemented: toHtml for type '%s'", this.type);
+    return el;
+  };
+
 };
 
-HTMLTable.Prototype.prototype = Document.Node.prototype;
+HTMLTable.Prototype.prototype = DocumentNode.prototype;
 HTMLTable.prototype = new HTMLTable.Prototype();
 HTMLTable.prototype.constructor = HTMLTable;
 
-Document.Node.defineProperties(HTMLTable);
+DocumentNode.defineProperties(HTMLTable);
 
 module.exports = HTMLTable;

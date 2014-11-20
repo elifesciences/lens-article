@@ -1,13 +1,13 @@
 var _ = require('underscore');
 
-var Document = require("substance-document");
+var DocumentNode = require("../node").Model;
 
 // Lens.Supplement
 // -----------------
 //
 
 var Supplement = function(node, doc) {
-  Document.Composite.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
@@ -16,9 +16,8 @@ var Supplement = function(node, doc) {
 
 Supplement.type = {
   "id": "supplement",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "label": "string",
     "url": "string",
     "caption": "caption", // contains the doi
@@ -59,13 +58,7 @@ Supplement.example = {
 
 Supplement.Prototype = function() {
 
-  this.getChildrenIds = function() {
-    var nodes = [];
-    if (this.properties.caption) {
-      nodes.push(this.properties.caption);
-    }
-    return nodes;
-  };
+  this.__super__ = DocumentNode.prototype;
 
   this.getCaption = function() {
     if (this.properties.caption) {
@@ -78,12 +71,28 @@ Supplement.Prototype = function() {
   this.getHeader = function() {
     return this.properties.label;
   };
+
+  this.toHtml = function(htmlDocument) {
+    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    if (this.properties.label) {
+      figureEl.appendChild(this.propertyToHtml('label'));
+    }
+    var linkEl = htmlDocument.createElement('a');
+    img.setAttribute('href', this.url);
+    figureEl.appendChild(linkEl);
+    var caption = this.getCaption();
+    if (caption) {
+      figureEl.appendChild(caption.toHtml(htmlDocument));
+    }
+    return figureEl;
+  };
+
 };
 
-Supplement.Prototype.prototype = Document.Composite.prototype;
+Supplement.Prototype.prototype = DocumentNode.prototype;
 Supplement.prototype = new Supplement.Prototype();
 Supplement.prototype.constructor = Supplement;
 
-Document.Node.defineProperties(Supplement);
+DocumentNode.defineProperties(Supplement);
 
 module.exports = Supplement;

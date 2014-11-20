@@ -1,7 +1,7 @@
 "use strict";
 
 var Document = require('substance-document');
-var Composite = Document.Composite;
+var Composite = require('../composite').Model;
 
 // Lens.Box
 // -----------------
@@ -17,9 +17,8 @@ var Box = function(node, doc) {
 
 Box.type = {
   "id": "box",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "label": "string",
     "children": ["array", "paragraph"]
   }
@@ -54,8 +53,22 @@ Box.example = {
 
 Box.Prototype = function() {
 
+  this.__super__ = Composite.prototype;
+
   this.getChildrenIds = function() {
     return this.properties.children;
+  };
+
+  this.toHtml = function(htmlDocument) {
+    var box = this.__super__.toHtml.call(this, htmlDocument);
+    if (this.properties.label) {
+      box.appendChild(this.propertyToHtml('label'));
+    }
+    var childrenEls = this.childrenToHtml(htmlDocument);
+    for (var i = 0; i < childrenEls.length; i++) {
+      box.appendChild(childrenEls[i]);
+    }
+    return box;
   };
 
 };

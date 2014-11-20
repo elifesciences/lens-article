@@ -1,6 +1,6 @@
 
 var util = require("substance-util");
-var NodeView = require('../node/node_view');
+var NodeView = require('../node').View;
 var Fragmenter = util.Fragmenter;
 var $$ = require("substance-application").$$;
 

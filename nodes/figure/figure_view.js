@@ -1,7 +1,7 @@
 "use strict";
 
 var _ = require('underscore');
-var CompositeView = require("../composite").View;
+var NodeView = require("../node").View;
 var $$ = require ("substance-application").$$;
 var ResourceView = require('../resource/resource_view');
 
@@ -9,7 +9,7 @@ var ResourceView = require('../resource/resource_view');
 // ==========================================================================
 
 var FigureView = function(node, viewFactory, options) {
-  CompositeView.call(this, node, viewFactory);
+  NodeView.call(this, node, viewFactory);
 
   // Mix-in
   ResourceView.call(this, options);
@@ -41,7 +41,11 @@ FigureView.Prototype = function() {
       this.content.appendChild(imgEl);
     }
 
-    this.renderChildren();
+    if (this.caption) {
+      var captionView = this.createChildView(this.caption);
+      var captionViewEl = captionView.render().el;
+      this.content.appendChild(captionViewEl);
+    }
 
     // Attrib
     if (this.node.attrib) {
@@ -51,7 +55,7 @@ FigureView.Prototype = function() {
 
 };
 
-FigureView.Prototype.prototype = CompositeView.prototype;
+FigureView.Prototype.prototype = NodeView.prototype;
 FigureView.prototype = new FigureView.Prototype();
 
 module.exports = FigureView;

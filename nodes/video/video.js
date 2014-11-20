@@ -1,12 +1,12 @@
 
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
 
 // Lens.Video
 // -----------------
 //
 
 var Video = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
@@ -69,6 +69,8 @@ Video.example = {
 
 Video.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.getHeader = function() {
     return this.properties.label;
   };
@@ -82,12 +84,49 @@ Video.Prototype = function() {
     }
   };
 
+  this.toHtml = function(htmlDocument) {
+    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    if (this.properties.label) {
+      figureEl.appendChild(this.propertyToHtml('label'));
+    }
+    var videoEl = htmlDocument.createElement('video');
+    var sourceEl;
+    if (node.url) {
+      sourceEl = htmlDocument.createElement('source');
+      sourceEl.setAttribute('data-property', 'url_mp4');
+      sourceEl.setAttribute('src', node.url);
+      sourceEl.setAttribute('type', "video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;");
+      videoEl.append(source);
+    }
+    if (node.url_ogv) {
+      sourceEl = htmlDocument.createElement('source');
+      sourceEl.setAttribute('data-property', 'url_ogv');
+      sourceEl.setAttribute('src', node.url_ogv);
+      sourceEl.setAttribute('type', "video/ogg; codecs=&quot;theora, vorbis&quot;");
+      videoEl.append(source);
+    }
+    if (node.url_webm) {
+      sourceEl = htmlDocument.createElement('source');
+      sourceEl.setAttribute('data-property', 'url_webm');
+      sourceEl.setAttribute('src', node.url_webm);
+      sourceEl.setAttribute('type', "video/webm; codecs=&quot;vp8, vorbis%quot;");
+      videoEl.append(source);
+    }
+    figureEl.appendChild(videoEl);
+
+    var caption = this.getCaption();
+    if (caption) {
+      figureEl.appendChild(caption.toHtml(htmlDocument));
+    }
+    return figureEl;
+  };
+
 };
 
-Video.Prototype.prototype = Document.Node.prototype;
+Video.Prototype.prototype = DocumentNode.prototype;
 Video.prototype = new Video.Prototype();
 Video.prototype.constructor = Video;
 
-Document.Node.defineProperties(Video);
+DocumentNode.defineProperties(Video);
 
 module.exports = Video;

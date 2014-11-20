@@ -1,9 +1,9 @@
 "use strict";
 
-var Text = require("../text").Model;
+var TextNode = require("../text").Model;
 
 var Codeblock = function(node, document) {
-  Text.call(this, node, document);
+  TextNode.call(this, node, document);
 };
 
 // Type definition
@@ -11,15 +11,10 @@ var Codeblock = function(node, document) {
 
 Codeblock.type = {
   "id": "codeblock",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "content": "string"
   }
-};
-
-Codeblock.config = {
-  "zoomable": true
 };
 
 // This is used for the auto-generated docs
@@ -44,14 +39,13 @@ Codeblock.description = {
 Codeblock.example = {
   "type": "codeblock",
   "id": "codeblock_1",
-  "content": "var text = \"Sun\";\nvar op1 = null;\ntext = op2.apply(op1.apply(text));\nconsole.log(text);",
+  "content": "var code = \"Sun\";\nvar op1 = null;\nTextNode = op2.apply(op1.apply(TextNode));\nconsole.log(TextNode);",
 };
 
 Codeblock.Prototype = function() {};
 
-Codeblock.Prototype.prototype = Text.prototype;
+Codeblock.Prototype.prototype = TextNode.prototype;
 Codeblock.prototype = new Codeblock.Prototype();
 Codeblock.prototype.constructor = Codeblock;
 
 module.exports = Codeblock;
-

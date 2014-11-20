@@ -1,12 +1,14 @@
+
 var _ = require('underscore');
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
+var articleUtil = require("../../article_util");
 
 // Lens.Cover
 // -----------------
 //
 
 var Cover = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
@@ -15,12 +17,10 @@ var Cover = function(node, doc) {
 
 Cover.type = {
   "id": "cover",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "authors": ["array", "paragraph"],
     "breadcrumbs": "object"
-    // No properties as they are all derived from the document node
   }
 };
 
@@ -50,6 +50,8 @@ Cover.example = {
 
 Cover.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.getAuthors = function() {
     return _.map(this.properties.authors, function(paragraphId) {
       return this.document.get(paragraphId);
@@ -60,12 +62,46 @@ Cover.Prototype = function() {
     return this.document.title;
   };
 
+  this.toHtml = function(htmlDocument) {
+    var coverEl = this.__super__.toHtml(htmlDocument);
+    var pubInfo = this.document.get('publication_info');
+
+    if (pubInfo) {
+      var pubInfoEl = htmlDocument.createElement('div');
+      pubInfoEl.setAttribute('data-property', "pub-info");
+      var date = pubInfo.published_on;
+      var journal = pubInfo.journal;
+      if (date) {
+        var dateEl = htmlDocument.createElement('span');
+        dateEl.setAttribute('data-property', 'date');
+        dateEl.textContent = articleUtil.formatDate(date);
+        pubInfoEl.appendChild(dateEl);
+      }
+      if (date && journal) {
+        pubInfoEl.appendChild(htmlDocument.createTextElement(' in '));
+      }
+      if (pubInfo.journal) {
+        var journalEl = htmlDocument.createElement('i');
+        journalEl.setAttribute('data-property', 'journal');
+        journalEl.textContent = pubInfo.journal;
+        pubInfoEl.appendChild(journalEl);
+      }
+      coverEl.appendChild(pubInfoEl);
+    }
+
+    coverEl.appendChild(this.propertyToHtml(['document', 'title']));
+
+    // TODO: render more (authors, links, etc.)
+
+    return coverEl;
+  };
+
 };
 
-Cover.Prototype.prototype = Document.Node.prototype;
+Cover.Prototype.prototype = DocumentNode.prototype;
 Cover.prototype = new Cover.Prototype();
 Cover.prototype.constructor = Cover;
 
-Document.Node.defineProperties(Cover);
+DocumentNode.defineProperties(Cover);
 
 module.exports = Cover;

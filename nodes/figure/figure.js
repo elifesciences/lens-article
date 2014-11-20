@@ -1,16 +1,15 @@
 "use strict";
 
-var Document = require("substance-document");
+var DocumentNode = require("../node").Model;
 
 var Figure = function(node, document) {
-  Document.Composite.call(this, node, document);
+  DocumentNode.call(this, node, document);
 };
 
 
 Figure.type = {
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "label": "string",
     "url": "string",
     "caption": "caption",
@@ -52,16 +51,10 @@ Figure.example = {
 
 Figure.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.hasCaption = function() {
     return (!!this.properties.caption);
-  };
-
-  this.getChildrenIds = function() {
-    var nodes = [];
-    if (this.properties.caption) {
-      nodes.push(this.properties.caption);
-    }
-    return nodes;
   };
 
   this.getCaption = function() {
@@ -71,12 +64,28 @@ Figure.Prototype = function() {
   this.getHeader = function() {
     return this.properties.label;
   };
+
+  this.toHtml = function(htmlDocument) {
+    var figureEl = this.__super__.toHtml.call(this, htmlDocument, { elementType: 'figure' });
+    if (this.properties.label) {
+      figureEl.appendChild(this.propertyToHtml('label'));
+    }
+    var imgEl = htmlDocument.createElement('img');
+    imgEl.setAttribute('source', this.url);
+    figureEl.appendChild(imgEl)
+    var caption = this.getCaption();
+    if (caption) {
+      figureEl.appendChild(caption.toHtml(htmlDocument));
+    }
+    return figureEl;
+  };
+
 };
 
-Figure.Prototype.prototype = Document.Composite.prototype;
+Figure.Prototype.prototype = DocumentNode.prototype;
 Figure.prototype = new Figure.Prototype();
 Figure.prototype.constructor = Figure;
 
-Document.Node.defineProperties(Figure.prototype, Object.keys(Figure.type.properties));
+DocumentNode.defineProperties(Figure);
 
 module.exports = Figure;

@@ -1,16 +1,15 @@
 "use strict";
 
-var Document = require("substance-document");
+var Composite = require("../composite").Model;
 
 var Caption = function(node, document) {
-  Document.Composite.call(this, node, document);
+  Composite.call(this, node, document);
 };
 
 Caption.type = {
   "id": "caption",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "title": "paragraph",
     "children": ["array", "paragraph"]
   }
@@ -59,12 +58,23 @@ Caption.Prototype = function() {
     if (this.properties.title) return this.document.get(this.properties.title);
   };
 
+  this.toHtml = function(htmlDocument) {
+    var caption = this.__super__.toHtml.call(this, htmlDocument, { elementType: "figcaption" });
+    if (this.properties.title) {
+      caption.appendChild(this.propertyToHtml('title'));
+    }
+    var childrenEls = this.childrenToHtml(htmlDocument);
+    for (var i = 0; i < childrenEls.length; i++) {
+      caption.appendChild(childrenEls[i]);
+    }
+    return caption;
+  };
 };
 
-Caption.Prototype.prototype = Document.Composite.prototype;
+Caption.Prototype.prototype = Composite.prototype;
 Caption.prototype = new Caption.Prototype();
 Caption.prototype.constructor = Caption;
 
-Document.Node.defineProperties(Caption);
+Composite.defineProperties(Caption);
 
 module.exports = Caption;

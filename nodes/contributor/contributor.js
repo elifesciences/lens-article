@@ -1,12 +1,12 @@
 var _ = require('underscore');
-var Document = require('substance-document');
+var DocumentNode = require('../node').Model;
 
 // Lens.Contributor
 // -----------------
 //
 
 var Contributor = function(node, doc) {
-  Document.Node.call(this, node, doc);
+  DocumentNode.call(this, node, doc);
 };
 
 // Type definition
@@ -15,9 +15,8 @@ var Contributor = function(node, doc) {
 
 Contributor.type = {
   "id": "contributor",
-  "parent": "content",
+  "parent": "node",
   "properties": {
-    "source_id": "string",
     "name": "string", // full name
     "role": "string",
     "affiliations": ["array", "affiliation"],
@@ -80,6 +79,8 @@ Contributor.example = {
 
 Contributor.Prototype = function() {
 
+  this.__super__ = DocumentNode.prototype;
+
   this.getAffiliations = function() {
     return _.map(this.properties.affiliations, function(affId) {
       return this.document.get(affId);
@@ -90,12 +91,75 @@ Contributor.Prototype = function() {
     return this.properties.role || 'Author';
   };
 
+  this.toHtml = function(htmlDocument) {
+    var contributor = this.__super__.toHtml(htmlDocument);
+
+    contributor.setAttribute('data-deceased', this.deceased);
+
+    if (this.image) {
+      var imgEl = htmlDocument.create('img');
+      imgEl.setAttribute('source', this.image);
+
+    }
+    contributor.appendChild(this.propertyToHtml("name"));
+
+    if (this.bio && this.bio.length > 0) {
+      var bioEl = htmlDocument.createElement('div');
+      bioEl.setAttribute('data-property', 'bio');
+      this.bio.forEach(function(id) {
+        var p = this.document.get(id);
+        bioEl.appendChild(p.toHtml(htmlDocument));
+      }, this);
+      contributor.appendChild(bioEl);
+    }
+
+    ["role", "contribution"].forEach(function(prop) {
+      if (this.properties[prop]) {
+        contributor.appendChild(this.propertyToHtml(prop));
+      }
+    });
+
+    if (this.equal_contrib && this.equal_contrib.length > 0) {
+      var equalContribsEl = htmlDocument.createElement('div');
+      equalContribsEl.setAttribute('data-property', 'equal_contribs');
+      this.equal_contrib.forEach(function(name) {
+        var el = htmlDocument.createElement('span');
+        el.setAttribute('data-property', 'equal_contrib');
+        el.textContent = name;
+        equalContribsEl.appendChild(el);
+      });
+      contributor.appendChild(equalContribsEl);
+    }
+
+    // TODO: need to discuss how we want to deal with 'referenced' content
+    this.affiliations.forEach(function(affId) {
+       var aff = this.document.get(affId);
+       contributor.appendChild(aff.toHtml(htmlDocument));
+    }, this);
+
+    if (this.fundings && this.fundings.length > 0) {
+      var fundingsEl = htmlDocument.createElement('div');
+      fundingsEl.setAttribute('data-property', 'fundings');
+      this.fundings.forEach(function(name) {
+        var el = htmlDocument.createElement('span');
+        el.setAttribute('data-property', 'funding');
+        el.textContent = name;
+        fundingsEl.appendChild(el);
+      });
+      contributor.appendChild(fundingsEl);
+    }
+
+    // TODO: Rethink everything and add more implementation here
+
+    return contributor;
+  };
+
 };
 
-Contributor.Prototype.prototype = Document.Node.prototype;
+Contributor.Prototype.prototype = DocumentNode.prototype;
 Contributor.prototype = new Contributor.Prototype();
 Contributor.prototype.constructor = Contributor;
 
-Document.Node.defineProperties(Contributor);
+DocumentNode.defineProperties(Contributor);
 
 module.exports = Contributor;

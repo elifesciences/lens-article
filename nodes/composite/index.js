@@ -3,6 +3,6 @@
 var Document = require("substance-document");
 
 module.exports = {
-  Model: Document.Composite,
-  View: require("./composite_view")
+  Model: require("./lens_composite"),
+  View: require("./lens_composite_view")
 };
