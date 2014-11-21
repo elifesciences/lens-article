@@ -26,7 +26,12 @@ NodeView.Prototype = function() {
   this.render = function() {
     this.content = document.createElement("DIV");
     this.content.classList.add("content");
+
+    this.focusHandle = document.createElement("DIV");
+    this.focusHandle.classList.add('focus-handle');
+
     this.el.appendChild(this.content);
+    this.el.appendChild(this.focusHandle);
     return this;
   };
 

@@ -10,17 +10,7 @@ var ParagraphView = function(node, viewFactory) {
 };
 
 ParagraphView.Prototype = function() {
-
-  this.render = function() {
-    this.content = document.createElement("DIV");
-    this.content.classList.add("content");
-
-    this.renderChildren();
-
-    this.el.appendChild(this.content);
-
-    return this;
-  };
+  
 };
 
 ParagraphView.Prototype.prototype = CompositeView.prototype;

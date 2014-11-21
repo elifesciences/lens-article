@@ -21,13 +21,9 @@ CompositeView.Prototype = function() {
   //
 
   this.render = function() {
-    this.content = document.createElement("DIV");
-    this.content.classList.add("content");
+    NodeView.prototype.render.call(this);
 
     this.renderChildren();
-
-    this.el.appendChild(this.content);
-
     return this;
   };
 
