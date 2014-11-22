@@ -4,7 +4,7 @@
 
 .lens-article .content-node.cover .breadcrumbs {
   font-size: 14px;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-bottom: 20px;
 
   /* Prevent from nasty scrollbars that appear when eLife logo is shown */
@@ -27,6 +27,7 @@
   font-weight: 600;
   line-height: 1.3em;
   font-size: 30px;
+  padding-top: 20px;
 }
 
 .lens-article .content-node.cover .published-on {
@@ -63,7 +64,7 @@
   float: left;
   padding: 0px;
   margin: 0px;
-  font-size: 20px;
+  font-size: 17px;
   margin-right: 10px;
   margin-bottom: 8px;
 }
