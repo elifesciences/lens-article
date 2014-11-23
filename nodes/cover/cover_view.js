@@ -51,7 +51,7 @@ CoverView.Prototype = function() {
       if (pubDate) {
         var items = [articleUtil.formatDate(pubDate)];
         if (pubInfo.journal && !node.breadcrumbs) {
-          items.push('<i> in '+pubInfo.journal+'</i>');
+          items.push(' in <i>'+pubInfo.journal+'</i>');
         }
 
         this.content.appendChild($$('.published-on', {
