@@ -48,12 +48,12 @@ FigureView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var textView = this.createTextPropertyView([this.node.id, 'label'], {
-      classes: "name"
-    });
-    var el = textView.render().el;
-    el.setAttribute("sbs-click", "toggleResource("+this.node.id+")");
-    return el;
+    var labelEl = $$('a.name', {
+      href: "#",
+      "sbs-click": "toggleResource("+this.node.id+")"
+    })
+    this.renderAnnotatedText([this.node.id, 'label'], labelEl);
+    return labelEl;
   };
 
 };

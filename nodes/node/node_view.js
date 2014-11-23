@@ -52,6 +52,12 @@ NodeView.Prototype = function() {
     return view;
   };
 
+  this.renderAnnotatedText = function(path, el) {
+    var property = this.node.document.resolve(path);
+    var view = TextPropertyView.renderAnnotatedText(this.node.document, property, el, this.viewFactory);
+    return view;
+  };
+
 };
 
 NodeView.Prototype.prototype = View.prototype;
