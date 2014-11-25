@@ -8,6 +8,11 @@ var InlineFormulaView = function(node, viewFactory) {
 
 InlineFormulaView.Prototype = function() {
 
+  this.createElement = function() {
+    var el = document.createElement('span');
+    return el;
+  };
+
   this.render = function() {
     var formula = this.node.document.get(this.node.target);
     var formulaView = this.viewFactory.createView(formula);
