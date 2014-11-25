@@ -4,6 +4,7 @@ var AnnotationView = require('../annotation/annotation_view');
 
 var ResourceReferenceView = function(node, viewFactory) {
   AnnotationView.call(this, node, viewFactory);
+  this.$el.addClass('resource-reference');
 };
 
 ResourceReferenceView.Prototype = function() {

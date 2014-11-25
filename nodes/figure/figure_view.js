@@ -48,9 +48,8 @@ FigureView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var labelEl = $$('a.name', {
-      href: "#",
-      "sbs-click": "toggleResource("+this.node.id+")"
+    var labelEl = $$('a.name.action-toggle-resource', {
+      href: "#"
     })
     this.renderAnnotatedText([this.node.id, 'label'], labelEl);
     return labelEl;
