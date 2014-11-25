@@ -31,6 +31,14 @@ ContributorView.Prototype = function() {
 
     this.content.appendChild($$('.contributor-name', {text: this.node.name}));
 
+    // Contributor Role
+    // -------
+
+    if (this.node.role) {
+      this.content.appendChild($$('.role', {text: this.node.role}));  
+    }
+    
+
     // Add Affiliations
     // -------
 
