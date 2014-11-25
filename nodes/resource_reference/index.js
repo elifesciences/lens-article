@@ -1,5 +1,5 @@
 
 module.exports = {
   Model: require('./resource_reference.js'),
-  View: require('../annotation/annotation_view.js')
+  View: require('./resource_reference_view.js')
 };
