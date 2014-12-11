@@ -20,6 +20,7 @@ Contributor.type = {
     "source_id": "string",
     "name": "string", // full name
     "role": "string",
+    "contributor_type": "string",
     "affiliations": ["array", "affiliation"],
     "present_address": ["string"],
     "fundings": ["array", "string"],
@@ -87,7 +88,7 @@ Contributor.Prototype = function() {
   };
 
   this.getHeader = function() {
-    return this.properties.role || 'Author';
+    return this.properties.contributor_type || 'Author';
   };
 
 };

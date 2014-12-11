@@ -1,6 +1,5 @@
 "use strict";
 
-var TextView = require('../text').View;
 var NodeView = require("../node").View;
 var $$ = require("substance-application").$$;
 
@@ -15,6 +14,7 @@ var HeadingView = function(node, viewFactory) {
 };
 
 HeadingView.Prototype = function() {
+
   this.render = function() {
     NodeView.prototype.render.call(this);
 
@@ -31,6 +31,13 @@ HeadingView.Prototype = function() {
     this.content.appendChild(titleView.render().el);
     return this;
   };
+
+  this.renderTocItem = function() {
+    var el = $$('div');
+    this.renderAnnotatedText([this.node.id, 'content'], el);
+    return el;
+  };
+
 };
 
 HeadingView.Prototype.prototype = NodeView.prototype;
