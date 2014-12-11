@@ -56,7 +56,9 @@ Heading.Prototype = function() {
 
   // TOC API
 
-  this.includeInToc = true;
+  this.includeInToc = function() {
+    return true;
+  };
 
   this.getLevel = function() {
     return this.level;

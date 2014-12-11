@@ -34,7 +34,13 @@ HeadingView.Prototype = function() {
 
   this.renderTocItem = function() {
     var el = $$('div');
-    this.renderAnnotatedText([this.node.id, 'content'], el);
+    if (this.node.label) {
+      var labelEl = $$('.label', {text: this.node.label});
+      el.appendChild(labelEl);
+    }
+    var titleEl = $$('span');
+    this.renderAnnotatedText([this.node.id, 'content'], titleEl);
+    el.appendChild(titleEl);
     return el;
   };
 

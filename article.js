@@ -75,7 +75,7 @@ Article.Prototype = function() {
 
   this.getTocNodes = function() {
     var nodes = _.filter(this.get('content').getNodes(), function(node) {
-      return node.includeInToc;
+      return node.includeInToc();
     });
     return nodes;
   };
