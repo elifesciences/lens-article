@@ -11,7 +11,13 @@ var HeadingView = function() {
   this.$el.addClass('level-'+this.node.level);
 };
 
-HeadingView.Prototype = function() {};
+HeadingView.Prototype = function() {
+  this.renderTocItem = function() {
+    var el = $$('div');
+    this.renderAnnotatedText([this.node.id, 'content'], el);
+    return el;
+  };
+};
 
 HeadingView.Prototype.prototype = TextView.prototype;
 HeadingView.prototype = new HeadingView.Prototype();
