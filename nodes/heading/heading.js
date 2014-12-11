@@ -51,7 +51,17 @@ Heading.description = {
 };
 
 Heading.Prototype = function() {
+
   this.splitInto = 'paragraph';
+
+  // TOC API
+
+  this.includeInToc = true;
+
+  this.getLevel = function() {
+    return this.level;
+  }
+
 };
 
 Heading.Prototype.prototype = Text.prototype;

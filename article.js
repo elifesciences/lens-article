@@ -73,6 +73,13 @@ Article.Prototype = function() {
     return headings;
   };
 
+  this.getTocNodes = function() {
+    var nodes = _.filter(this.get('content').getNodes(), function(node) {
+      return node.includeInToc;
+    });
+    return nodes;
+  };
+
 };
 
 Article.prepareOptions = function(options) {
