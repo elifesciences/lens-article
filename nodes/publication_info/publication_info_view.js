@@ -102,7 +102,7 @@ PublicationInfoView.Prototype = function() {
         children: [
           $$('div.label', {text: "DOI"}),
           $$('div.value', {
-            children: [$$('a', {href: this.node.doi, text: this.node.doi, target: '_blank'})]
+            children: [$$('a', {href: "http://dx.doi.org/"+this.node.doi, text: this.node.doi, target: '_blank'})]
           })
         ]
       });
