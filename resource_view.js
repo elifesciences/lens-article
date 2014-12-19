@@ -44,12 +44,10 @@ ResourceView.Prototype = function() {
         headerEl.appendChild($$('a.toggle-fullscreen', {
           "href": "#",
           "html": "<i class=\"icon-resize-full\"></i><i class=\"icon-resize-small\"></i>",
-          "sbs-click": "toggleFullscreen("+node.id+")"
         }));
       }
-      headerEl.appendChild($$('a.toggle-res', {
+      headerEl.appendChild($$('a.toggle-res.action-toggle-resource', {
         "href": "#",
-        "sbs-click": "toggleResource("+node.id+")",
         "html": "<i class=\"icon-eye-open\"></i><i class=\"icon-eye-close\"></i>"
       }));
       this.headerEl = headerEl;
@@ -58,11 +56,10 @@ ResourceView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var labelEl = $$('a.name', {
+    var labelEl = $$('a.name.action-toggle-resource', {
       href: "#",
       html: this.getHeader(),
-      "sbs-click": "toggleResource("+this.node.id+")"
-    })
+    });
     return labelEl;
   };
 
