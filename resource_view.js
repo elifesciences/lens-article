@@ -43,12 +43,12 @@ ResourceView.Prototype = function() {
       if (this.options.zoom) {
         headerEl.appendChild($$('a.toggle-fullscreen', {
           "href": "#",
-          "html": "<i class=\"icon-resize-full\"></i><i class=\"icon-resize-small\"></i>",
+          "html": "<i class=\"fa fa-expand\"></i><i class=\"fa fa-compress\"></i>",
         }));
       }
       headerEl.appendChild($$('a.toggle-res.action-toggle-resource', {
         "href": "#",
-        "html": "<i class=\"icon-eye-open\"></i><i class=\"icon-eye-close\"></i>"
+        "html": "<i class=\"fa fa-eye\"></i><i class=\"fa fa-eye-slash\"></i>"
       }));
       this.headerEl = headerEl;
       this.el.insertBefore(headerEl, this.content);
