@@ -4,6 +4,7 @@ var ResourceReferenceView = require('../resource_reference').View;
 
 var InlineFormulaView = function(node, viewFactory) {
   ResourceReferenceView.call(this, node, viewFactory);
+  $(this.el).removeClass('resource-reference');
 };
 
 InlineFormulaView.Prototype = function() {
