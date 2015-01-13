@@ -102,14 +102,14 @@ CoverView.Prototype = function() {
 
           linksEl.appendChild($$('a.json', {
             href: window.URL ? window.URL.createObjectURL(bb) : "#",
-            html: '<i class="fa fa-external-link"></i> '+link.name,
+            html: '<i class="fa fa-external-link-square"></i> '+link.name,
             target: '_blank'
           }));
 
         } else {
           linksEl.appendChild($$('a.'+link.type, {
             href: link.url,
-            html: '<i class="fa fa-external-link"></i> '+ link.name,
+            html: '<i class="fa fa-external-link-square"></i> '+ link.name,
             target: '_blank'
           }));
         }
