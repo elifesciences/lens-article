@@ -16,7 +16,8 @@ DocumentNode.type = {
     "title": "string",
     "authors": ["array", "contributor"],
     "on_behalf_of": "string",
-    "abstract": "string"
+    "abstract": "string",
+    "impact_statement": "string"
   }
 };
 
