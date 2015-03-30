@@ -55,7 +55,7 @@ VideoView.Prototype = function() {
     if (node.url_webm) {
       sources.push($$('source', {
         src: node.url_webm,
-        type: "video/webm; codecs=&quot;vp8, vorbis%quot;",
+        type: "video/webm"
       }));
     }
 
