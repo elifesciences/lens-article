@@ -7,7 +7,8 @@
 .resources .content-node.video .content video {
   background: #000;
   padding: 10px;
-  max-width: 100%;
+  /* We use a fix value of 100% now (instead of max-width: 100%), so small videos don't look so ugly; */
+  width: 100%;
   max-height: 500px;
 }
 
