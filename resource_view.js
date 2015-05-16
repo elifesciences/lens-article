@@ -56,8 +56,7 @@ ResourceView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var labelEl = $$('a.name.action-toggle-resource', {
-      href: "#",
+    var labelEl = $$('div.name.action-toggle-resource', {
       html: this.getHeader(),
     });
     return labelEl;

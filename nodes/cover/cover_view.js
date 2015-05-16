@@ -64,7 +64,7 @@ CoverView.Prototype = function() {
     // --------------
     //
 
-    var titleView = this.createTextPropertyView(['document', 'title'], { classes: 'title' });
+    var titleView = this.createTextPropertyView(['document', 'title'], { classes: 'title', elementType: 'div' });
     this.content.appendChild(titleView.render().el);
 
     // Render Authors
