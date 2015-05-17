@@ -48,7 +48,7 @@ ResourceView.Prototype = function() {
       }
       headerEl.appendChild($$('a.toggle-res.action-toggle-resource', {
         "href": "#",
-        "html": "<i class=\"fa fa-eye\"></i><i class=\"fa fa-eye-slash\"></i>"
+        "html": "<i class=\"fa fa-eye\"></i> Focus"
       }));
       this.headerEl = headerEl;
       this.el.insertBefore(headerEl, this.content);
@@ -56,7 +56,7 @@ ResourceView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var labelEl = $$('div.name.action-toggle-resource', {
+    var labelEl = $$('div.name', {
       html: this.getHeader(),
     });
     return labelEl;
