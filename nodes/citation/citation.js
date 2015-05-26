@@ -31,7 +31,8 @@ Citation.type = {
     "lpage": "string",
     "year": "string",
     "comment": "string",
-    "citation_urls": ["array", "object"]
+    "citation_urls": ["array", "object"],
+    "source_formats": ["array", "object"]
   }
 };
 
