@@ -48,9 +48,10 @@ FigureView.Prototype = function() {
   };
 
   this.renderLabel = function() {
-    var labelEl = $$('a.name.action-toggle-resource', {
+    var labelEl = $$('.name', {
       href: "#"
-    })
+    });
+
     this.renderAnnotatedText([this.node.id, 'label'], labelEl);
     return labelEl;
   };
