@@ -14,6 +14,7 @@ Figure.type = {
     "label": "string",
     "url": "string",
     "caption": "caption",
+    "position": "string", // 'float': default;figure goes into figure panel | 'anchor': figure is rendered in-flow
     "attrib": "string"
   }
 };
