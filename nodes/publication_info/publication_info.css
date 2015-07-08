@@ -20,8 +20,6 @@
 }
 
 .lens-article .content-node.publication-info .meta-data {
-  padding-bottom: 30px;
-  border-bottom: 1px solid #ddd;
   margin-bottom: 20px;
 }
 
@@ -37,12 +35,12 @@
 }
 
 .lens-article .content-node.publication-info .dates {
-  font-size: 16px;
+  /*font-size: 14px;*/
 }
 
 .article .resources .nodes > .content-node.publication-info > .content {
   border: none;
-  padding: 10px;
+  padding: 20px;
 }
 
 .article .resources .nodes > .content-node.publication-info .content-node[data-id=articleinfo] {
